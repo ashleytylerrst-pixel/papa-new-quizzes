@@ -14,59 +14,101 @@
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;min-height:100vh;padding:32px 16px 60px;}
-.pitch-lines{position:fixed;inset:0;pointer-events:none;z-index:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 60px,rgba(0,200,83,0.025) 60px,rgba(0,200,83,0.025) 61px);}
-.page{position:relative;z-index:1;max-width:580px;margin:0 auto;}
+.pitch{position:fixed;inset:0;pointer-events:none;z-index:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 60px,rgba(0,200,83,0.025) 60px,rgba(0,200,83,0.025) 61px);}
+.page{position:relative;z-index:1;max-width:600px;margin:0 auto;}
+
+/* NAV */
 .top-nav{display:flex;justify-content:flex-end;margin-bottom:28px;}
 .nav-pill{background:var(--surface);border:1px solid var(--border);border-radius:8px;display:flex;overflow:hidden;}
 .nav-pill button{background:transparent;border:none;color:var(--grey);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:8px 16px;cursor:pointer;transition:all 0.15s;}
 .nav-pill button.active{background:var(--green);color:#000;}
 .nav-pill button:hover:not(.active){color:var(--white);}
+
+/* HEADER */
 .header{text-align:center;margin-bottom:28px;}
 .eyebrow{display:inline-block;font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--green);border:1px solid var(--green-dim);padding:4px 12px;border-radius:2px;margin-bottom:12px;}
 h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(40px,10vw,62px);letter-spacing:2px;line-height:0.95;color:var(--white);}
 h1 em{font-style:normal;color:var(--green);}
 .subtitle{margin-top:8px;color:var(--grey);font-size:14px;}
-.score-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;padding:10px 16px;background:var(--surface);border:1px solid var(--border);border-radius:8px;}
+
+/* SCORE BAR */
+.score-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;padding:10px 16px;background:var(--surface);border:1px solid var(--border);border-radius:8px;}
 .score-label{font-size:12px;color:var(--grey);letter-spacing:1px;text-transform:uppercase;}
 .score-num{font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--green);line-height:1;}
 .progress-track{flex:1;margin:0 16px;height:4px;background:rgba(255,255,255,0.07);border-radius:2px;overflow:hidden;}
 .progress-fill{height:100%;background:var(--green);border-radius:2px;transition:width 0.5s ease;}
-.questions{display:flex;flex-direction:column;gap:8px;}
-.q-row{border-radius:10px;overflow:hidden;transition:box-shadow 0.3s;}
+
+/* QUESTION ROWS */
+.questions{display:flex;flex-direction:column;gap:10px;}
+
+.q-row{border-radius:12px;overflow:hidden;transition:box-shadow 0.3s;}
 .q-row.solved{box-shadow:0 0 0 1px var(--green-dim);}
-.q-inner{display:flex;align-items:stretch;}
-.q-clue{flex:1;background:var(--surface);border:1px solid var(--border);border-right:none;border-radius:10px 0 0 10px;padding:14px 16px;display:flex;gap:12px;align-items:flex-start;transition:background 0.3s,border-color 0.3s;}
-.q-row.solved .q-clue{background:var(--green-bg);border-color:var(--green-dim);}
-.q-row.locked .q-clue{background:var(--surface-locked);border-color:var(--border-locked);}
-.q-num{font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--green);line-height:1;width:22px;flex-shrink:0;padding-top:1px;transition:color 0.3s;}
+
+.q-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:12px;padding:16px 18px;
+  transition:background 0.3s,border-color 0.3s,opacity 0.3s;
+}
+.q-row.solved .q-card{background:var(--green-bg);border-color:var(--green-dim);}
+.q-row.locked .q-card{background:var(--surface-locked);border-color:var(--border-locked);opacity:0.6;}
+
+.q-top{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px;}
+.q-num{font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--green);line-height:1;width:22px;flex-shrink:0;padding-top:1px;transition:color 0.3s;}
 .q-row.locked .q-num{color:var(--grey);}
-.q-text{font-size:14px;line-height:1.5;color:var(--white);transition:color 0.3s;}
+.q-text{font-size:15px;font-weight:600;line-height:1.4;color:var(--white);transition:color 0.3s;flex:1;}
 .q-row.locked .q-text{color:var(--grey);}
-.q-input-wrap{width:155px;flex-shrink:0;position:relative;}
-.q-input{width:100%;height:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-left:none;border-radius:0 10px 10px 0;color:var(--white);font-family:'DM Sans',sans-serif;font-size:14px;padding:12px 14px;outline:none;min-height:52px;transition:background 0.2s,border-color 0.2s,color 0.2s;}
+
+.q-answer-row{display:flex;gap:8px;align-items:center;}
+.q-input{
+  flex:1;background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.1);border-radius:8px;
+  color:var(--white);font-family:'DM Sans',sans-serif;font-size:14px;
+  padding:10px 14px;outline:none;
+  transition:background 0.2s,border-color 0.2s,color 0.2s;
+}
 .q-input:focus:not(:disabled){border-color:var(--green);background:rgba(0,200,83,0.06);}
 .q-input::placeholder{color:var(--grey);font-size:13px;}
 .q-input:disabled{cursor:default;}
 .q-input:disabled::placeholder{color:transparent;}
 .q-input.shake{animation:shake 0.38s ease;border-color:var(--red)!important;background:rgba(229,57,53,0.08)!important;}
-.q-input.correct-anim{border-color:var(--green)!important;background:var(--green-bg)!important;color:var(--green)!important;font-weight:600;}
-@keyframes shake{0%,100%{transform:translateX(0);}20%{transform:translateX(-7px);}40%{transform:translateX(7px);}60%{transform:translateX(-4px);}80%{transform:translateX(4px);}}
-.q-tick{display:none;position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--green);font-size:16px;}
+.q-input.correct{border-color:var(--green)!important;background:var(--green-bg)!important;color:var(--green)!important;font-weight:600;}
+
+.q-tick{font-size:18px;color:var(--green);display:none;flex-shrink:0;}
 .q-row.solved .q-tick{display:block;}
-.q-row.solved .q-input{padding-right:32px;}
-.win-screen{display:none;text-align:center;padding:36px 20px 20px;}
-.win-screen.show{display:block;animation:fadeUp 0.4s ease;}
-@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
-.win-trophy{font-size:52px;margin-bottom:10px;}
-.win-title{font-family:'Bebas Neue',sans-serif;font-size:34px;letter-spacing:2px;color:var(--green);margin-bottom:6px;}
-.win-answer{font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--white);margin-bottom:8px;letter-spacing:1px;}
-.win-sub{color:var(--grey);font-size:13px;line-height:1.6;max-width:400px;margin:0 auto 24px;}
-.play-again-btn{background:transparent;border:1px solid var(--green-dim);color:var(--green);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;padding:11px 28px;border-radius:8px;cursor:pointer;transition:all 0.2s;}
+
+@keyframes shake{0%,100%{transform:translateX(0);}20%{transform:translateX(-7px);}40%{transform:translateX(7px);}60%{transform:translateX(-4px);}80%{transform:translateX(4px);}}
+
+/* WIN SCREEN */
+.win-screen{display:none;text-align:center;padding:40px 20px 20px;}
+.win-screen.show{display:block;animation:fadeUp 0.5s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+.win-score-big{font-family:'Bebas Neue',sans-serif;font-size:100px;line-height:1;color:var(--green);text-shadow:0 0 40px rgba(0,200,83,0.4);margin-bottom:4px;}
+.win-score-label{font-size:13px;color:var(--grey);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;}
+.win-verdict{font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:1px;margin-bottom:6px;}
+.win-sub{color:var(--grey);font-size:14px;margin-bottom:28px;}
+.play-again-btn{background:transparent;border:1px solid var(--green-dim);color:var(--green);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;padding:12px 32px;border-radius:8px;cursor:pointer;transition:all 0.2s;}
 .play-again-btn:hover{background:var(--green);color:#000;}
+
+/* REVIEW */
+.review{margin-top:24px;text-align:left;}
+.review-title{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--green);margin-bottom:12px;}
+.review-item{display:flex;gap:10px;align-items:flex-start;padding:10px 14px;border-radius:8px;margin-bottom:6px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.05);}
+.review-item.correct{background:rgba(0,200,83,0.07);border-color:rgba(0,200,83,0.2);}
+.review-num{font-family:'Bebas Neue',sans-serif;font-size:16px;color:var(--grey);width:18px;flex-shrink:0;}
+.review-item.correct .review-num{color:var(--green);}
+.review-body{flex:1;}
+.review-q{font-size:13px;font-weight:600;margin-bottom:3px;}
+.review-a{font-size:12px;color:var(--grey);}
+.review-item.correct .review-a{color:var(--green);}
+.review-icon{font-size:16px;flex-shrink:0;}
+
+/* NO QUIZ */
 .no-quiz{text-align:center;padding:60px 20px;background:var(--surface);border:1px solid var(--border);border-radius:14px;}
 .no-quiz-icon{font-size:40px;margin-bottom:12px;}
 .no-quiz h2{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:1px;margin-bottom:6px;}
 .no-quiz p{color:var(--grey);font-size:14px;line-height:1.7;}
+
+/* ADMIN */
 .admin-gate-wrap{max-width:380px;margin:60px auto;text-align:center;}
 .admin-gate-icon{font-size:40px;margin-bottom:14px;}
 .admin-gate-wrap h2{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:1px;margin-bottom:6px;}
@@ -89,17 +131,26 @@ h1 em{font-style:normal;color:var(--green);}
 .notice strong{color:var(--green);}
 .divider{height:1px;background:rgba(255,255,255,0.06);margin:16px 0;}
 .error-msg{color:var(--red);font-size:12px;margin-top:8px;}
+
+/* BUILDER */
 .q-builder-row{display:flex;gap:8px;align-items:flex-start;margin-bottom:10px;}
 .q-builder-num{font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--green);width:24px;flex-shrink:0;padding-top:10px;line-height:1;}
 .q-builder-fields{flex:1;display:flex;flex-direction:column;gap:6px;}
 .q-builder-input{width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:7px;color:var(--white);font-family:'DM Sans',sans-serif;font-size:13px;padding:9px 12px;outline:none;transition:border-color 0.2s;}
 .q-builder-input:focus{border-color:var(--green);}
-.q-builder-input.answers-input{border-color:rgba(0,200,83,0.2);font-size:12px;}
+.q-builder-input.answer-field{border-color:rgba(0,200,83,0.25);font-size:12px;}
 .q-builder-input::placeholder{color:rgba(107,140,114,0.7);}
 .q-remove-btn{background:none;border:none;color:var(--grey);cursor:pointer;font-size:20px;padding-top:10px;flex-shrink:0;line-height:1;transition:color 0.15s;}
 .q-remove-btn:hover{color:var(--red);}
 .add-q-btn{background:rgba(0,200,83,0.08);border:1px dashed var(--green-dim);color:var(--green);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;padding:10px;border-radius:8px;cursor:pointer;width:100%;transition:all 0.15s;margin-top:4px;}
 .add-q-btn:hover{background:rgba(0,200,83,0.14);}
+
+/* QUIZ TITLE INPUT */
+.quiz-title-input{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--white);font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:1px;padding:10px 14px;outline:none;margin-bottom:20px;transition:border-color 0.2s;}
+.quiz-title-input:focus{border-color:var(--green);}
+.quiz-title-input::placeholder{color:var(--grey);font-size:18px;}
+
+/* SHARE BOX */
 .share-box{background:rgba(0,200,83,0.07);border:1px solid var(--green-dim);border-radius:10px;padding:16px;margin-top:16px;display:none;}
 .share-box.show{display:block;animation:fadeUp 0.3s ease;}
 .share-box-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--green);margin-bottom:10px;}
@@ -109,11 +160,16 @@ h1 em{font-style:normal;color:var(--green);}
 .copy-btn:hover{background:#00e676;}
 .copy-btn.copied{background:var(--green-dim);color:var(--white);}
 .share-hint{font-size:12px;color:var(--grey);margin-top:8px;line-height:1.5;}
-@media(max-width:480px){.q-input-wrap{width:115px;}.q-input{font-size:13px;padding:10px;}}
+
+/* CONFETTI CANVAS */
+#confetti-canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:999;display:none;}
+
+@media(max-width:480px){.q-text{font-size:14px;}.q-input{font-size:13px;}}
 </style>
 </head>
 <body>
-<div class="pitch-lines"></div>
+<div class="pitch"></div>
+<canvas id="confetti-canvas"></canvas>
 <div class="page">
 
   <div class="top-nav">
@@ -126,16 +182,15 @@ h1 em{font-style:normal;color:var(--green);}
   <!-- PLAY -->
   <div id="play-view">
     <div class="header">
-      <div class="eyebrow">⚽ Weekly Football Puzzle</div>
+      <div class="eyebrow">⚽ Weekly Football Quiz</div>
       <h1>Papa <em>New</em><br>Quizzes</h1>
-      <p class="subtitle">Answer each clue correctly to unlock the next one</p>
+      <p class="subtitle" id="play-subtitle">Answer all questions to complete this week's quiz</p>
     </div>
     <div id="play-content"></div>
   </div>
 
   <!-- ADMIN -->
   <div id="admin-view" style="display:none">
-
     <div id="admin-gate">
       <div class="admin-gate-wrap">
         <div class="admin-gate-icon">🔒</div>
@@ -151,32 +206,25 @@ h1 em{font-style:normal;color:var(--green);}
 
     <div id="admin-panel" style="display:none">
       <div class="admin-header">
-        <div>
-          <h2>Gaffer's Panel</h2>
-          <p>Build the quiz then copy the link</p>
-        </div>
+        <div><h2>Gaffer's Panel</h2><p>Build the quiz then copy the link</p></div>
         <button class="btn btn-ghost btn-sm" onclick="lockAdmin()">Lock 🔒</button>
       </div>
 
       <div class="admin-card">
-        <div class="admin-card-title">✏️ Build This Week's Quiz</div>
+        <div class="admin-card-title">✏️ This Week's Quiz</div>
         <div class="notice">
-          <strong>How it works:</strong> Fill in your clues and accepted answers,
-          click <strong>Generate Link</strong>, then paste the link into WhatsApp.
-          Everyone who opens it plays this week's quiz. No account needed!
+          <strong>How it works:</strong> Add your questions and accepted answers below.
+          Hit <strong>Generate Link</strong>, copy it, and paste into WhatsApp.
+          Answers are case-insensitive. Separate multiple accepted answers with a comma.
         </div>
 
-        <label class="field-label">Player name (shown on win screen)</label>
-        <input class="text-input" id="player-name-input" placeholder="e.g. Geovanni" style="margin-bottom:16px" />
-
-        <label class="field-label">Win screen description (optional)</label>
-        <input class="text-input" id="player-bio-input" placeholder="e.g. Brazilian who scored Hull City's first ever PL goal…" style="margin-bottom:20px" />
+        <label class="field-label">Quiz title (e.g. "GW32 · April Special")</label>
+        <input class="quiz-title-input" id="quiz-title-input" placeholder="Week 1 · Opening Day…" />
 
         <div id="q-builder-list"></div>
-        <button class="add-q-btn" onclick="addBuilderRow()">+ Add Clue</button>
+        <button class="add-q-btn" onclick="addBuilderRow()">+ Add Question</button>
 
         <div class="divider"></div>
-
         <div style="display:flex;gap:10px;flex-wrap:wrap">
           <button class="btn" style="flex:1" onclick="generateLink()">🔗 Generate Link</button>
           <button class="btn btn-ghost" style="flex:1" onclick="clearBuilder()">Clear All</button>
@@ -189,17 +237,18 @@ h1 em{font-style:normal;color:var(--green);}
             <div class="share-url-text" id="share-url-display"></div>
             <button class="copy-btn" id="copy-btn" onclick="copyLink()">Copy</button>
           </div>
-          <div class="share-hint">Paste this into WhatsApp. Generate a new link each week with fresh clues.</div>
+          <div class="share-hint">Paste into WhatsApp. Everyone who opens it plays this week's quiz.</div>
         </div>
       </div>
     </div>
-
   </div>
+
 </div>
 
 <script>
-const ADMIN_PASSWORD = 'gaffer';
+var ADMIN_PASSWORD = 'gaffer';
 
+// ── Encode / Decode ─────────────────────────────────────────
 function encodeQuiz(q) {
   try { return btoa(unescape(encodeURIComponent(JSON.stringify(q)))); } catch(e) { return null; }
 }
@@ -207,13 +256,14 @@ function decodeQuiz(s) {
   try { return JSON.parse(decodeURIComponent(escape(atob(s)))); } catch(e) { return null; }
 }
 function getQuizFromURL() {
-  const p = new URLSearchParams(window.location.search);
+  var p = new URLSearchParams(window.location.search);
   if (p.has('q')) return decodeQuiz(p.get('q'));
-  const h = window.location.hash.slice(1);
+  var h = window.location.hash.slice(1);
   if (h) return decodeQuiz(h);
   return null;
 }
 
+// ── Nav ─────────────────────────────────────────────────────
 function switchView(v) {
   document.getElementById('play-view').style.display  = v==='play'  ? 'block' : 'none';
   document.getElementById('admin-view').style.display = v==='admin' ? 'block' : 'none';
@@ -223,59 +273,87 @@ function switchView(v) {
   if (v==='admin') renderAdminGate();
 }
 
-// PLAY
+// ── Play ────────────────────────────────────────────────────
 var solvedArr = [];
+var currentQuiz = null;
+
 function renderPlay() {
   var el = document.getElementById('play-content');
   var quiz = getQuizFromURL();
+  currentQuiz = quiz;
+
   if (!quiz || !quiz.questions || !quiz.questions.length) {
-    el.innerHTML = '<div class="no-quiz"><div class="no-quiz-icon">⏳</div><h2>No Quiz Here Yet</h2><p>You need a weekly quiz link from the gaffer.<br><br><strong style="color:var(--white)">Are you the gaffer?</strong><br>Click Admin above, build the quiz, generate a link and share it.</p></div>';
+    el.innerHTML = '<div class="no-quiz"><div class="no-quiz-icon">⏳</div><h2>No Quiz Yet</h2><p>You need this week\'s quiz link from the gaffer.<br><br><strong style="color:var(--white)">Are you the gaffer?</strong><br>Click Admin, build the quiz and generate a link.</p></div>';
     return;
   }
+
+  if (quiz.title) {
+    document.getElementById('play-subtitle').textContent = quiz.title;
+  }
+
   solvedArr = new Array(quiz.questions.length).fill(false);
-  el.innerHTML = '<div class="score-bar"><div class="score-label">Score</div><div class="progress-track"><div class="progress-fill" id="pf" style="width:0%"></div></div><div class="score-num"><span id="sn">0</span>/'+quiz.questions.length+'</div></div><div class="questions" id="qc"></div><div class="win-screen" id="ws"><div class="win-trophy">🏆</div><div class="win-title">Got it!</div><div class="win-answer">'+esc(quiz.playerName||'')+'</div><div class="win-sub">'+esc(quiz.playerBio||'')+'</div><button class="play-again-btn" onclick="renderPlay()">Play Again</button></div>';
+
+  var html = '<div class="score-bar"><div class="score-label">Score</div><div class="progress-track"><div class="progress-fill" id="pf" style="width:0%"></div></div><div class="score-num"><span id="sn">0</span>/'+quiz.questions.length+'</div></div><div class="questions" id="qc"></div><div class="win-screen" id="ws"></div>';
+  el.innerHTML = html;
+
   var qc = document.getElementById('qc');
-  quiz.questions.forEach(function(q, i) {
-    var row = document.createElement('div');
-    row.className = 'q-row' + (i > 0 ? ' locked' : '');
-    row.id = 'row'+i;
-    row.innerHTML = '<div class="q-inner"><div class="q-clue"><div class="q-num">'+(i+1)+'</div><div class="q-text">'+esc(q.clue)+'</div></div><div class="q-input-wrap"><input class="q-input" id="inp'+i+'" type="text" placeholder="Answer…" autocomplete="off"'+(i>0?' disabled':'')+'><span class="q-tick">✓</span></div></div>';
-    qc.appendChild(row);
-    var inp = document.getElementById('inp'+i);
-    inp.addEventListener('keydown', function(e){ if(e.key==='Enter') checkAnswer(i, quiz); });
-    inp.addEventListener('blur',    function(){   checkAnswer(i, quiz); });
-  });
+  for (var i = 0; i < quiz.questions.length; i++) {
+    (function(idx) {
+      var q = quiz.questions[idx];
+      var row = document.createElement('div');
+      row.className = 'q-row' + (idx > 0 ? ' locked' : '');
+      row.id = 'row'+idx;
+      row.innerHTML =
+        '<div class="q-card">' +
+          '<div class="q-top">' +
+            '<div class="q-num">'+(idx+1)+'</div>' +
+            '<div class="q-text">'+esc(q.question)+'</div>' +
+          '</div>' +
+          '<div class="q-answer-row">' +
+            '<input class="q-input" id="inp'+idx+'" type="text" placeholder="Your answer…" autocomplete="off"'+(idx>0?' disabled':'')+' />' +
+            '<span class="q-tick">✓</span>' +
+          '</div>' +
+        '</div>';
+      qc.appendChild(row);
+
+      var inp = document.getElementById('inp'+idx);
+      inp.addEventListener('keydown', function(e){ if(e.key==='Enter') checkAnswer(idx); });
+      inp.addEventListener('blur',    function(){ checkAnswer(idx); });
+    })(i);
+  }
 }
 
-function checkAnswer(i, quiz) {
-  if (solvedArr[i]) return;
+function checkAnswer(i) {
+  var quiz = currentQuiz;
+  if (!quiz || solvedArr[i]) return;
   var inp = document.getElementById('inp'+i);
   if (!inp) return;
   var val = inp.value.trim().toLowerCase();
   if (!val) return;
+
   var accepted = quiz.questions[i].answers.map(function(a){ return a.trim().toLowerCase(); }).filter(Boolean);
-  var correct = accepted.some(function(a){ return val===a || val.indexOf(a)>=0 || a.indexOf(val)>=0; });
+  var correct  = accepted.some(function(a){ return val===a || val.indexOf(a)>=0 || a.indexOf(val)>=0; });
+
   if (correct) {
     solvedArr[i] = true;
-    if (i===quiz.questions.length-1 && quiz.playerName) inp.value = quiz.playerName;
-    inp.classList.add('correct-anim');
+    inp.value = quiz.questions[i].answers[0]; // show canonical answer
+    inp.classList.add('correct');
     inp.disabled = true;
     document.getElementById('row'+i).classList.remove('locked');
     document.getElementById('row'+i).classList.add('solved');
+
     var count = solvedArr.filter(Boolean).length;
     document.getElementById('sn').textContent = count;
     document.getElementById('pf').style.width = (count/quiz.questions.length*100)+'%';
+
     if (i+1 < quiz.questions.length) {
-      var next = document.getElementById('inp'+(i+1));
+      var nextInp = document.getElementById('inp'+(i+1));
       document.getElementById('row'+(i+1)).classList.remove('locked');
-      next.disabled = false;
-      setTimeout(function(){ next.focus(); next.scrollIntoView({behavior:'smooth',block:'nearest'}); }, 150);
+      nextInp.disabled = false;
+      setTimeout(function(){ nextInp.focus(); nextInp.scrollIntoView({behavior:'smooth',block:'nearest'}); }, 150);
     } else {
-      setTimeout(function(){
-        var ws = document.getElementById('ws');
-        ws.classList.add('show');
-        ws.scrollIntoView({behavior:'smooth',block:'center'});
-      }, 500);
+      // All done!
+      setTimeout(function(){ showWinScreen(quiz, count); }, 400);
     }
   } else {
     inp.classList.remove('shake');
@@ -287,13 +365,111 @@ function checkAnswer(i, quiz) {
   }
 }
 
-// ADMIN AUTH
+function showWinScreen(quiz, score) {
+  var total   = quiz.questions.length;
+  var pct     = Math.round(score/total*100);
+  var verdict, emoji;
+  if (pct===100)     { verdict='WORLD CLASS';        emoji='🌟'; }
+  else if (pct>=80)  { verdict='CRACKING DISPLAY';   emoji='🔥'; }
+  else if (pct>=60)  { verdict='SOLID PERFORMANCE';  emoji='👍'; }
+  else if (pct>=40)  { verdict='NEEDS WORK';         emoji='😅'; }
+  else               { verdict='BACK TO TRAINING';   emoji='😬'; }
+
+  // Build review
+  var reviewHTML = '<div class="review"><div class="review-title">📋 Your Answers</div>';
+  for (var i=0; i<quiz.questions.length; i++) {
+    var solved = solvedArr[i];
+    reviewHTML += '<div class="review-item'+(solved?' correct':'')+'">'+
+      '<div class="review-num">'+(i+1)+'</div>'+
+      '<div class="review-body">'+
+        '<div class="review-q">'+esc(quiz.questions[i].question)+'</div>'+
+        '<div class="review-a">'+(solved ? '✓ '+esc(quiz.questions[i].answers[0]) : '✗ '+esc(quiz.questions[i].answers[0]))+'</div>'+
+      '</div>'+
+      '<div class="review-icon">'+(solved?'✅':'❌')+'</div>'+
+    '</div>';
+  }
+  reviewHTML += '</div>';
+
+  var ws = document.getElementById('ws');
+  ws.innerHTML =
+    '<div class="win-score-label">Final Score</div>'+
+    '<div class="win-score-big">'+score+'/'+total+'</div>'+
+    '<div class="win-verdict">'+emoji+' '+verdict+'</div>'+
+    '<div class="win-sub">'+pct+'% correct</div>'+
+    '<button class="play-again-btn" onclick="renderPlay()">Play Again</button>'+
+    reviewHTML;
+  ws.classList.add('show');
+  ws.scrollIntoView({behavior:'smooth',block:'start'});
+
+  if (pct >= 60) launchConfetti();
+}
+
+// ── Confetti ────────────────────────────────────────────────
+function launchConfetti() {
+  var canvas  = document.getElementById('confetti-canvas');
+  var ctx     = canvas.getContext('2d');
+  canvas.style.display = 'block';
+  canvas.width  = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  var pieces = [];
+  var colors = ['#00c853','#ffd600','#00b0ff','#ff4081','#f5f5f0','#00e676'];
+
+  for (var i=0; i<120; i++) {
+    pieces.push({
+      x: Math.random()*canvas.width,
+      y: -10 - Math.random()*200,
+      w: 8+Math.random()*6,
+      h: 4+Math.random()*4,
+      r: Math.random()*Math.PI*2,
+      rd: (Math.random()-0.5)*0.2,
+      vx: (Math.random()-0.5)*3,
+      vy: 2+Math.random()*4,
+      color: colors[Math.floor(Math.random()*colors.length)],
+      alpha: 1
+    });
+  }
+
+  var frame = 0;
+  function draw() {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    var alive = false;
+    for (var i=0; i<pieces.length; i++) {
+      var p = pieces[i];
+      p.x  += p.vx;
+      p.y  += p.vy;
+      p.r  += p.rd;
+      if (frame > 80) p.alpha -= 0.012;
+      if (p.alpha <= 0) continue;
+      alive = true;
+      ctx.save();
+      ctx.globalAlpha = Math.max(0, p.alpha);
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.r);
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+      ctx.restore();
+    }
+    frame++;
+    if (alive && frame < 200) {
+      requestAnimationFrame(draw);
+    } else {
+      canvas.style.display = 'none';
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+    }
+  }
+  requestAnimationFrame(draw);
+}
+
+// ── Admin Auth ───────────────────────────────────────────────
 var adminUnlocked = false;
+
 function renderAdminGate() {
   document.getElementById('admin-gate').style.display  = adminUnlocked ? 'none'  : 'block';
   document.getElementById('admin-panel').style.display = adminUnlocked ? 'block' : 'none';
   if (adminUnlocked) renderBuilderList();
 }
+
 function unlockAdmin() {
   var val = document.getElementById('admin-pass-input').value;
   if (val === ADMIN_PASSWORD) {
@@ -306,56 +482,102 @@ function unlockAdmin() {
     document.getElementById('pass-error').style.display = 'block';
   }
 }
+
 function lockAdmin() { adminUnlocked = false; renderAdminGate(); }
+
 document.addEventListener('keydown', function(e){
   if (e.key==='Enter' && document.activeElement.id==='admin-pass-input') unlockAdmin();
 });
 
-// BUILDER
-var builderRows = [{clue:'',answers:''}];
+// ── Builder ──────────────────────────────────────────────────
+var builderRows = [
+  {question:'',answers:''},
+  {question:'',answers:''},
+  {question:'',answers:''},
+  {question:'',answers:''},
+  {question:'',answers:''},
+  {question:'',answers:''},
+  {question:'',answers:''},
+  {question:'',answers:''},
+  {question:'',answers:''},
+  {question:'',answers:''}
+];
+
 function renderBuilderList() {
   var list = document.getElementById('q-builder-list');
   if (!list) return;
   list.innerHTML = builderRows.map(function(r,i){
-    return '<div class="q-builder-row"><div class="q-builder-num">'+(i+1)+'</div><div class="q-builder-fields"><input class="q-builder-input" placeholder="Clue… e.g. I am Brazilian." value="'+esc(r.clue)+'" oninput="builderRows['+i+'].clue=this.value"><input class="q-builder-input answers-input" placeholder="Accepted answers, comma-separated… e.g. brazil, brazilian" value="'+esc(r.answers)+'" oninput="builderRows['+i+'].answers=this.value"></div>'+(builderRows.length>1?'<button class="q-remove-btn" onclick="removeBuilderRow('+i+')">&#215;</button>':'')+'</div>';
+    return '<div class="q-builder-row">'+
+      '<div class="q-builder-num">'+(i+1)+'</div>'+
+      '<div class="q-builder-fields">'+
+        '<input class="q-builder-input" placeholder="Question… e.g. Who scored England\'s first goal at Euro 96?" value="'+esc(r.question)+'" oninput="builderRows['+i+'].question=this.value" />'+
+        '<input class="q-builder-input answer-field" placeholder="Answer(s), comma-separated… e.g. shearer, alan shearer" value="'+esc(r.answers)+'" oninput="builderRows['+i+'].answers=this.value" />'+
+      '</div>'+
+      (builderRows.length>1 ? '<button class="q-remove-btn" onclick="removeBuilderRow('+i+')">&#215;</button>' : '')+
+    '</div>';
   }).join('');
 }
+
 function addBuilderRow() {
-  builderRows.push({clue:'',answers:''});
+  builderRows.push({question:'',answers:''});
   renderBuilderList();
   setTimeout(function(){
     var l = document.getElementById('q-builder-list');
-    if (l.lastElementChild) {
+    if (l && l.lastElementChild) {
       var inp = l.lastElementChild.querySelector('input');
       if (inp) { inp.focus(); inp.scrollIntoView({behavior:'smooth',block:'nearest'}); }
     }
   }, 50);
 }
+
 function removeBuilderRow(i) { builderRows.splice(i,1); renderBuilderList(); }
+
 function clearBuilder() {
-  builderRows = [{clue:'',answers:''}];
-  document.getElementById('player-name-input').value = '';
-  document.getElementById('player-bio-input').value  = '';
+  builderRows = [{question:'',answers:''},{question:'',answers:''},{question:'',answers:''},{question:'',answers:''},{question:'',answers:''},{question:'',answers:''},{question:'',answers:''},{question:'',answers:''},{question:'',answers:''},{question:'',answers:''}];
+  document.getElementById('quiz-title-input').value = '';
   document.getElementById('share-box').classList.remove('show');
   renderBuilderList();
 }
 
-// GENERATE LINK
+// ── Generate Link ────────────────────────────────────────────
 function generateLink() {
   var errEl = document.getElementById('link-error');
   errEl.style.display = 'none';
-  var playerName = document.getElementById('player-name-input').value.trim();
-  var playerBio  = document.getElementById('player-bio-input').value.trim();
-  var questions  = builderRows.filter(function(r){ return r.clue.trim(); }).map(function(r){
-    return { clue: r.clue.trim(), answers: r.answers.split(',').map(function(a){ return a.trim(); }).filter(Boolean) };
-  });
-  if (!playerName) { errEl.textContent='Please enter the player name.'; errEl.style.display='block'; document.getElementById('player-name-input').focus(); return; }
-  if (!questions.length) { errEl.textContent='Add at least one clue.'; errEl.style.display='block'; return; }
+
+  var title = document.getElementById('quiz-title-input').value.trim();
+
+  var questions = builderRows
+    .filter(function(r){ return r.question.trim(); })
+    .map(function(r){
+      return {
+        question: r.question.trim(),
+        answers:  r.answers.split(',').map(function(a){ return a.trim(); }).filter(Boolean)
+      };
+    });
+
+  if (!questions.length) {
+    errEl.textContent = 'Add at least one question.';
+    errEl.style.display = 'block';
+    return;
+  }
+
   var empty = -1;
-  for (var i=0; i<questions.length; i++) { if (!questions[i].answers.length) { empty=i; break; } }
-  if (empty>=0) { errEl.textContent='Clue '+(empty+1)+' has no accepted answers.'; errEl.style.display='block'; return; }
-  var encoded = encodeQuiz({playerName:playerName, playerBio:playerBio, questions:questions});
-  if (!encoded) { errEl.textContent='Failed to encode quiz.'; errEl.style.display='block'; return; }
+  for (var i=0; i<questions.length; i++) {
+    if (!questions[i].answers.length) { empty=i; break; }
+  }
+  if (empty >= 0) {
+    errEl.textContent = 'Question '+(empty+1)+' has no answer.';
+    errEl.style.display = 'block';
+    return;
+  }
+
+  var encoded = encodeQuiz({ title:title, questions:questions });
+  if (!encoded) {
+    errEl.textContent = 'Failed to generate link. Try shortening your questions.';
+    errEl.style.display = 'block';
+    return;
+  }
+
   var url = window.location.origin + window.location.pathname + '?q=' + encoded;
   document.getElementById('share-url-display').textContent = url;
   document.getElementById('share-box').classList.add('show');
@@ -367,18 +589,26 @@ function generateLink() {
 function copyLink() {
   var url = document.getElementById('share-url-display').textContent;
   var btn = document.getElementById('copy-btn');
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(url).then(function(){
-      btn.textContent = '✓ Copied!'; btn.classList.add('copied');
-      setTimeout(function(){ btn.textContent='Copy'; btn.classList.remove('copied'); }, 2500);
-    });
-  } else {
-    var ta = document.createElement('textarea');
-    ta.value = url; ta.style.position='fixed'; ta.style.opacity='0';
-    document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
-    btn.textContent = '✓ Copied!'; btn.classList.add('copied');
+  function onCopied() {
+    btn.textContent = '✓ Copied!';
+    btn.classList.add('copied');
     setTimeout(function(){ btn.textContent='Copy'; btn.classList.remove('copied'); }, 2500);
   }
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(url).then(onCopied).catch(function(){
+      fallbackCopy(url, onCopied);
+    });
+  } else {
+    fallbackCopy(url, onCopied);
+  }
+}
+
+function fallbackCopy(text, cb) {
+  var ta = document.createElement('textarea');
+  ta.value = text; ta.style.position='fixed'; ta.style.opacity='0';
+  document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+  document.body.removeChild(ta);
+  if (cb) cb();
 }
 
 function esc(s) {
@@ -386,6 +616,7 @@ function esc(s) {
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
+// ── Init ─────────────────────────────────────────────────────
 switchView('play');
 </script>
 </body>
