@@ -10,7 +10,7 @@
   --bg:#0d1b0f;--surface:#142918;--surface-locked:#0f1f12;
   --green:#00c853;--green-dim:#007a33;--green-bg:rgba(0,200,83,0.10);
   --white:#f0f4f0;--grey:#6b8c72;--red:#e53935;
-  --border:rgba(0,200,83,0.18);--border-locked:rgba(255,255,255,0.05);
+  --border:rgba(0,200,83,0.18);
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;min-height:100vh;padding:32px 16px 60px;}
@@ -38,25 +38,19 @@ h1 em{font-style:normal;color:var(--green);}
 .progress-track{flex:1;margin:0 16px;height:4px;background:rgba(255,255,255,0.07);border-radius:2px;overflow:hidden;}
 .progress-fill{height:100%;background:var(--green);border-radius:2px;transition:width 0.5s ease;}
 
-/* QUESTION ROWS */
+/* QUESTIONS */
 .questions{display:flex;flex-direction:column;gap:10px;}
-
-.q-row{border-radius:12px;overflow:hidden;transition:box-shadow 0.3s;}
-.q-row.solved{box-shadow:0 0 0 1px var(--green-dim);}
 
 .q-card{
   background:var(--surface);border:1px solid var(--border);
   border-radius:12px;padding:16px 18px;
-  transition:background 0.3s,border-color 0.3s,opacity 0.3s;
+  transition:background 0.3s,border-color 0.3s;
 }
-.q-row.solved .q-card{background:var(--green-bg);border-color:var(--green-dim);}
-.q-row.locked .q-card{background:var(--surface-locked);border-color:var(--border-locked);opacity:0.6;}
+.q-card.solved{background:var(--green-bg);border-color:var(--green-dim);box-shadow:0 0 0 1px var(--green-dim);}
 
 .q-top{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px;}
-.q-num{font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--green);line-height:1;width:22px;flex-shrink:0;padding-top:1px;transition:color 0.3s;}
-.q-row.locked .q-num{color:var(--grey);}
-.q-text{font-size:15px;font-weight:600;line-height:1.4;color:var(--white);transition:color 0.3s;flex:1;}
-.q-row.locked .q-text{color:var(--grey);}
+.q-num{font-family:'Bebas Neue',sans-serif;font-size:18px;color:var(--green);line-height:1;width:22px;flex-shrink:0;padding-top:2px;}
+.q-text{font-size:15px;font-weight:600;line-height:1.4;color:var(--white);flex:1;}
 
 .q-answer-row{display:flex;gap:8px;align-items:center;}
 .q-input{
@@ -72,22 +66,44 @@ h1 em{font-style:normal;color:var(--green);}
 .q-input:disabled::placeholder{color:transparent;}
 .q-input.shake{animation:shake 0.38s ease;border-color:var(--red)!important;background:rgba(229,57,53,0.08)!important;}
 .q-input.correct{border-color:var(--green)!important;background:var(--green-bg)!important;color:var(--green)!important;font-weight:600;}
-
 .q-tick{font-size:18px;color:var(--green);display:none;flex-shrink:0;}
-.q-row.solved .q-tick{display:block;}
+.q-card.solved .q-tick{display:block;}
 
 @keyframes shake{0%,100%{transform:translateX(0);}20%{transform:translateX(-7px);}40%{transform:translateX(7px);}60%{transform:translateX(-4px);}80%{transform:translateX(4px);}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+@keyframes pop{0%{transform:scale(0.8);}60%{transform:scale(1.08);}100%{transform:scale(1);}}
 
-/* WIN SCREEN */
+/* WIN */
 .win-screen{display:none;text-align:center;padding:40px 20px 20px;}
 .win-screen.show{display:block;animation:fadeUp 0.5s ease;}
-@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
-.win-score-big{font-family:'Bebas Neue',sans-serif;font-size:100px;line-height:1;color:var(--green);text-shadow:0 0 40px rgba(0,200,83,0.4);margin-bottom:4px;}
+.win-score-big{font-family:'Bebas Neue',sans-serif;font-size:100px;line-height:1;color:var(--green);text-shadow:0 0 40px rgba(0,200,83,0.4);margin-bottom:4px;animation:pop 0.5s ease 0.2s both;}
 .win-score-label{font-size:13px;color:var(--grey);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;}
 .win-verdict{font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:1px;margin-bottom:6px;}
-.win-sub{color:var(--grey);font-size:14px;margin-bottom:28px;}
-.play-again-btn{background:transparent;border:1px solid var(--green-dim);color:var(--green);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;padding:12px 32px;border-radius:8px;cursor:pointer;transition:all 0.2s;}
+.win-sub{color:var(--grey);font-size:14px;margin-bottom:24px;}
+
+.win-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:28px;}
+.share-btn{background:var(--green);color:#000;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;border:none;border-radius:8px;padding:12px 24px;cursor:pointer;transition:all 0.15s;}
+.share-btn:hover{background:#00e676;transform:translateY(-1px);}
+.play-again-btn{background:transparent;border:1px solid var(--green-dim);color:var(--green);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;padding:12px 24px;border-radius:8px;cursor:pointer;transition:all 0.2s;}
 .play-again-btn:hover{background:var(--green);color:#000;}
+
+/* RESULTS CARD (for screenshot) */
+.results-card{
+  background:#0d1b0f;border:2px solid var(--green-dim);border-radius:16px;
+  padding:24px;max-width:400px;margin:0 auto 24px;
+  display:none;
+}
+.results-card.visible{display:block;}
+.rc-header{text-align:center;margin-bottom:16px;}
+.rc-title{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--green);letter-spacing:1px;}
+.rc-week{font-size:12px;color:var(--grey);margin-top:2px;}
+.rc-score{font-family:'Bebas Neue',sans-serif;font-size:64px;color:var(--green);line-height:1;margin:8px 0 4px;}
+.rc-verdict{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:1px;margin-bottom:16px;}
+.rc-grid{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:16px;}
+.rc-dot{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;font-family:'Bebas Neue',sans-serif;}
+.rc-dot.ok{background:var(--green);color:#000;}
+.rc-dot.no{background:rgba(255,255,255,0.1);color:var(--grey);}
+.rc-footer{font-size:11px;color:var(--grey);text-align:center;letter-spacing:1px;text-transform:uppercase;}
 
 /* REVIEW */
 .review{margin-top:24px;text-align:left;}
@@ -100,7 +116,6 @@ h1 em{font-style:normal;color:var(--green);}
 .review-q{font-size:13px;font-weight:600;margin-bottom:3px;}
 .review-a{font-size:12px;color:var(--grey);}
 .review-item.correct .review-a{color:var(--green);}
-.review-icon{font-size:16px;flex-shrink:0;}
 
 /* NO QUIZ */
 .no-quiz{text-align:center;padding:60px 20px;background:var(--surface);border:1px solid var(--border);border-radius:14px;}
@@ -131,8 +146,6 @@ h1 em{font-style:normal;color:var(--green);}
 .notice strong{color:var(--green);}
 .divider{height:1px;background:rgba(255,255,255,0.06);margin:16px 0;}
 .error-msg{color:var(--red);font-size:12px;margin-top:8px;}
-
-/* BUILDER */
 .q-builder-row{display:flex;gap:8px;align-items:flex-start;margin-bottom:10px;}
 .q-builder-num{font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--green);width:24px;flex-shrink:0;padding-top:10px;line-height:1;}
 .q-builder-fields{flex:1;display:flex;flex-direction:column;gap:6px;}
@@ -144,13 +157,9 @@ h1 em{font-style:normal;color:var(--green);}
 .q-remove-btn:hover{color:var(--red);}
 .add-q-btn{background:rgba(0,200,83,0.08);border:1px dashed var(--green-dim);color:var(--green);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;padding:10px;border-radius:8px;cursor:pointer;width:100%;transition:all 0.15s;margin-top:4px;}
 .add-q-btn:hover{background:rgba(0,200,83,0.14);}
-
-/* QUIZ TITLE INPUT */
 .quiz-title-input{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--white);font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:1px;padding:10px 14px;outline:none;margin-bottom:20px;transition:border-color 0.2s;}
 .quiz-title-input:focus{border-color:var(--green);}
 .quiz-title-input::placeholder{color:var(--grey);font-size:18px;}
-
-/* SHARE BOX */
 .share-box{background:rgba(0,200,83,0.07);border:1px solid var(--green-dim);border-radius:10px;padding:16px;margin-top:16px;display:none;}
 .share-box.show{display:block;animation:fadeUp 0.3s ease;}
 .share-box-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--green);margin-bottom:10px;}
@@ -161,7 +170,7 @@ h1 em{font-style:normal;color:var(--green);}
 .copy-btn.copied{background:var(--green-dim);color:var(--white);}
 .share-hint{font-size:12px;color:var(--grey);margin-top:8px;line-height:1.5;}
 
-/* CONFETTI CANVAS */
+/* CONFETTI */
 #confetti-canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:999;display:none;}
 
 @media(max-width:480px){.q-text{font-size:14px;}.q-input{font-size:13px;}}
@@ -184,7 +193,7 @@ h1 em{font-style:normal;color:var(--green);}
     <div class="header">
       <div class="eyebrow">⚽ Weekly Football Quiz</div>
       <h1>Papa <em>New</em><br>Quizzes</h1>
-      <p class="subtitle" id="play-subtitle">Answer all questions to complete this week's quiz</p>
+      <p class="subtitle" id="play-subtitle">Answer all 10 questions to complete this week's quiz</p>
     </div>
     <div id="play-content"></div>
   </div>
@@ -213,24 +222,20 @@ h1 em{font-style:normal;color:var(--green);}
       <div class="admin-card">
         <div class="admin-card-title">✏️ This Week's Quiz</div>
         <div class="notice">
-          <strong>How it works:</strong> Add your questions and accepted answers below.
-          Hit <strong>Generate Link</strong>, copy it, and paste into WhatsApp.
-          Answers are case-insensitive. Separate multiple accepted answers with a comma.
+          <strong>How it works:</strong> Add your questions and accepted answers.
+          Hit <strong>Generate Link</strong>, copy it and paste into WhatsApp.
+          Separate multiple accepted answers with a comma — answers are case-insensitive.
         </div>
-
-        <label class="field-label">Quiz title (e.g. "GW32 · April Special")</label>
+        <label class="field-label">Quiz title / week label</label>
         <input class="quiz-title-input" id="quiz-title-input" placeholder="Week 1 · Opening Day…" />
-
         <div id="q-builder-list"></div>
         <button class="add-q-btn" onclick="addBuilderRow()">+ Add Question</button>
-
         <div class="divider"></div>
         <div style="display:flex;gap:10px;flex-wrap:wrap">
           <button class="btn" style="flex:1" onclick="generateLink()">🔗 Generate Link</button>
           <button class="btn btn-ghost" style="flex:1" onclick="clearBuilder()">Clear All</button>
         </div>
         <div class="error-msg" id="link-error" style="display:none"></div>
-
         <div class="share-box" id="share-box">
           <div class="share-box-label">✅ Your quiz link is ready</div>
           <div class="share-url-row">
@@ -247,6 +252,20 @@ h1 em{font-style:normal;color:var(--green);}
 
 <script>
 var ADMIN_PASSWORD = 'gaffer';
+
+// Default first round questions from the image
+var DEFAULT_QUESTIONS = [
+  { question: "Patrick van Aanholt started his career at what club?", answers: ["chelsea"] },
+  { question: "Jobsite was the front of shirt sponsor for what club in the 2009/10 Premier League season?", answers: ["portsmouth"] },
+  { question: "Jesse Lingard currently plays football in what country?", answers: ["brazil"] },
+  { question: "When leaving Manchester United, what club did Morgan Schneiderlin join?", answers: ["everton"] },
+  { question: "Who is the only South African player to win the Premier League?", answers: ["quinton fortune", "fortune"] },
+  { question: "Who was the only player in the England squad who was playing for Real Madrid in the 1998 World Cup?", answers: ["steve mcmanaman", "mcmanaman"] },
+  { question: "What was the last Premier League club Danny Mills played for?", answers: ["derby county", "derby"] },
+  { question: "I played for West Ham, Chelsea, Liverpool, Lille (Loan), West Ham, Aston Villa, Coventry and Norwich. Who am I?", answers: ["joe cole", "cole"] },
+  { question: "What English defender left Chelsea in 2007?", answers: ["glen johnson", "johnson"] },
+  { question: "After leaving Wales in 2017, what club did Chris Coleman join?", answers: ["sunderland"] }
+];
 
 // ── Encode / Decode ─────────────────────────────────────────
 function encodeQuiz(q) {
@@ -280,12 +299,13 @@ var currentQuiz = null;
 function renderPlay() {
   var el = document.getElementById('play-content');
   var quiz = getQuizFromURL();
-  currentQuiz = quiz;
 
+  // Fall back to default questions if no URL quiz
   if (!quiz || !quiz.questions || !quiz.questions.length) {
-    el.innerHTML = '<div class="no-quiz"><div class="no-quiz-icon">⏳</div><h2>No Quiz Yet</h2><p>You need this week\'s quiz link from the gaffer.<br><br><strong style="color:var(--white)">Are you the gaffer?</strong><br>Click Admin, build the quiz and generate a link.</p></div>';
-    return;
+    quiz = { title: 'Week 1 · Opening Round', questions: DEFAULT_QUESTIONS };
   }
+
+  currentQuiz = quiz;
 
   if (quiz.title) {
     document.getElementById('play-subtitle').textContent = quiz.title;
@@ -293,28 +313,33 @@ function renderPlay() {
 
   solvedArr = new Array(quiz.questions.length).fill(false);
 
-  var html = '<div class="score-bar"><div class="score-label">Score</div><div class="progress-track"><div class="progress-fill" id="pf" style="width:0%"></div></div><div class="score-num"><span id="sn">0</span>/'+quiz.questions.length+'</div></div><div class="questions" id="qc"></div><div class="win-screen" id="ws"></div>';
+  var html =
+    '<div class="score-bar">' +
+      '<div class="score-label">Score</div>' +
+      '<div class="progress-track"><div class="progress-fill" id="pf" style="width:0%"></div></div>' +
+      '<div class="score-num"><span id="sn">0</span>/'+quiz.questions.length+'</div>' +
+    '</div>' +
+    '<div class="questions" id="qc"></div>' +
+    '<div class="win-screen" id="ws"></div>';
   el.innerHTML = html;
 
   var qc = document.getElementById('qc');
   for (var i = 0; i < quiz.questions.length; i++) {
     (function(idx) {
       var q = quiz.questions[idx];
-      var row = document.createElement('div');
-      row.className = 'q-row' + (idx > 0 ? ' locked' : '');
-      row.id = 'row'+idx;
-      row.innerHTML =
-        '<div class="q-card">' +
-          '<div class="q-top">' +
-            '<div class="q-num">'+(idx+1)+'</div>' +
-            '<div class="q-text">'+esc(q.question)+'</div>' +
-          '</div>' +
-          '<div class="q-answer-row">' +
-            '<input class="q-input" id="inp'+idx+'" type="text" placeholder="Your answer…" autocomplete="off"'+(idx>0?' disabled':'')+' />' +
-            '<span class="q-tick">✓</span>' +
-          '</div>' +
+      var card = document.createElement('div');
+      card.className = 'q-card';
+      card.id = 'card'+idx;
+      card.innerHTML =
+        '<div class="q-top">' +
+          '<div class="q-num">'+(idx+1)+'</div>' +
+          '<div class="q-text">'+esc(q.question)+'</div>' +
+        '</div>' +
+        '<div class="q-answer-row">' +
+          '<input class="q-input" id="inp'+idx+'" type="text" placeholder="Your answer…" autocomplete="off" />' +
+          '<span class="q-tick">✓</span>' +
         '</div>';
-      qc.appendChild(row);
+      qc.appendChild(card);
 
       var inp = document.getElementById('inp'+idx);
       inp.addEventListener('keydown', function(e){ if(e.key==='Enter') checkAnswer(idx); });
@@ -336,23 +361,16 @@ function checkAnswer(i) {
 
   if (correct) {
     solvedArr[i] = true;
-    inp.value = quiz.questions[i].answers[0]; // show canonical answer
+    inp.value = quiz.questions[i].answers[0].replace(/\b\w/g, function(c){ return c.toUpperCase(); });
     inp.classList.add('correct');
     inp.disabled = true;
-    document.getElementById('row'+i).classList.remove('locked');
-    document.getElementById('row'+i).classList.add('solved');
+    document.getElementById('card'+i).classList.add('solved');
 
     var count = solvedArr.filter(Boolean).length;
     document.getElementById('sn').textContent = count;
     document.getElementById('pf').style.width = (count/quiz.questions.length*100)+'%';
 
-    if (i+1 < quiz.questions.length) {
-      var nextInp = document.getElementById('inp'+(i+1));
-      document.getElementById('row'+(i+1)).classList.remove('locked');
-      nextInp.disabled = false;
-      setTimeout(function(){ nextInp.focus(); nextInp.scrollIntoView({behavior:'smooth',block:'nearest'}); }, 150);
-    } else {
-      // All done!
+    if (count === quiz.questions.length) {
       setTimeout(function(){ showWinScreen(quiz, count); }, 400);
     }
   } else {
@@ -366,97 +384,111 @@ function checkAnswer(i) {
 }
 
 function showWinScreen(quiz, score) {
-  var total   = quiz.questions.length;
-  var pct     = Math.round(score/total*100);
+  var total  = quiz.questions.length;
+  var pct    = Math.round(score/total*100);
   var verdict, emoji;
-  if (pct===100)     { verdict='WORLD CLASS';        emoji='🌟'; }
-  else if (pct>=80)  { verdict='CRACKING DISPLAY';   emoji='🔥'; }
-  else if (pct>=60)  { verdict='SOLID PERFORMANCE';  emoji='👍'; }
-  else if (pct>=40)  { verdict='NEEDS WORK';         emoji='😅'; }
-  else               { verdict='BACK TO TRAINING';   emoji='😬'; }
+  if (pct===100)    { verdict='WORLD CLASS';       emoji='🌟'; }
+  else if (pct>=80) { verdict='CRACKING DISPLAY';  emoji='🔥'; }
+  else if (pct>=60) { verdict='SOLID PERFORMANCE'; emoji='👍'; }
+  else if (pct>=40) { verdict='NEEDS WORK';        emoji='😅'; }
+  else              { verdict='BACK TO TRAINING';  emoji='😬'; }
 
-  // Build review
-  var reviewHTML = '<div class="review"><div class="review-title">📋 Your Answers</div>';
-  for (var i=0; i<quiz.questions.length; i++) {
-    var solved = solvedArr[i];
-    reviewHTML += '<div class="review-item'+(solved?' correct':'')+'">'+
-      '<div class="review-num">'+(i+1)+'</div>'+
-      '<div class="review-body">'+
-        '<div class="review-q">'+esc(quiz.questions[i].question)+'</div>'+
-        '<div class="review-a">'+(solved ? '✓ '+esc(quiz.questions[i].answers[0]) : '✗ '+esc(quiz.questions[i].answers[0]))+'</div>'+
-      '</div>'+
-      '<div class="review-icon">'+(solved?'✅':'❌')+'</div>'+
-    '</div>';
+  // Dot grid for results card
+  var dots = '';
+  for (var i=0; i<total; i++) {
+    dots += '<div class="rc-dot '+(solvedArr[i]?'ok':'no')+'">'+(i+1)+'</div>';
   }
-  reviewHTML += '</div>';
 
   var ws = document.getElementById('ws');
   ws.innerHTML =
-    '<div class="win-score-label">Final Score</div>'+
-    '<div class="win-score-big">'+score+'/'+total+'</div>'+
-    '<div class="win-verdict">'+emoji+' '+verdict+'</div>'+
-    '<div class="win-sub">'+pct+'% correct</div>'+
-    '<button class="play-again-btn" onclick="renderPlay()">Play Again</button>'+
-    reviewHTML;
+    '<div class="win-score-label">Final Score</div>' +
+    '<div class="win-score-big">'+score+'/'+total+'</div>' +
+    '<div class="win-verdict">'+emoji+' '+verdict+'</div>' +
+    '<div class="win-sub">'+pct+'% correct · '+quiz.title+'</div>' +
+
+    '<div class="win-actions">' +
+      '<button class="share-btn" onclick="downloadResultsCard()">📸 Show Results Card</button>' +
+      '<button class="play-again-btn" onclick="renderPlay()">Play Again</button>' +
+    '</div>' +
+
+    // Hidden results card for screenshot
+    '<div class="results-card" id="results-card">' +
+      '<div class="rc-header">' +
+        '<div class="rc-title">Papa New Quizzes</div>' +
+        '<div class="rc-week">'+esc(quiz.title||'')+'</div>' +
+      '</div>' +
+      '<div class="rc-score">'+score+'/'+total+'</div>' +
+      '<div class="rc-verdict">'+emoji+' '+verdict+'</div>' +
+      '<div class="rc-grid">'+dots+'</div>' +
+      '<div class="rc-footer">📱 Screenshot &amp; share · Papa New Quizzes</div>' +
+    '</div>' +
+
+    // Answer review
+    buildReview(quiz);
+
   ws.classList.add('show');
   ws.scrollIntoView({behavior:'smooth',block:'start'});
+  launchConfetti();
+}
 
-  if (pct >= 60) launchConfetti();
+function buildReview(quiz) {
+  var html = '<div class="review"><div class="review-title">📋 Answers</div>';
+  for (var i=0; i<quiz.questions.length; i++) {
+    var ok = solvedArr[i];
+    html += '<div class="review-item'+(ok?' correct':'')+'">'+
+      '<div class="review-num">'+(i+1)+'</div>'+
+      '<div class="review-body">'+
+        '<div class="review-q">'+esc(quiz.questions[i].question)+'</div>'+
+        '<div class="review-a">'+(ok?'✓ ':'✗ ')+esc(quiz.questions[i].answers[0].replace(/\b\w/g,function(c){return c.toUpperCase();}))+'</div>'+
+      '</div>'+
+      '<div style="font-size:16px;flex-shrink:0">'+(ok?'✅':'❌')+'</div>'+
+    '</div>';
+  }
+  return html + '</div>';
+}
+
+// ── Show/hide results card for screenshotting ───────────────
+function downloadResultsCard() {
+  var card = document.getElementById('results-card');
+  var btn  = document.querySelector('.share-btn');
+  if (!card) return;
+
+  var isVisible = card.classList.contains('visible');
+  if (isVisible) {
+    card.classList.remove('visible');
+    if (btn) btn.textContent = '📸 Show Results Card';
+  } else {
+    card.classList.add('visible');
+    if (btn) btn.textContent = '✕ Hide Results Card';
+    setTimeout(function(){ card.scrollIntoView({behavior:'smooth',block:'center'}); }, 50);
+  }
 }
 
 // ── Confetti ────────────────────────────────────────────────
 function launchConfetti() {
-  var canvas  = document.getElementById('confetti-canvas');
-  var ctx     = canvas.getContext('2d');
+  var canvas = document.getElementById('confetti-canvas');
+  var ctx    = canvas.getContext('2d');
   canvas.style.display = 'block';
   canvas.width  = window.innerWidth;
   canvas.height = window.innerHeight;
-
   var pieces = [];
   var colors = ['#00c853','#ffd600','#00b0ff','#ff4081','#f5f5f0','#00e676'];
-
-  for (var i=0; i<120; i++) {
-    pieces.push({
-      x: Math.random()*canvas.width,
-      y: -10 - Math.random()*200,
-      w: 8+Math.random()*6,
-      h: 4+Math.random()*4,
-      r: Math.random()*Math.PI*2,
-      rd: (Math.random()-0.5)*0.2,
-      vx: (Math.random()-0.5)*3,
-      vy: 2+Math.random()*4,
-      color: colors[Math.floor(Math.random()*colors.length)],
-      alpha: 1
-    });
+  for (var i=0;i<140;i++){
+    pieces.push({x:Math.random()*canvas.width,y:-10-Math.random()*200,w:8+Math.random()*6,h:4+Math.random()*4,r:Math.random()*Math.PI*2,rd:(Math.random()-0.5)*0.2,vx:(Math.random()-0.5)*3,vy:2+Math.random()*4,color:colors[Math.floor(Math.random()*colors.length)],alpha:1});
   }
-
-  var frame = 0;
-  function draw() {
+  var frame=0;
+  function draw(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
-    var alive = false;
-    for (var i=0; i<pieces.length; i++) {
-      var p = pieces[i];
-      p.x  += p.vx;
-      p.y  += p.vy;
-      p.r  += p.rd;
-      if (frame > 80) p.alpha -= 0.012;
-      if (p.alpha <= 0) continue;
-      alive = true;
-      ctx.save();
-      ctx.globalAlpha = Math.max(0, p.alpha);
-      ctx.translate(p.x, p.y);
-      ctx.rotate(p.r);
-      ctx.fillStyle = p.color;
-      ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
-      ctx.restore();
+    var alive=false;
+    for(var i=0;i<pieces.length;i++){
+      var p=pieces[i];p.x+=p.vx;p.y+=p.vy;p.r+=p.rd;
+      if(frame>80)p.alpha-=0.012;
+      if(p.alpha<=0)continue;alive=true;
+      ctx.save();ctx.globalAlpha=Math.max(0,p.alpha);ctx.translate(p.x,p.y);ctx.rotate(p.r);ctx.fillStyle=p.color;ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);ctx.restore();
     }
     frame++;
-    if (alive && frame < 200) {
-      requestAnimationFrame(draw);
-    } else {
-      canvas.style.display = 'none';
-      ctx.clearRect(0,0,canvas.width,canvas.height);
-    }
+    if(alive&&frame<200){requestAnimationFrame(draw);}
+    else{canvas.style.display='none';ctx.clearRect(0,0,canvas.width,canvas.height);}
   }
   requestAnimationFrame(draw);
 }
@@ -469,39 +501,27 @@ function renderAdminGate() {
   document.getElementById('admin-panel').style.display = adminUnlocked ? 'block' : 'none';
   if (adminUnlocked) renderBuilderList();
 }
-
 function unlockAdmin() {
   var val = document.getElementById('admin-pass-input').value;
-  if (val === ADMIN_PASSWORD) {
-    adminUnlocked = true;
-    document.getElementById('admin-pass-input').value = '';
-    document.getElementById('pass-error').style.display = 'none';
+  if (val===ADMIN_PASSWORD){
+    adminUnlocked=true;
+    document.getElementById('admin-pass-input').value='';
+    document.getElementById('pass-error').style.display='none';
     renderAdminGate();
   } else {
-    document.getElementById('admin-pass-input').style.borderColor = 'var(--red)';
-    document.getElementById('pass-error').style.display = 'block';
+    document.getElementById('admin-pass-input').style.borderColor='var(--red)';
+    document.getElementById('pass-error').style.display='block';
   }
 }
-
-function lockAdmin() { adminUnlocked = false; renderAdminGate(); }
-
-document.addEventListener('keydown', function(e){
-  if (e.key==='Enter' && document.activeElement.id==='admin-pass-input') unlockAdmin();
-});
+function lockAdmin(){ adminUnlocked=false; renderAdminGate(); }
+document.addEventListener('keydown',function(e){ if(e.key==='Enter'&&document.activeElement.id==='admin-pass-input') unlockAdmin(); });
 
 // ── Builder ──────────────────────────────────────────────────
-var builderRows = [
-  {question:'',answers:''},
-  {question:'',answers:''},
-  {question:'',answers:''},
-  {question:'',answers:''},
-  {question:'',answers:''},
-  {question:'',answers:''},
-  {question:'',answers:''},
-  {question:'',answers:''},
-  {question:'',answers:''},
-  {question:'',answers:''}
-];
+var builderRows = (function(){
+  var rows=[];
+  for(var i=0;i<10;i++) rows.push({question:'',answers:''});
+  return rows;
+})();
 
 function renderBuilderList() {
   var list = document.getElementById('q-builder-list');
@@ -510,111 +530,55 @@ function renderBuilderList() {
     return '<div class="q-builder-row">'+
       '<div class="q-builder-num">'+(i+1)+'</div>'+
       '<div class="q-builder-fields">'+
-        '<input class="q-builder-input" placeholder="Question… e.g. Who scored England\'s first goal at Euro 96?" value="'+esc(r.question)+'" oninput="builderRows['+i+'].question=this.value" />'+
+        '<input class="q-builder-input" placeholder="Question…" value="'+esc(r.question)+'" oninput="builderRows['+i+'].question=this.value" />'+
         '<input class="q-builder-input answer-field" placeholder="Answer(s), comma-separated… e.g. shearer, alan shearer" value="'+esc(r.answers)+'" oninput="builderRows['+i+'].answers=this.value" />'+
       '</div>'+
-      (builderRows.length>1 ? '<button class="q-remove-btn" onclick="removeBuilderRow('+i+')">&#215;</button>' : '')+
+      (builderRows.length>1?'<button class="q-remove-btn" onclick="removeBuilderRow('+i+')">&#215;</button>':'')+
     '</div>';
   }).join('');
 }
 
-function addBuilderRow() {
-  builderRows.push({question:'',answers:''});
-  renderBuilderList();
-  setTimeout(function(){
-    var l = document.getElementById('q-builder-list');
-    if (l && l.lastElementChild) {
-      var inp = l.lastElementChild.querySelector('input');
-      if (inp) { inp.focus(); inp.scrollIntoView({behavior:'smooth',block:'nearest'}); }
-    }
-  }, 50);
-}
-
-function removeBuilderRow(i) { builderRows.splice(i,1); renderBuilderList(); }
-
-function clearBuilder() {
-  builderRows = [{question:'',answers:''},{question:'',answers:''},{question:'',answers:''},{question:'',answers:''},{question:'',answers:''},{question:'',answers:''},{question:'',answers:''},{question:'',answers:''},{question:'',answers:''},{question:'',answers:''}];
-  document.getElementById('quiz-title-input').value = '';
+function addBuilderRow(){ builderRows.push({question:'',answers:''}); renderBuilderList(); setTimeout(function(){ var l=document.getElementById('q-builder-list'); if(l&&l.lastElementChild){var inp=l.lastElementChild.querySelector('input');if(inp){inp.focus();inp.scrollIntoView({behavior:'smooth',block:'nearest'});}}},50); }
+function removeBuilderRow(i){ builderRows.splice(i,1); renderBuilderList(); }
+function clearBuilder(){
+  builderRows=[];for(var i=0;i<10;i++)builderRows.push({question:'',answers:''});
+  document.getElementById('quiz-title-input').value='';
   document.getElementById('share-box').classList.remove('show');
   renderBuilderList();
 }
 
 // ── Generate Link ────────────────────────────────────────────
-function generateLink() {
-  var errEl = document.getElementById('link-error');
-  errEl.style.display = 'none';
-
-  var title = document.getElementById('quiz-title-input').value.trim();
-
-  var questions = builderRows
-    .filter(function(r){ return r.question.trim(); })
-    .map(function(r){
-      return {
-        question: r.question.trim(),
-        answers:  r.answers.split(',').map(function(a){ return a.trim(); }).filter(Boolean)
-      };
-    });
-
-  if (!questions.length) {
-    errEl.textContent = 'Add at least one question.';
-    errEl.style.display = 'block';
-    return;
-  }
-
-  var empty = -1;
-  for (var i=0; i<questions.length; i++) {
-    if (!questions[i].answers.length) { empty=i; break; }
-  }
-  if (empty >= 0) {
-    errEl.textContent = 'Question '+(empty+1)+' has no answer.';
-    errEl.style.display = 'block';
-    return;
-  }
-
-  var encoded = encodeQuiz({ title:title, questions:questions });
-  if (!encoded) {
-    errEl.textContent = 'Failed to generate link. Try shortening your questions.';
-    errEl.style.display = 'block';
-    return;
-  }
-
-  var url = window.location.origin + window.location.pathname + '?q=' + encoded;
-  document.getElementById('share-url-display').textContent = url;
+function generateLink(){
+  var errEl=document.getElementById('link-error');
+  errEl.style.display='none';
+  var title=document.getElementById('quiz-title-input').value.trim();
+  var questions=builderRows.filter(function(r){return r.question.trim();}).map(function(r){
+    return {question:r.question.trim(),answers:r.answers.split(',').map(function(a){return a.trim();}).filter(Boolean)};
+  });
+  if(!questions.length){errEl.textContent='Add at least one question.';errEl.style.display='block';return;}
+  var empty=-1;
+  for(var i=0;i<questions.length;i++){if(!questions[i].answers.length){empty=i;break;}}
+  if(empty>=0){errEl.textContent='Question '+(empty+1)+' has no answer.';errEl.style.display='block';return;}
+  var encoded=encodeQuiz({title:title,questions:questions});
+  if(!encoded){errEl.textContent='Failed to generate link.';errEl.style.display='block';return;}
+  var url=window.location.origin+window.location.pathname+'?q='+encoded;
+  document.getElementById('share-url-display').textContent=url;
   document.getElementById('share-box').classList.add('show');
-  document.getElementById('copy-btn').textContent = 'Copy';
+  document.getElementById('copy-btn').textContent='Copy';
   document.getElementById('copy-btn').classList.remove('copied');
   document.getElementById('share-box').scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 
-function copyLink() {
-  var url = document.getElementById('share-url-display').textContent;
-  var btn = document.getElementById('copy-btn');
-  function onCopied() {
-    btn.textContent = '✓ Copied!';
-    btn.classList.add('copied');
-    setTimeout(function(){ btn.textContent='Copy'; btn.classList.remove('copied'); }, 2500);
-  }
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(url).then(onCopied).catch(function(){
-      fallbackCopy(url, onCopied);
-    });
-  } else {
-    fallbackCopy(url, onCopied);
-  }
+function copyLink(){
+  var url=document.getElementById('share-url-display').textContent;
+  var btn=document.getElementById('copy-btn');
+  function done(){btn.textContent='✓ Copied!';btn.classList.add('copied');setTimeout(function(){btn.textContent='Copy';btn.classList.remove('copied');},2500);}
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(done).catch(function(){fbCopy(url,done);});}
+  else{fbCopy(url,done);}
 }
+function fbCopy(t,cb){var ta=document.createElement('textarea');ta.value=t;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);if(cb)cb();}
 
-function fallbackCopy(text, cb) {
-  var ta = document.createElement('textarea');
-  ta.value = text; ta.style.position='fixed'; ta.style.opacity='0';
-  document.body.appendChild(ta); ta.select(); document.execCommand('copy');
-  document.body.removeChild(ta);
-  if (cb) cb();
-}
-
-function esc(s) {
-  if (!s) return '';
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
+function esc(s){if(!s)return '';return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 
 // ── Init ─────────────────────────────────────────────────────
 switchView('play');
