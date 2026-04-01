@@ -287,7 +287,6 @@ h1{font-size:clamp(40px,9vw,64px);font-weight:700;letter-spacing:-0.03em;line-he
     <div class="scoring-key">
       <div class="key-item"><div class="key-dot" style="background:var(--green)"></div>3 pts — no hint</div>
       <div class="key-item"><div class="key-dot" style="background:var(--gold)"></div>1 pt — hint used</div>
-      <div class="key-item"><div class="key-dot" style="background:rgba(0,0,0,0.12)"></div>0 pts — missed</div>
     </div>
     <div id="league-content"></div>
   </div>
@@ -345,22 +344,33 @@ h1{font-size:clamp(40px,9vw,64px);font-weight:700;letter-spacing:-0.03em;line-he
 </div>
 
 <script>
-var API_URL        = 'https://script.google.com/macros/s/AKfycbwi-ec47XtJAu4iMEEYpey59ir4JfYtlVJzKo-ih5RP0ZtsbLnSx3x3Xi5JQlZvhmuIoQ/exec';
+var API_URL        = 'https://script.google.com/macros/s/AKfycbzmg2IY3AM6goOo1_vpF3DuB2OeFLohY9rWJz9db3bjRhIncfb--o3IkSdOz9PSrD24Bg/exec';
 var API_KEY        = 'pnq-secret-2025';
 var ADMIN_PASSWORD = 'gaffer';
 var DRAFT_KEY      = 'pnq_admin_draft';
 
 // ── API ───────────────────────────────────────────────────────
-async function api(action, body) {
+async function api(action, body, retries) {
+  retries = retries || 0;
   body = body || {};
   body.action = action;
   body.key = API_KEY;
-  var res = await fetch(API_URL, {
-    method: 'POST',
-    body: JSON.stringify(body),
-    headers: { 'Content-Type': 'text/plain' }
-  });
-  return res.json();
+  try {
+    var res = await fetch(API_URL, {
+      method: 'POST',
+      body: JSON.stringify(body),
+      headers: { 'Content-Type': 'text/plain' }
+    });
+    var data = await res.json();
+    return data;
+  } catch(e) {
+    // Retry once automatically before giving up
+    if (retries < 1) {
+      await new Promise(function(r){ setTimeout(r, 1500); });
+      return api(action, body, retries + 1);
+    }
+    throw e;
+  }
 }
 
 // ── NAV ───────────────────────────────────────────────────────
@@ -396,6 +406,7 @@ async function renderPlay() {
       '<span class="name-screen-emoji">⚽</span>'+
       '<h2>'+(quiz.title||'This Week\'s Quiz')+'</h2>'+
       '<p>'+quiz.questions.length+' questions · 3 pts per answer · 1 pt if you need a hint</p>'+
+      '<p style="font-size:12px;background:rgba(255,159,10,0.1);border:0.5px solid rgba(255,159,10,0.3);border-radius:8px;padding:10px 14px;color:#b25000;margin-bottom:20px;line-height:1.6"><strong>⚠️ Important:</strong> Use the same name every week so your scores add up correctly on the league table. Even a small difference (e.g. "Dan" vs "Danny") will create a separate entry.</p>'+
       '<input class="name-field" id="name-input" type="text" placeholder="Your name" maxlength="20" autocomplete="off" />'+
       '<button class="apple-btn" onclick="startQuiz()">Start Quiz →</button>'+
       '</div></div>';
@@ -405,15 +416,42 @@ async function renderPlay() {
       if(ni){ni.focus();ni.addEventListener('keydown',function(e){if(e.key==='Enter')startQuiz();});}
     },100);
   } catch(e) {
-    el.innerHTML='<div class="glass-card"><div class="no-quiz"><span class="no-quiz-emoji">⚠️</span><h2>Connection Error</h2><p>Couldn\'t load the quiz. Please try again.</p></div></div>';
+    el.innerHTML='<div class="glass-card"><div class="no-quiz"><span class="no-quiz-emoji">📶</span><h2>Couldn\'t Load Quiz</h2><p style="margin-bottom:20px">This is usually a temporary blip. Give it a second and try again.</p><button class="apple-btn" onclick="renderPlay()" style="max-width:200px;margin:0 auto">↻ Try Again</button></div></div>';
   }
 }
 
 function startQuiz() {
   var ni=document.getElementById('name-input'),val=ni?ni.value.trim():'';
   if(!val){if(ni)ni.classList.add('error');return;}
-  playerName=val;
+  playerName=val.replace(/\b\w/g,function(c){return c.toUpperCase();});
   var quiz=currentQuiz;
+  var week=quiz.title||'Unknown Week';
+
+  // Disable button while checking
+  var btn=document.querySelector('#name-card .apple-btn');
+  if(btn){btn.textContent='Checking…';btn.disabled=true;}
+
+  // Check server-side if this player has already played this week
+  api('checkPlayed',{player:playerName,week:week}).then(function(data){
+    if(data.played){
+      var el=document.getElementById('play-content');
+      el.innerHTML='<div class="glass-card"><div class="name-screen">'+
+        '<span class="name-screen-emoji">✅</span>'+
+        '<h2>Already Played!</h2>'+
+        '<p style="margin-bottom:8px">You\'ve already completed <strong>'+esc(week)+'</strong> this week, '+esc(playerName)+'.</p>'+
+        '<p style="margin-bottom:24px;color:var(--text-secondary);font-size:14px">Your score of <strong>'+data.score+' pts</strong> has been saved to the league.</p>'+
+        '<button class="apple-btn" onclick="switchView(\'league\')" style="margin-bottom:10px">🏆 See League Table</button>'+
+      '</div></div>';
+      return;
+    }
+    beginQuiz(quiz);
+  }).catch(function(){
+    // If check fails just let them play
+    beginQuiz(quiz);
+  });
+}
+
+function beginQuiz(quiz) {
   solvedArr  =new Array(quiz.questions.length).fill(false);
   wrongCounts=new Array(quiz.questions.length).fill(0);
   hintUsed   =new Array(quiz.questions.length).fill(false);
@@ -472,9 +510,12 @@ function checkAnswer(i) {
   var val=inp.value.trim();
   if(!val)return;
 
-  // Exact match, case-insensitive only
   var accepted=quiz.questions[i].answers.map(function(a){return a.trim().toLowerCase();}).filter(Boolean);
-  var correct=accepted.indexOf(val.toLowerCase())>=0;
+  // Case-insensitive partial match — 'shearer' matches 'Alan Shearer' and vice versa
+  var correct=accepted.some(function(a){
+    var v=val.toLowerCase(), ac=a.toLowerCase();
+    return v===ac || v.indexOf(ac)>=0 || ac.indexOf(v)>=0;
+  });
 
   if(correct){
     solvedArr[i]=true;
@@ -645,7 +686,7 @@ async function renderLeague() {
     html+='</tbody></table></div></div>';
     el.innerHTML=html;
   } catch(e) {
-    el.innerHTML='<div class="glass-card"><div class="no-league"><span class="no-league-emoji">⚠️</span><h2>Connection Error</h2><p>Couldn\'t load the league. Please try again.</p></div></div>';
+    el.innerHTML='<div class="glass-card"><div class="no-league"><span class="no-league-emoji">📶</span><h2>Couldn\'t Load League</h2><p style="margin-bottom:20px">This is usually temporary. Give it a second and try again.</p><button class="apple-btn" onclick="renderLeague()" style="max-width:200px;margin:0 auto">↻ Try Again</button></div></div>';
   }
 }
 
