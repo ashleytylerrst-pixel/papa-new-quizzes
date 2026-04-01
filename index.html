@@ -1121,33 +1121,8 @@ function generateLink(){
   if(empty>=0){errEl.textContent='Question '+(empty+1)+' needs an answer.';errEl.style.display='block';return;}
   var encoded=encodeQuiz({title:title,questions:questions});
   if(!encoded){errEl.textContent='Failed to generate link.';errEl.style.display='block';return;}
-
-  var longUrl=window.location.origin+window.location.pathname+'?w='+getWeekCode()+'&q='+encoded;
-
-  // Show loading state
-  var genBtn=document.querySelector('.btn-row .apple-btn');
-  if(genBtn){genBtn.textContent='⏳ Shortening…';genBtn.disabled=true;}
-
-  // Try TinyURL via a CORS-friendly proxy
-  var tinyUrl='https://tinyurl.com/api-create.php?url='+encodeURIComponent(longUrl);
-  var proxyUrl='https://corsproxy.io/?'+encodeURIComponent(tinyUrl);
-
-  fetch(proxyUrl)
-    .then(function(r){
-      if(!r.ok) throw new Error('proxy failed');
-      return r.text();
-    })
-    .then(function(short){
-      short=short.trim();
-      showShareBox(short.indexOf('http')===0 ? short : longUrl);
-    })
-    .catch(function(){
-      // Silently fall back to long URL — still works fine
-      showShareBox(longUrl);
-    })
-    .finally(function(){
-      if(genBtn){genBtn.textContent='🔗 Generate Link';genBtn.disabled=false;}
-    });
+  var url=window.location.origin+window.location.pathname+'?w='+getWeekCode()+'&q='+encoded;
+  showShareBox(url);
 }
 
 function showShareBox(url){
