@@ -123,6 +123,35 @@ body::before {
 .club-dot.mufc { background: var(--mufc); width: 28px; }
 .club-dot.cfc  { background: var(--cfc);  width: 28px; }
 
+/* Club badges row */
+.club-badges {
+  display: flex; justify-content: center; align-items: center;
+  gap: 20px; margin-top: 20px;
+}
+
+.club-badge-wrap {
+  display: flex; flex-direction: column; align-items: center; gap: 5px;
+  opacity: 0.75; transition: opacity 0.2s;
+}
+
+.club-badge-wrap:hover { opacity: 1; }
+
+.club-badge-svg {
+  width: 44px; height: 44px;
+  filter: drop-shadow(0 1px 3px rgba(0,0,0,0.15));
+}
+
+.club-badge-name {
+  font-size: 9px; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--text-tertiary);
+}
+
+.club-badge-divider {
+  width: 1px; height: 32px;
+  background: rgba(0,0,0,0.08);
+}
+
 /* ── GLASS CARD ── */
 .glass-card {
   background: var(--surface);
@@ -709,7 +738,7 @@ body::before {
             Add your questions below. Each has an answer field, an optional hint shown after 3 wrong attempts, and an optional image URL for picture rounds. Separate multiple accepted answers with a comma.
           </div>
           <label class="field-label">Week / Title</label>
-          <input class="title-field" id="quiz-title-input" placeholder="e.g. Week 4 · January Edition" />
+          <input class="title-field" id="quiz-title-input" placeholder="e.g. Week 4 · January Edition" oninput="saveAdminDraft()" />
           <div id="q-builder-list"></div>
           <button class="add-q-btn" onclick="addBuilderRow()">⚽ Add Question</button>
         </div>
@@ -924,10 +953,10 @@ function showWin(quiz,score){
           '<button class="apple-btn apple-btn-secondary" onclick="renderPlay()">🔄 Play Again</button>'+
         '</div>'+
         '<div class="results-card" id="results-card">'+
-          '<div class="rc-clubs">'+
-            '<div class="rc-club-pip" style="background:#241f20"></div>'+
-            '<div class="rc-club-pip" style="background:#DA291C"></div>'+
-            '<div class="rc-club-pip" style="background:#034694"></div>'+
+          '<div class="rc-clubs" style="display:flex;justify-content:center;gap:8px;margin-bottom:14px;align-items:center">'+
+            '<div style="height:3px;width:24px;border-radius:2px;background:#241f20"></div>'+
+            '<div style="height:3px;width:24px;border-radius:2px;background:#DA291C"></div>'+
+            '<div style="height:3px;width:24px;border-radius:2px;background:#034694"></div>'+
           '</div>'+
           '<div class="rc-title">Papa New Quizzes</div>'+
           (quiz.title?'<div class="rc-week">'+esc(quiz.title)+'</div>':'')+
@@ -997,11 +1026,35 @@ function launchConfetti(){
 }
 
 // ── ADMIN ────────────────────────────────────────────────────
-var adminUnlocked=false;
-function renderAdminGate(){
-  document.getElementById('admin-gate').style.display  =adminUnlocked?'none':'block';
-  document.getElementById('admin-panel').style.display =adminUnlocked?'block':'none';
-  if(adminUnlocked)renderBuilderList();
+var adminUnlocked = false;
+var ADMIN_STORAGE_KEY = 'pnq_admin_draft';
+
+function saveAdminDraft() {
+  try {
+    var ti = document.getElementById('quiz-title-input');
+    localStorage.setItem(ADMIN_STORAGE_KEY, JSON.stringify({
+      rows: builderRows,
+      title: ti ? ti.value : ''
+    }));
+  } catch(e) {}
+}
+
+function loadAdminDraft() {
+  try {
+    var raw = localStorage.getItem(ADMIN_STORAGE_KEY);
+    if (raw) {
+      var draft = JSON.parse(raw);
+      if (draft.rows && draft.rows.length) builderRows = draft.rows;
+      var ti = document.getElementById('quiz-title-input');
+      if (ti && draft.title) ti.value = draft.title;
+    }
+  } catch(e) {}
+}
+
+function renderAdminGate() {
+  document.getElementById('admin-gate').style.display  = adminUnlocked ? 'none'  : 'block';
+  document.getElementById('admin-panel').style.display = adminUnlocked ? 'block' : 'none';
+  if (adminUnlocked) { loadAdminDraft(); renderBuilderList(); }
 }
 function unlockAdmin(){
   var val=document.getElementById('admin-pass-input').value;
@@ -1024,10 +1077,10 @@ function renderBuilderList(){
         (builderRows.length>1?'<button class="q-remove-btn" onclick="removeBuilderRow('+i+')">×</button>':'')+
       '</div>'+
       '<div class="q-builder-fields">'+
-        '<input class="builder-input" placeholder="Question" value="'+esc(r.question)+'" oninput="builderRows['+i+'].question=this.value" />'+
-        '<input class="builder-input answer-f" placeholder="✅ Answer(s), comma-separated" value="'+esc(r.answers)+'" oninput="builderRows['+i+'].answers=this.value" />'+
-        '<input class="builder-input hint-f" placeholder="💡 Hint after 3 wrong attempts (optional)" value="'+esc(r.hint)+'" oninput="builderRows['+i+'].hint=this.value" />'+
-        '<input class="builder-input img-f" placeholder="🖼 Image URL (optional)" value="'+esc(r.imageUrl)+'" oninput="builderRows['+i+'].imageUrl=this.value" />'+
+        '<input class="builder-input" placeholder="Question" value="'+esc(r.question)+'" oninput="builderRows['+i+'].question=this.value;saveAdminDraft()" />'+
+        '<input class="builder-input answer-f" placeholder="✅ Answer(s), comma-separated" value="'+esc(r.answers)+'" oninput="builderRows['+i+'].answers=this.value;saveAdminDraft()" />'+
+        '<input class="builder-input hint-f" placeholder="💡 Hint after 3 wrong attempts (optional)" value="'+esc(r.hint)+'" oninput="builderRows['+i+'].hint=this.value;saveAdminDraft()" />'+
+        '<input class="builder-input img-f" placeholder="🖼 Image URL (optional)" value="'+esc(r.imageUrl)+'" oninput="builderRows['+i+'].imageUrl=this.value;saveAdminDraft()" />'+
       '</div>'+
     '</div>';
   }).join('');
@@ -1040,10 +1093,21 @@ function addBuilderRow(){
 }
 function removeBuilderRow(i){builderRows.splice(i,1);renderBuilderList();}
 function clearBuilder(){
+  if(!confirm('Clear this week\'s quiz? This cannot be undone.')) return;
   builderRows=[];for(var i=0;i<10;i++)builderRows.push({question:'',answers:'',hint:'',imageUrl:''});
-  document.getElementById('quiz-title-input').value='';
+  var ti=document.getElementById('quiz-title-input');
+  if(ti) ti.value='';
   document.getElementById('share-box').classList.remove('show');
+  localStorage.removeItem(ADMIN_STORAGE_KEY);
   renderBuilderList();
+}
+
+function getWeekCode(){
+  // Returns a number that changes every week — e.g. 202518 (year + ISO week)
+  var now=new Date();
+  var jan4=new Date(now.getFullYear(),0,4);
+  var week=Math.ceil(((now-jan4)/86400000+jan4.getDay()+1)/7);
+  return now.getFullYear()+''+week;
 }
 
 function generateLink(){
@@ -1057,7 +1121,36 @@ function generateLink(){
   if(empty>=0){errEl.textContent='Question '+(empty+1)+' needs an answer.';errEl.style.display='block';return;}
   var encoded=encodeQuiz({title:title,questions:questions});
   if(!encoded){errEl.textContent='Failed to generate link.';errEl.style.display='block';return;}
-  var url=window.location.origin+window.location.pathname+'?q='+encoded;
+
+  var longUrl=window.location.origin+window.location.pathname+'?w='+getWeekCode()+'&q='+encoded;
+
+  // Show loading state
+  var genBtn=document.querySelector('.btn-row .apple-btn');
+  if(genBtn){genBtn.textContent='⏳ Shortening…';genBtn.disabled=true;}
+
+  // Try TinyURL via a CORS-friendly proxy
+  var tinyUrl='https://tinyurl.com/api-create.php?url='+encodeURIComponent(longUrl);
+  var proxyUrl='https://corsproxy.io/?'+encodeURIComponent(tinyUrl);
+
+  fetch(proxyUrl)
+    .then(function(r){
+      if(!r.ok) throw new Error('proxy failed');
+      return r.text();
+    })
+    .then(function(short){
+      short=short.trim();
+      showShareBox(short.indexOf('http')===0 ? short : longUrl);
+    })
+    .catch(function(){
+      // Silently fall back to long URL — still works fine
+      showShareBox(longUrl);
+    })
+    .finally(function(){
+      if(genBtn){genBtn.textContent='🔗 Generate Link';genBtn.disabled=false;}
+    });
+}
+
+function showShareBox(url){
   document.getElementById('share-url-display').textContent=url;
   document.getElementById('share-box').classList.add('show');
   document.getElementById('copy-btn').textContent='Copy';
