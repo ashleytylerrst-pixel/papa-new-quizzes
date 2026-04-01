@@ -19,13 +19,13 @@ body::before{content:'';position:fixed;inset:0;z-index:0;background:radial-gradi
 /* NAV */
 .top-nav{display:flex;justify-content:flex-end;margin-bottom:40px;}
 .nav-pill{background:rgba(0,0,0,0.05);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-radius:980px;display:flex;padding:3px;gap:2px;}
-.nav-pill button{background:transparent;border:none;font-family:inherit;font-size:13px;font-weight:500;color:var(--text-secondary);padding:6px 18px;border-radius:980px;cursor:pointer;transition:all 0.25s ease;letter-spacing:-0.01em;}
+.nav-pill button{background:transparent;border:none;font-family:inherit;font-size:13px;font-weight:500;color:var(--text-secondary);padding:6px 16px;border-radius:980px;cursor:pointer;transition:all 0.25s ease;letter-spacing:-0.01em;white-space:nowrap;}
 .nav-pill button.active{background:#fff;color:var(--text);box-shadow:0 1px 3px rgba(0,0,0,0.12),0 1px 2px rgba(0,0,0,0.08);}
 
 /* HEADER */
 .header{text-align:center;margin-bottom:48px;}
 .header-eyebrow{font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--blue);margin-bottom:10px;}
-h1{font-size:clamp(40px,9vw,64px);font-weight:700;letter-spacing:-0.03em;line-height:1.0;color:var(--text);background:linear-gradient(135deg,var(--text) 40%,#6e6e73 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+h1{font-size:clamp(40px,9vw,64px);font-weight:700;letter-spacing:-0.03em;line-height:1.0;background:linear-gradient(135deg,var(--text) 40%,#6e6e73 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
 .header-sub{font-size:17px;color:var(--text-secondary);margin-top:10px;font-weight:400;letter-spacing:-0.01em;}
 .club-dots{display:flex;justify-content:center;gap:6px;margin-top:16px;}
 .club-dot{height:4px;border-radius:2px;}
@@ -46,9 +46,9 @@ h1{font-size:clamp(40px,9vw,64px);font-weight:700;letter-spacing:-0.03em;line-he
 .name-screen-emoji{font-size:52px;margin-bottom:20px;display:block;}
 .name-screen h2{font-size:26px;font-weight:700;letter-spacing:-0.02em;margin-bottom:6px;}
 .name-screen p{font-size:15px;color:var(--text-secondary);margin-bottom:28px;line-height:1.5;}
-.name-field{width:100%;background:rgba(0,0,0,0.04);border:0.5px solid rgba(0,0,0,0.1);border-radius:var(--radius-xs);font-family:inherit;font-size:17px;font-weight:400;color:var(--text);padding:13px 16px;outline:none;text-align:center;transition:all 0.2s;margin-bottom:12px;letter-spacing:-0.01em;}
+.name-field{width:100%;background:rgba(0,0,0,0.04);border:0.5px solid rgba(0,0,0,0.1);border-radius:var(--radius-xs);font-family:inherit;font-size:17px;color:var(--text);padding:13px 16px;outline:none;text-align:center;transition:all 0.2s;margin-bottom:12px;}
 .name-field:focus{border-color:var(--blue);background:rgba(0,113,227,0.04);box-shadow:0 0 0 3px rgba(0,113,227,0.12);}
-.name-field.error{border-color:var(--red);box-shadow:0 0 0 3px rgba(255,59,48,0.12);}
+.name-field.error{border-color:var(--red)!important;box-shadow:0 0 0 3px rgba(255,59,48,0.12)!important;}
 
 /* APPLE BUTTON */
 .apple-btn{display:inline-flex;align-items:center;justify-content:center;background:var(--blue);color:#fff;font-family:inherit;font-size:15px;font-weight:600;border:none;border-radius:980px;padding:13px 28px;cursor:pointer;transition:all 0.2s;letter-spacing:-0.01em;width:100%;}
@@ -57,9 +57,10 @@ h1{font-size:clamp(40px,9vw,64px);font-weight:700;letter-spacing:-0.03em;line-he
 .apple-btn:disabled{opacity:0.5;cursor:not-allowed;transform:none!important;}
 .apple-btn-secondary{background:rgba(0,0,0,0.05);color:var(--text);}
 .apple-btn-secondary:hover{background:rgba(0,0,0,0.08);}
+.apple-btn-danger{background:rgba(255,59,48,0.1);color:var(--red);}
+.apple-btn-danger:hover{background:rgba(255,59,48,0.18);}
 
 /* SCORE BAR */
-.score-bar-wrap{margin-bottom:16px;}
 .score-bar{display:flex;align-items:center;padding:14px 20px;}
 .score-fraction{font-size:28px;font-weight:700;letter-spacing:-0.03em;color:var(--text);line-height:1;}
 .score-fraction span{color:var(--text-tertiary);font-weight:400;}
@@ -73,7 +74,6 @@ h1{font-size:clamp(40px,9vw,64px);font-weight:700;letter-spacing:-0.03em;line-he
 .q-card{background:var(--surface);backdrop-filter:blur(40px);-webkit-backdrop-filter:blur(40px);padding:18px 20px;border-bottom:0.5px solid var(--separator);transition:background 0.3s;position:relative;}
 .q-card:first-child{border-radius:var(--radius) var(--radius) 0 0;}
 .q-card:last-child{border-radius:0 0 var(--radius) var(--radius);border-bottom:none;}
-.q-card:only-child{border-radius:var(--radius);border-bottom:none;}
 .q-card.solved{background:rgba(52,199,89,0.06);}
 .q-card::before{content:'';position:absolute;left:0;top:10%;height:80%;width:3px;border-radius:0 2px 2px 0;opacity:0;transition:opacity 0.3s;}
 .q-card.solved::before{opacity:1;}
@@ -82,11 +82,18 @@ h1{font-size:clamp(40px,9vw,64px);font-weight:700;letter-spacing:-0.03em;line-he
 .q-card:nth-child(3n).solved::before{background:var(--cfc);}
 .q-img{width:100%;max-height:200px;object-fit:cover;border-radius:var(--radius-sm);margin-bottom:14px;}
 .q-row{display:flex;gap:14px;align-items:flex-start;margin-bottom:12px;}
-.q-num{font-size:13px;font-weight:600;color:var(--text-tertiary);width:20px;flex-shrink:0;padding-top:2px;letter-spacing:-0.01em;}
+.q-num{font-size:13px;font-weight:600;color:var(--text-tertiary);width:20px;flex-shrink:0;padding-top:2px;}
 .q-card.solved .q-num{color:var(--green);}
-.q-text{font-size:15px;font-weight:500;color:var(--text);line-height:1.4;letter-spacing:-0.01em;flex:1;}
+.q-text{font-size:15px;font-weight:500;color:var(--text);line-height:1.4;flex:1;}
+
+/* Score badge per question */
+.q-score-badge{display:none;font-size:11px;font-weight:700;padding:2px 7px;border-radius:980px;flex-shrink:0;margin-top:2px;}
+.q-score-badge.pts3{background:rgba(52,199,89,0.15);color:#1a7f37;}
+.q-score-badge.pts1{background:rgba(255,159,10,0.15);color:#b25000;}
+.q-card.solved .q-score-badge{display:inline-flex;}
+
 .q-answer-row{display:flex;gap:10px;align-items:center;}
-.q-input{flex:1;background:rgba(0,0,0,0.04);border:0.5px solid rgba(0,0,0,0.1);border-radius:var(--radius-xs);color:var(--text);font-family:inherit;font-size:15px;padding:10px 14px;outline:none;transition:all 0.2s;letter-spacing:-0.01em;}
+.q-input{flex:1;background:rgba(0,0,0,0.04);border:0.5px solid rgba(0,0,0,0.1);border-radius:var(--radius-xs);color:var(--text);font-family:inherit;font-size:15px;padding:10px 14px;outline:none;transition:all 0.2s;}
 .q-input:focus:not(:disabled){border-color:var(--blue);background:rgba(0,113,227,0.04);box-shadow:0 0 0 3px rgba(0,113,227,0.1);}
 .q-input::placeholder{color:var(--text-tertiary);font-size:14px;}
 .q-input:disabled{cursor:default;background:transparent;border-color:transparent;}
@@ -101,12 +108,13 @@ h1{font-size:clamp(40px,9vw,64px);font-weight:700;letter-spacing:-0.03em;line-he
 .q-wrong{font-size:12px;color:var(--text-tertiary);margin-top:6px;display:none;}
 .q-wrong.show{display:block;}
 
-/* WIN */
+/* WIN SCREEN */
 .win-wrap{padding:40px 28px 32px;text-align:center;}
 .win-score-display{font-size:80px;font-weight:800;letter-spacing:-0.05em;line-height:1;margin-bottom:4px;background:linear-gradient(135deg,var(--nufc) 0%,var(--mufc) 50%,var(--cfc) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.win-total{font-size:17px;color:var(--text-tertiary);margin-bottom:16px;font-weight:400;}
+.win-total{font-size:17px;color:var(--text-tertiary);margin-bottom:8px;font-weight:400;}
 .win-name{font-size:28px;font-weight:700;letter-spacing:-0.02em;margin-bottom:4px;}
-.win-verdict{font-size:17px;color:var(--text-secondary);margin-bottom:28px;}
+.win-verdict{font-size:17px;color:var(--text-secondary);margin-bottom:8px;}
+.win-points-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(0,113,227,0.08);border:0.5px solid rgba(0,113,227,0.2);border-radius:980px;padding:6px 16px;font-size:14px;font-weight:600;color:var(--blue);margin-bottom:24px;}
 .win-actions{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:32px;}
 .win-actions .apple-btn{flex:1;min-width:140px;}
 
@@ -116,12 +124,14 @@ h1{font-size:clamp(40px,9vw,64px);font-weight:700;letter-spacing:-0.03em;line-he
 .results-card.visible{display:block;animation:fadeSlide 0.4s ease;}
 .rc-title{font-size:13px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:4px;}
 .rc-week{font-size:15px;color:rgba(255,255,255,0.6);margin-bottom:4px;}
-.rc-name{font-size:22px;font-weight:700;letter-spacing:-0.02em;color:#fff;margin-bottom:16px;}
+.rc-name{font-size:22px;font-weight:700;letter-spacing:-0.02em;color:#fff;margin-bottom:8px;}
 .rc-score{font-size:64px;font-weight:800;letter-spacing:-0.04em;line-height:1;color:#fff;margin-bottom:4px;}
+.rc-points{font-size:17px;color:rgba(255,255,255,0.5);margin-bottom:8px;}
 .rc-verdict{font-size:17px;color:rgba(255,255,255,0.6);margin-bottom:20px;}
 .rc-dots{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:20px;}
 .rc-dot{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;}
-.rc-dot.ok{background:var(--green);color:#fff;}
+.rc-dot.pts3{background:var(--green);color:#fff;}
+.rc-dot.pts1{background:var(--gold);color:#fff;}
 .rc-dot.no{background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.3);}
 .rc-footer{font-size:11px;color:rgba(255,255,255,0.25);letter-spacing:0.04em;text-transform:uppercase;}
 
@@ -131,13 +141,19 @@ h1{font-size:clamp(40px,9vw,64px);font-weight:700;letter-spacing:-0.03em;line-he
 .review-item{display:flex;gap:12px;align-items:flex-start;padding:12px 16px;border-bottom:0.5px solid var(--separator);background:var(--surface);}
 .review-item:first-of-type{border-radius:var(--radius-sm) var(--radius-sm) 0 0;}
 .review-item:last-of-type{border-radius:0 0 var(--radius-sm) var(--radius-sm);border-bottom:none;}
-.review-item.correct{background:rgba(52,199,89,0.06);}
+.review-item.pts3{background:rgba(52,199,89,0.06);}
+.review-item.pts1{background:rgba(255,159,10,0.06);}
 .review-num{font-size:13px;font-weight:600;color:var(--text-tertiary);width:18px;flex-shrink:0;padding-top:1px;}
-.review-item.correct .review-num{color:var(--green);}
+.review-item.pts3 .review-num,.review-item.pts1 .review-num{color:var(--green);}
 .review-body{flex:1;}
 .review-q{font-size:13px;font-weight:500;color:var(--text);margin-bottom:2px;}
 .review-a{font-size:12px;color:var(--text-tertiary);}
-.review-item.correct .review-a{color:var(--green);}
+.review-item.pts3 .review-a{color:var(--green);}
+.review-item.pts1 .review-a{color:#b25000;}
+.review-pts{font-size:11px;font-weight:700;flex-shrink:0;padding:2px 7px;border-radius:980px;}
+.pts3-badge{background:rgba(52,199,89,0.15);color:#1a7f37;}
+.pts1-badge{background:rgba(255,159,10,0.15);color:#b25000;}
+.pts0-badge{background:rgba(0,0,0,0.06);color:var(--text-tertiary);}
 
 /* NO QUIZ */
 .no-quiz{padding:60px 28px;text-align:center;}
@@ -145,12 +161,52 @@ h1{font-size:clamp(40px,9vw,64px);font-weight:700;letter-spacing:-0.03em;line-he
 .no-quiz h2{font-size:22px;font-weight:700;letter-spacing:-0.02em;margin-bottom:6px;}
 .no-quiz p{font-size:15px;color:var(--text-secondary);line-height:1.5;}
 
+/* ── LEAGUE TABLE ── */
+.league-header{text-align:center;margin-bottom:32px;}
+.league-header h2{font-size:32px;font-weight:700;letter-spacing:-0.02em;margin-bottom:6px;}
+.league-header p{font-size:15px;color:var(--text-secondary);}
+
+.league-table{width:100%;border-collapse:collapse;}
+.league-table th{font-size:11px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;color:var(--text-tertiary);padding:10px 16px;text-align:left;border-bottom:0.5px solid var(--separator);}
+.league-table th.num{text-align:right;}
+.league-table td{padding:14px 16px;border-bottom:0.5px solid var(--separator);font-size:15px;}
+.league-table tr:last-child td{border-bottom:none;}
+.league-table tr.me td{background:rgba(0,113,227,0.04);}
+
+.pos-cell{font-size:13px;font-weight:700;color:var(--text-tertiary);width:28px;}
+.pos-1{color:#f5a623;}
+.pos-2{color:#9b9b9b;}
+.pos-3{color:#b87333;}
+
+.player-cell{font-weight:600;font-size:15px;}
+.player-cell .you-tag{font-size:10px;font-weight:600;background:rgba(0,113,227,0.1);color:var(--blue);padding:1px 6px;border-radius:4px;margin-left:6px;vertical-align:middle;}
+
+.pts-cell{font-family:-apple-system,sans-serif;font-size:20px;font-weight:700;text-align:right;color:var(--text);}
+.played-cell{font-size:13px;color:var(--text-secondary);text-align:right;}
+
+.week-cols th,.week-cols td{text-align:center;font-size:12px;min-width:36px;}
+.week-score{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;font-size:12px;font-weight:600;}
+.week-score.high{background:rgba(52,199,89,0.15);color:#1a7f37;}
+.week-score.low{background:rgba(255,159,10,0.15);color:#b25000;}
+.week-score.zero{background:rgba(0,0,0,0.05);color:var(--text-tertiary);}
+.week-score.none{color:var(--text-tertiary);font-size:16px;}
+
+.no-league{padding:60px 28px;text-align:center;}
+.no-league-emoji{font-size:44px;display:block;margin-bottom:16px;}
+.no-league h2{font-size:22px;font-weight:700;letter-spacing:-0.02em;margin-bottom:6px;}
+.no-league p{font-size:15px;color:var(--text-secondary);line-height:1.5;}
+
+/* SCORING KEY */
+.scoring-key{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:24px;}
+.key-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-secondary);}
+.key-dot{width:10px;height:10px;border-radius:50%;}
+
 /* ADMIN */
 .admin-gate-wrap{max-width:360px;margin:60px auto;text-align:center;padding:0 20px;}
 .admin-gate-emoji{font-size:44px;display:block;margin-bottom:16px;}
 .admin-gate-wrap h2{font-size:28px;font-weight:700;letter-spacing:-0.02em;margin-bottom:6px;}
 .admin-gate-wrap p{font-size:15px;color:var(--text-secondary);margin-bottom:24px;}
-.apple-field{width:100%;background:rgba(0,0,0,0.04);border:0.5px solid rgba(0,0,0,0.1);border-radius:var(--radius-xs);font-family:inherit;font-size:15px;color:var(--text);padding:12px 14px;outline:none;margin-bottom:10px;transition:all 0.2s;letter-spacing:-0.01em;}
+.apple-field{width:100%;background:rgba(0,0,0,0.04);border:0.5px solid rgba(0,0,0,0.1);border-radius:var(--radius-xs);font-family:inherit;font-size:15px;color:var(--text);padding:12px 14px;outline:none;margin-bottom:10px;transition:all 0.2s;}
 .apple-field:focus{border-color:var(--blue);background:rgba(0,113,227,0.04);box-shadow:0 0 0 3px rgba(0,113,227,0.1);}
 .apple-field::placeholder{color:var(--text-tertiary);}
 .field-label{display:block;font-size:11px;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;color:var(--text-secondary);margin-bottom:6px;}
@@ -183,21 +239,15 @@ h1{font-size:clamp(40px,9vw,64px);font-weight:700;letter-spacing:-0.03em;line-he
 .title-field::placeholder{color:var(--text-tertiary);font-weight:400;font-size:17px;}
 .btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;}
 .btn-row .apple-btn{flex:1;min-width:140px;}
-.divider{height:0.5px;background:var(--separator);margin:16px 0;}
 .error-msg{font-size:13px;color:var(--red);margin-top:8px;}
 .success-msg{font-size:13px;color:var(--green);margin-top:8px;font-weight:500;}
-
-/* CONFIG BANNER */
-.config-banner{background:rgba(255,59,48,0.08);border:0.5px solid rgba(255,59,48,0.25);border-radius:var(--radius-sm);padding:14px 18px;margin-bottom:20px;font-size:13px;color:#c0392b;line-height:1.6;}
-.config-banner strong{color:var(--text);display:block;margin-bottom:4px;}
-.config-banner code{background:rgba(0,0,0,0.06);padding:1px 6px;border-radius:4px;font-size:12px;}
 
 /* ANIMATIONS */
 @keyframes shake{0%,100%{transform:translateX(0);}20%{transform:translateX(-6px);}40%{transform:translateX(6px);}60%{transform:translateX(-4px);}80%{transform:translateX(4px);}}
 @keyframes fadeSlide{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
 @keyframes popIn{0%{transform:scale(0);}60%{transform:scale(1.15);}100%{transform:scale(1);}}
 #confetti-canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:999;display:none;}
-@media(max-width:480px){.page{padding:32px 16px 60px;}.name-screen{padding:28px 20px;}.win-wrap{padding:28px 20px;}.win-score-display{font-size:64px;}}
+@media(max-width:480px){.page{padding:32px 16px 60px;}.name-screen{padding:28px 20px;}.win-wrap{padding:28px 20px;}.win-score-display{font-size:64px;}.week-cols{display:none;}}
 </style>
 </head>
 <body>
@@ -206,8 +256,9 @@ h1{font-size:clamp(40px,9vw,64px);font-weight:700;letter-spacing:-0.03em;line-he
 
   <div class="top-nav">
     <div class="nav-pill">
-      <button id="nav-play" class="active" onclick="switchView('play')">⚽ Play</button>
-      <button id="nav-admin" onclick="switchView('admin')">🔧 Admin</button>
+      <button id="nav-play"   class="active" onclick="switchView('play')">⚽ Play</button>
+      <button id="nav-league"            onclick="switchView('league')">🏆 League</button>
+      <button id="nav-admin"             onclick="switchView('admin')">🔧 Admin</button>
     </div>
   </div>
 
@@ -223,8 +274,22 @@ h1{font-size:clamp(40px,9vw,64px);font-weight:700;letter-spacing:-0.03em;line-he
         <div class="club-dot cfc"></div>
       </div>
     </div>
-    <div id="config-warning"></div>
     <div id="play-content"></div>
+  </div>
+
+  <!-- LEAGUE -->
+  <div id="league-view" style="display:none">
+    <div class="league-header">
+      <div class="header-eyebrow">🏆 Season Standings</div>
+      <h2>League Table</h2>
+      <p>3 pts per correct answer · 1 pt if hint used</p>
+    </div>
+    <div class="scoring-key">
+      <div class="key-item"><div class="key-dot" style="background:var(--green)"></div>3 pts — no hint</div>
+      <div class="key-item"><div class="key-dot" style="background:var(--gold)"></div>1 pt — hint used</div>
+      <div class="key-item"><div class="key-dot" style="background:rgba(0,0,0,0.12)"></div>0 pts — missed</div>
+    </div>
+    <div id="league-content"></div>
   </div>
 
   <!-- ADMIN -->
@@ -233,7 +298,7 @@ h1{font-size:clamp(40px,9vw,64px);font-weight:700;letter-spacing:-0.03em;line-he
       <div class="admin-gate-wrap">
         <span class="admin-gate-emoji">🔐</span>
         <h2>Admin</h2>
-        <p>Enter your password to set this week's quiz.</p>
+        <p>Enter your password to manage the quiz.</p>
         <input class="apple-field" id="admin-pass-input" type="password" placeholder="Password" />
         <div class="error-msg" id="pass-error" style="display:none">Incorrect password.</div>
         <button class="apple-btn" style="margin-top:8px" onclick="unlockAdmin()">Continue</button>
@@ -242,46 +307,48 @@ h1{font-size:clamp(40px,9vw,64px);font-weight:700;letter-spacing:-0.03em;line-he
 
     <div id="admin-panel" style="display:none">
       <div class="admin-header-row">
-        <div><h2>Admin</h2><p>Set this week's quiz</p></div>
+        <div><h2>Admin</h2><p>Manage quiz &amp; league</p></div>
         <button class="apple-btn apple-btn-secondary" style="width:auto;padding:8px 16px;font-size:13px" onclick="lockAdmin()">🔒 Lock</button>
       </div>
 
+      <!-- Quiz section -->
       <div class="admin-section">
-        <div class="admin-section-header">
-          <div class="admin-section-title">This Week's Quiz</div>
-        </div>
+        <div class="admin-section-header"><div class="admin-section-title">⚽ This Week's Quiz</div></div>
         <div class="admin-section-body">
-          <div class="admin-notice">
-            Add your questions below. Each has an answer field, an optional hint shown after 3 wrong attempts, and an optional image URL for picture rounds. Separate multiple accepted answers with a comma.
-          </div>
+          <div class="admin-notice">Add your questions. Each correct answer scores 3pts (no hint) or 1pt (hint used). Players must finish all questions to score.</div>
           <label class="field-label">Week / Title</label>
           <input class="title-field" id="quiz-title-input" placeholder="e.g. Week 4 · January Edition" oninput="saveLocalDraft()" />
           <div id="q-builder-list"></div>
           <button class="add-q-btn" onclick="addBuilderRow()">⚽ Add Question</button>
         </div>
       </div>
-
       <div class="btn-row">
         <button class="apple-btn" id="save-btn" onclick="saveQuizToSheet()">💾 Save & Go Live</button>
-        <button class="apple-btn apple-btn-secondary" onclick="clearBuilder()">🗑️ Clear All</button>
+        <button class="apple-btn apple-btn-secondary" onclick="clearBuilder()">🗑️ Clear Quiz</button>
       </div>
       <div class="error-msg"   id="save-error"   style="display:none"></div>
       <div class="success-msg" id="save-success" style="display:none"></div>
+
+      <!-- League section -->
+      <div class="admin-section" style="margin-top:24px">
+        <div class="admin-section-header"><div class="admin-section-title">🏆 League Management</div></div>
+        <div class="admin-section-body">
+          <p style="font-size:13px;color:var(--text-secondary);margin-bottom:16px;line-height:1.6">Reset the league to start a new season. This permanently deletes all scores — use with caution.</p>
+          <button class="apple-btn apple-btn-danger" onclick="resetLeagueSeason()">🗑️ Reset League Season</button>
+          <div class="error-msg"   id="league-error"   style="display:none"></div>
+          <div class="success-msg" id="league-success" style="display:none"></div>
+        </div>
+      </div>
     </div>
   </div>
 
 </div>
 
 <script>
-// ⚙️ PASTE YOUR APPS SCRIPT URL HERE
-var API_URL = 'https://script.google.com/macros/s/AKfycby57sPk3M7DQOQSpgnW1xrsLUDFN2C7Lyf4J-atysmMTbuh73Ul95mn47AZPjiZFcy5KA/exec';
-var API_KEY = 'pnq-secret-2025'; // Must match SECRET_KEY in Code.gs
+var API_URL        = 'https://script.google.com/macros/s/AKfycbwi-ec47XtJAu4iMEEYpey59ir4JfYtlVJzKo-ih5RP0ZtsbLnSx3x3Xi5JQlZvhmuIoQ/exec';
+var API_KEY        = 'pnq-secret-2025';
 var ADMIN_PASSWORD = 'gaffer';
-var DRAFT_KEY = 'pnq_admin_draft';
-
-function isConfigured() {
-  return API_URL && API_URL !== 'YOUR_APPS_SCRIPT_URL_HERE';
-}
+var DRAFT_KEY      = 'pnq_admin_draft';
 
 // ── API ───────────────────────────────────────────────────────
 async function api(action, body) {
@@ -298,136 +365,128 @@ async function api(action, body) {
 
 // ── NAV ───────────────────────────────────────────────────────
 function switchView(v) {
-  document.getElementById('play-view').style.display  = v==='play'  ? 'block':'none';
-  document.getElementById('admin-view').style.display = v==='admin' ? 'block':'none';
-  document.getElementById('nav-play').classList.toggle('active', v==='play');
-  document.getElementById('nav-admin').classList.toggle('active', v==='admin');
-  if (v==='play')  renderPlay();
-  if (v==='admin') renderAdminGate();
+  ['play','league','admin'].forEach(function(id){
+    document.getElementById(id+'-view').style.display = v===id ? 'block':'none';
+    document.getElementById('nav-'+id).classList.toggle('active', v===id);
+  });
+  if (v==='play')   renderPlay();
+  if (v==='league') renderLeague();
+  if (v==='admin')  renderAdminGate();
 }
 
 // ── PLAY ──────────────────────────────────────────────────────
-var solvedArr=[], wrongCounts=[], currentQuiz=null, playerName='';
+var solvedArr=[], wrongCounts=[], hintUsed=[], currentQuiz=null, playerName='';
 
 async function renderPlay() {
   var el = document.getElementById('play-content');
-  var cw = document.getElementById('config-warning');
-
-  if (!isConfigured()) {
-    cw.innerHTML = '<div class="config-banner"><strong>⚙️ Setup Required</strong>Open this file and replace <code>YOUR_APPS_SCRIPT_URL_HERE</code> with your Google Apps Script URL.</div>';
-    el.innerHTML = '';
-    return;
-  }
-
-  cw.innerHTML = '';
-  el.innerHTML = '<div class="glass-card"><div class="loading-state"><span class="spinner"></span>Loading this week\'s quiz…</div></div>';
+  el.innerHTML = '<div class="glass-card"><div class="loading-state"><span class="spinner"></span>Loading quiz…</div></div>';
 
   try {
     var data = await api('getQuiz');
     var quiz = data.quiz;
-
     if (!quiz || !quiz.questions || !quiz.questions.length) {
-      el.innerHTML = '<div class="glass-card"><div class="no-quiz"><span class="no-quiz-emoji">⏳</span><h2>No Quiz Yet</h2><p>The gaffer hasn\'t set this week\'s quiz yet.<br>Check back soon!</p></div></div>';
+      el.innerHTML = '<div class="glass-card"><div class="no-quiz"><span class="no-quiz-emoji">⏳</span><h2>No Quiz Yet</h2><p>The gaffer hasn\'t set this week\'s quiz yet. Check back soon!</p></div></div>';
       return;
     }
-
     currentQuiz = quiz;
     if (quiz.title) document.getElementById('play-subtitle').textContent = quiz.title;
 
-    el.innerHTML =
-      '<div class="glass-card score-bar-wrap">' +
-        '<div class="score-bar">' +
-          '<div class="score-fraction" id="sn">0<span>/'+quiz.questions.length+'</span></div>' +
-          '<div class="progress-wrap"><div class="progress-track"><div class="progress-fill" id="pf" style="width:0%"></div></div></div>' +
-          '<div class="pct-label" id="pct">⚽ 0%</div>' +
-        '</div>' +
-      '</div>' +
-      '<div class="questions" id="qc"></div>' +
-      '<div id="ws"></div>';
-
-    // Name screen injected first
-    var qc = document.getElementById('qc');
-    var nameCard = document.createElement('div');
-    nameCard.className = 'glass-card';
-    nameCard.id = 'name-card';
-    nameCard.innerHTML =
-      '<div class="name-screen">' +
-        '<span class="name-screen-emoji">⚽</span>' +
-        '<h2>'+(quiz.title||'This Week\'s Quiz')+'</h2>' +
-        '<p>'+quiz.questions.length+' questions · Enter your name to begin</p>' +
-        '<input class="name-field" id="name-input" type="text" placeholder="Your name" maxlength="20" autocomplete="off" />' +
-        '<button class="apple-btn" onclick="startQuiz()">Start Quiz</button>' +
-      '</div>';
-    qc.appendChild(nameCard);
+    // Name screen
+    el.innerHTML = '<div class="glass-card" id="name-card"><div class="name-screen">'+
+      '<span class="name-screen-emoji">⚽</span>'+
+      '<h2>'+(quiz.title||'This Week\'s Quiz')+'</h2>'+
+      '<p>'+quiz.questions.length+' questions · 3 pts per answer · 1 pt if you need a hint</p>'+
+      '<input class="name-field" id="name-input" type="text" placeholder="Your name" maxlength="20" autocomplete="off" />'+
+      '<button class="apple-btn" onclick="startQuiz()">Start Quiz →</button>'+
+      '</div></div>';
 
     setTimeout(function(){
-      var ni = document.getElementById('name-input');
-      if (ni) {
-        ni.focus();
-        ni.addEventListener('keydown', function(e){ if(e.key==='Enter') startQuiz(); });
-      }
-    }, 100);
-
+      var ni=document.getElementById('name-input');
+      if(ni){ni.focus();ni.addEventListener('keydown',function(e){if(e.key==='Enter')startQuiz();});}
+    },100);
   } catch(e) {
-    el.innerHTML = '<div class="glass-card"><div class="no-quiz"><span class="no-quiz-emoji">⚠️</span><h2>Connection Error</h2><p>Couldn\'t reach the quiz server.<br>Check your API URL is set correctly.</p></div></div>';
+    el.innerHTML='<div class="glass-card"><div class="no-quiz"><span class="no-quiz-emoji">⚠️</span><h2>Connection Error</h2><p>Couldn\'t load the quiz. Please try again.</p></div></div>';
   }
 }
 
 function startQuiz() {
-  var ni  = document.getElementById('name-input');
-  var val = ni ? ni.value.trim() : '';
-  if (!val) { if(ni) ni.classList.add('error'); return; }
-  playerName = val;
+  var ni=document.getElementById('name-input'),val=ni?ni.value.trim():'';
+  if(!val){if(ni)ni.classList.add('error');return;}
+  playerName=val;
+  var quiz=currentQuiz;
+  solvedArr  =new Array(quiz.questions.length).fill(false);
+  wrongCounts=new Array(quiz.questions.length).fill(0);
+  hintUsed   =new Array(quiz.questions.length).fill(false);
 
-  var quiz = currentQuiz;
-  solvedArr   = new Array(quiz.questions.length).fill(false);
-  wrongCounts = new Array(quiz.questions.length).fill(0);
+  var nc=document.getElementById('name-card');if(nc)nc.remove();
+  var el=document.getElementById('play-content');
 
-  var nameCard = document.getElementById('name-card');
-  if (nameCard) nameCard.remove();
+  var scoreBar='<div class="glass-card" style="margin-bottom:2px">'+
+    '<div class="score-bar">'+
+      '<div class="score-fraction" id="sn">0<span>/'+quiz.questions.length+'</span></div>'+
+      '<div class="progress-wrap"><div class="progress-track"><div class="progress-fill" id="pf" style="width:0%"></div></div></div>'+
+      '<div class="pct-label" id="pct">⚽ 0%</div>'+
+    '</div></div>';
 
-  var qc = document.getElementById('qc');
-  for (var i=0; i<quiz.questions.length; i++) {
+  var qDiv=document.createElement('div');
+  qDiv.innerHTML=scoreBar;
+  var qc=document.createElement('div');
+  qc.className='questions';qc.id='qc';
+  qDiv.appendChild(qc);
+  el.innerHTML='';
+  el.appendChild(qDiv);
+
+  var wsDiv=document.createElement('div');wsDiv.id='ws';el.appendChild(wsDiv);
+
+  for(var i=0;i<quiz.questions.length;i++){
     (function(idx){
-      var q    = quiz.questions[idx];
-      var card = document.createElement('div');
-      card.className = 'q-card';
-      card.id = 'card'+idx;
-      var imgHtml = q.imageUrl&&q.imageUrl.trim() ? '<img class="q-img" src="'+esc(q.imageUrl)+'" alt="" onerror="this.style.display=\'none\'" />' : '';
-      card.innerHTML =
-        imgHtml +
-        '<div class="q-row"><div class="q-num">'+(idx+1)+'</div><div class="q-text">'+esc(q.question)+'</div></div>' +
-        '<div class="q-answer-row"><input class="q-input" id="inp'+idx+'" type="text" placeholder="Answer…" autocomplete="off" /><div class="q-checkmark">✓</div></div>' +
-        (q.hint ? '<div class="q-hint" id="hint'+idx+'"><div class="q-hint-label">Hint</div>'+esc(q.hint)+'</div>' : '') +
+      var q=quiz.questions[idx];
+      var card=document.createElement('div');
+      card.className='q-card';card.id='card'+idx;
+      var imgHtml=q.imageUrl&&q.imageUrl.trim()?'<img class="q-img" src="'+esc(q.imageUrl)+'" alt="" onerror="this.style.display=\'none\'" />':'';
+      card.innerHTML=imgHtml+
+        '<div class="q-row">'+
+          '<div class="q-num">'+(idx+1)+'</div>'+
+          '<div class="q-text">'+esc(q.question)+'</div>'+
+          '<div class="q-score-badge" id="sb'+idx+'"></div>'+
+        '</div>'+
+        '<div class="q-answer-row">'+
+          '<input class="q-input" id="inp'+idx+'" type="text" placeholder="Answer…" autocomplete="off" spellcheck="false" />'+
+          '<div class="q-checkmark">✓</div>'+
+        '</div>'+
+        (q.hint?'<div class="q-hint" id="hint'+idx+'"><div class="q-hint-label">💡 Hint</div>'+esc(q.hint)+'</div>':'')+
         '<div class="q-wrong" id="wc'+idx+'"></div>';
       qc.appendChild(card);
-
-      var inp = document.getElementById('inp'+idx);
-      inp.addEventListener('keydown', function(e){ if(e.key==='Enter') checkAnswer(idx); });
-      inp.addEventListener('blur',    function(){   checkAnswer(idx); });
+      var inp=document.getElementById('inp'+idx);
+      inp.addEventListener('keydown',function(e){if(e.key==='Enter')checkAnswer(idx);});
+      inp.addEventListener('blur',function(){checkAnswer(idx);});
     })(i);
   }
 }
 
 function checkAnswer(i) {
-  var quiz = currentQuiz;
-  if (!quiz||solvedArr[i]) return;
-  var inp = document.getElementById('inp'+i);
-  if (!inp) return;
-  var val = inp.value.trim().toLowerCase();
-  if (!val) return;
+  var quiz=currentQuiz;
+  if(!quiz||solvedArr[i])return;
+  var inp=document.getElementById('inp'+i);
+  if(!inp)return;
+  var val=inp.value.trim();
+  if(!val)return;
 
-  var accepted = quiz.questions[i].answers.map(function(a){return a.trim().toLowerCase();}).filter(Boolean);
-  var correct  = accepted.some(function(a){return val===a||val.indexOf(a)>=0||a.indexOf(val)>=0;});
+  // Exact match, case-insensitive only
+  var accepted=quiz.questions[i].answers.map(function(a){return a.trim().toLowerCase();}).filter(Boolean);
+  var correct=accepted.indexOf(val.toLowerCase())>=0;
 
-  if (correct) {
+  if(correct){
     solvedArr[i]=true;
+    var pts=hintUsed[i]?1:3;
     inp.value=titleCase(quiz.questions[i].answers[0]);
-    inp.classList.add('correct');
-    inp.disabled=true;
-    document.getElementById('card'+i).classList.add('solved');
-    var hint=document.getElementById('hint'+i); if(hint)hint.classList.remove('show');
-    var wc=document.getElementById('wc'+i); if(wc){wc.classList.remove('show');wc.textContent='';}
+    inp.classList.add('correct');inp.disabled=true;
+    var card=document.getElementById('card'+i);
+    card.classList.add('solved');
+    var sb=document.getElementById('sb'+i);
+    if(sb){sb.textContent=pts===3?'+3 pts':'+1 pt';sb.className='q-score-badge '+(pts===3?'pts3':'pts1');}
+    var hint=document.getElementById('hint'+i);if(hint)hint.classList.remove('show');
+    var wc=document.getElementById('wc'+i);if(wc){wc.classList.remove('show');wc.textContent='';}
 
     var count=solvedArr.filter(Boolean).length;
     var pct=Math.round(count/quiz.questions.length*100);
@@ -435,25 +494,31 @@ function checkAnswer(i) {
     document.getElementById('pf').style.width=pct+'%';
     document.getElementById('pct').textContent=(pct===100?'🏆':'⚽')+' '+pct+'%';
 
-    if (count===quiz.questions.length) setTimeout(function(){showWin(quiz,count);},400);
+    if(count===quiz.questions.length) setTimeout(function(){showWin(quiz);},400);
   } else {
     wrongCounts[i]++;
-    inp.classList.remove('shake'); void inp.offsetWidth; inp.classList.add('shake');
+    inp.classList.remove('shake');void inp.offsetWidth;inp.classList.add('shake');
     setTimeout(function(){inp.classList.remove('shake');},400);
-    inp.value=''; inp.focus();
+    inp.value='';inp.focus();
 
-    if (wrongCounts[i]>=3&&quiz.questions[i].hint) {
-      var hint=document.getElementById('hint'+i); if(hint)hint.classList.add('show');
+    // Show hint after 3 wrong
+    if(wrongCounts[i]>=3&&quiz.questions[i].hint&&!hintUsed[i]){
+      hintUsed[i]=true;
+      var hint=document.getElementById('hint'+i);if(hint)hint.classList.add('show');
     }
-    if (wrongCounts[i]>=2) {
+    if(wrongCounts[i]>=2&&!hintUsed[i]){
       var wc=document.getElementById('wc'+i);
-      if (wc) { wc.classList.add('show'); var rem=3-wrongCounts[i]; wc.textContent=rem>0?(rem+' more attempt'+(rem===1?'':'s')+' until hint'):''; }
+      if(wc){wc.classList.add('show');var rem=3-wrongCounts[i];wc.textContent=rem>0?(rem+' more wrong answer'+(rem===1?'':'s')+' until hint'):'';}
     }
   }
 }
 
-function showWin(quiz,score){
-  var total=quiz.questions.length, pct=Math.round(score/total*100);
+async function showWin(quiz) {
+  // Calculate total points
+  var totalPts=0;
+  for(var i=0;i<quiz.questions.length;i++) totalPts+=solvedArr[i]?(hintUsed[i]?1:3):0;
+  var maxPts=quiz.questions.length*3;
+  var pct=Math.round(totalPts/maxPts*100);
   var verdict,emoji;
   if(pct===100){verdict='World Class';emoji='🌟';}
   else if(pct>=80){verdict='Cracking Display';emoji='🔥';}
@@ -461,29 +526,41 @@ function showWin(quiz,score){
   else if(pct>=40){verdict='Needs Work';emoji='😅';}
   else{verdict='Back to Training';emoji='😬';}
 
+  // Submit score to Google Sheets
+  var week=quiz.title||'Unknown Week';
+  var hintsCount=hintUsed.filter(Boolean).length;
+  try { await api('submitScore',{player:playerName,week:week,score:totalPts,hintsUsed:hintsCount}); }
+  catch(e){}
+
+  // Dot grid
   var dots='';
-  for(var i=0;i<total;i++) dots+='<div class="rc-dot '+(solvedArr[i]?'ok':'no')+'">'+(i+1)+'</div>';
+  for(var i=0;i<quiz.questions.length;i++){
+    var cls=solvedArr[i]?(hintUsed[i]?'pts1':'pts3'):'no';
+    dots+='<div class="rc-dot '+cls+'">'+(i+1)+'</div>';
+  }
 
   var ws=document.getElementById('ws');
   ws.innerHTML=
     '<div class="glass-card" style="margin-top:16px"><div class="win-wrap">'+
       '<div class="win-name">'+(playerName?esc(playerName):'')+'</div>'+
-      '<div class="win-score-display">'+score+'</div>'+
-      '<div class="win-total">out of '+total+'</div>'+
+      '<div class="win-score-display">'+totalPts+'</div>'+
+      '<div class="win-total">out of '+maxPts+' points</div>'+
       '<div class="win-verdict">'+emoji+' '+verdict+'</div>'+
+      '<div class="win-points-badge">🏆 '+totalPts+' pts added to league</div>'+
       '<div class="win-actions">'+
         '<button class="apple-btn" onclick="toggleResultsCard()">📸 Results Card</button>'+
-        '<button class="apple-btn apple-btn-secondary" onclick="renderPlay()">🔄 Play Again</button>'+
+        '<button class="apple-btn apple-btn-secondary" onclick="switchView(\'league\')">🏆 See League</button>'+
       '</div>'+
       '<div class="results-card" id="results-card">'+
         '<div style="height:3px;background:linear-gradient(90deg,#241f20 0%,#241f20 33.3%,#DA291C 33.3%,#DA291C 66.6%,#034694 66.6%,#034694 100%);margin:-28px -28px 20px;"></div>'+
         '<div class="rc-title">Papa New Quizzes</div>'+
         (quiz.title?'<div class="rc-week">'+esc(quiz.title)+'</div>':'')+
         (playerName?'<div class="rc-name">'+esc(playerName)+'</div>':'')+
-        '<div class="rc-score">'+score+'/'+total+'</div>'+
+        '<div class="rc-score">'+totalPts+'</div>'+
+        '<div class="rc-points">out of '+maxPts+' pts</div>'+
         '<div class="rc-verdict">'+emoji+' '+verdict+'</div>'+
         '<div class="rc-dots">'+dots+'</div>'+
-        '<div class="rc-footer">📱 Screenshot &amp; share · Papa New Quizzes</div>'+
+        '<div class="rc-footer">📱 Screenshot &amp; share · papanewquizzes.com</div>'+
       '</div>'+
     '</div></div>'+
     buildReview(quiz);
@@ -504,14 +581,72 @@ function toggleResultsCard(){
 function buildReview(quiz){
   var html='<div class="review-section glass-card" style="margin-top:2px"><div style="padding:16px 20px 0"><div class="review-label">📋 Answers</div></div>';
   for(var i=0;i<quiz.questions.length;i++){
-    var ok=solvedArr[i];
-    html+='<div class="review-item'+(ok?' correct':'')+'">'+
+    var pts=solvedArr[i]?(hintUsed[i]?1:3):0;
+    var cls=pts===3?'pts3':pts===1?'pts1':'';
+    var badgeCls=pts===3?'pts3-badge':pts===1?'pts1-badge':'pts0-badge';
+    var badgeTxt=pts===3?'+3 pts':pts===1?'+1 pt':'0 pts';
+    html+='<div class="review-item '+cls+'">'+
       '<div class="review-num">'+(i+1)+'</div>'+
-      '<div class="review-body"><div class="review-q">'+esc(quiz.questions[i].question)+'</div><div class="review-a">'+(ok?'✓ ':'✗ ')+esc(titleCase(quiz.questions[i].answers[0]))+'</div></div>'+
-      '<div style="font-size:16px;flex-shrink:0">'+(ok?'✅':'❌')+'</div>'+
+      '<div class="review-body"><div class="review-q">'+esc(quiz.questions[i].question)+'</div>'+
+      '<div class="review-a">'+(pts>0?'✓ ':'✗ ')+esc(titleCase(quiz.questions[i].answers[0]))+'</div></div>'+
+      '<div class="review-pts '+badgeCls+'">'+badgeTxt+'</div>'+
     '</div>';
   }
   return html+'</div>';
+}
+
+// ── LEAGUE ────────────────────────────────────────────────────
+async function renderLeague() {
+  var el=document.getElementById('league-content');
+  el.innerHTML='<div class="glass-card"><div class="loading-state"><span class="spinner"></span>Loading league…</div></div>';
+
+  try {
+    var data=await api('getLeague');
+    var league=data.league||[];
+    var weeks=data.weeks||[];
+
+    if(!league.length){
+      el.innerHTML='<div class="glass-card"><div class="no-league"><span class="no-league-emoji">🏆</span><h2>No Scores Yet</h2><p>Complete this week\'s quiz to get on the board!</p></div></div>';
+      return;
+    }
+
+    var html='<div class="glass-card"><div style="overflow-x:auto"><table class="league-table">'+
+      '<thead><tr>'+
+        '<th style="width:32px">#</th>'+
+        '<th>Player</th>'+
+        '<th class="num">Pts</th>'+
+        '<th class="num">Played</th>'+
+        (weeks.length ? '<th class="week-cols" colspan="'+weeks.length+'">Weeks</th>' : '')+
+      '</tr></thead><tbody>';
+
+    league.forEach(function(p){
+      var isMe=playerName&&p.name.toLowerCase()===playerName.toLowerCase();
+      var posCls=p.position===1?'pos-1':p.position===2?'pos-2':p.position===3?'pos-3':'';
+      var medal=p.position===1?'🥇':p.position===2?'🥈':p.position===3?'🥉':'';
+
+      html+='<tr'+(isMe?' class="me"':'')+'>';
+      html+='<td class="pos-cell '+posCls+'">'+(medal||p.position)+'</td>';
+      html+='<td class="player-cell">'+esc(p.name)+(isMe?'<span class="you-tag">You</span>':'')+'</td>';
+      html+='<td class="pts-cell">'+p.total+'</td>';
+      html+='<td class="played-cell">'+p.played+'</td>';
+
+      // Week columns
+      if(weeks.length){
+        weeks.forEach(function(w){
+          var s=p.weekScores[weeks.indexOf(w)];
+          var cls=s===null?'none':s>=20?'high':s>0?'low':'zero';
+          var disp=s===null?'–':String(s);
+          html+='<td class="week-cols"><span class="week-score '+cls+'">'+disp+'</span></td>';
+        });
+      }
+      html+='</tr>';
+    });
+
+    html+='</tbody></table></div></div>';
+    el.innerHTML=html;
+  } catch(e) {
+    el.innerHTML='<div class="glass-card"><div class="no-league"><span class="no-league-emoji">⚠️</span><h2>Connection Error</h2><p>Couldn\'t load the league. Please try again.</p></div></div>';
+  }
 }
 
 // ── CONFETTI ──────────────────────────────────────────────────
@@ -529,8 +664,6 @@ function launchConfetti(){
 
 // ── ADMIN AUTH ────────────────────────────────────────────────
 var adminUnlocked=false;
-var DRAFT_STORAGE_KEY='pnq_admin_draft';
-
 function renderAdminGate(){
   document.getElementById('admin-gate').style.display  =adminUnlocked?'none':'block';
   document.getElementById('admin-panel').style.display =adminUnlocked?'block':'none';
@@ -546,20 +679,12 @@ document.addEventListener('keydown',function(e){if(e.key==='Enter'&&document.act
 
 // ── LOCAL DRAFT ───────────────────────────────────────────────
 function saveLocalDraft(){
-  try{
-    var ti=document.getElementById('quiz-title-input');
-    localStorage.setItem(DRAFT_STORAGE_KEY,JSON.stringify({rows:builderRows,title:ti?ti.value:''}));
-  }catch(e){}
+  try{var ti=document.getElementById('quiz-title-input');localStorage.setItem(DRAFT_KEY,JSON.stringify({rows:builderRows,title:ti?ti.value:''}));}catch(e){}
 }
 function loadLocalDraft(){
   try{
-    var raw=localStorage.getItem(DRAFT_STORAGE_KEY);
-    if(raw){
-      var d=JSON.parse(raw);
-      if(d.rows&&d.rows.length)builderRows=d.rows;
-      var ti=document.getElementById('quiz-title-input');
-      if(ti&&d.title)ti.value=d.title;
-    }
+    var raw=localStorage.getItem(DRAFT_KEY);
+    if(raw){var d=JSON.parse(raw);if(d.rows&&d.rows.length)builderRows=d.rows;var ti=document.getElementById('quiz-title-input');if(ti&&d.title)ti.value=d.title;}
   }catch(e){}
 }
 
@@ -567,58 +692,61 @@ function loadLocalDraft(){
 var builderRows=(function(){var r=[];for(var i=0;i<10;i++)r.push({question:'',answers:'',hint:'',imageUrl:''});return r;})();
 
 function renderBuilderList(){
-  var list=document.getElementById('q-builder-list');
-  if(!list)return;
+  var list=document.getElementById('q-builder-list');if(!list)return;
   list.innerHTML=builderRows.map(function(r,i){
     return '<div class="q-builder-row">'+
       '<div class="q-builder-top"><div class="q-builder-num">'+(i+1)+'</div><div class="q-builder-label">Question '+(i+1)+'</div>'+(builderRows.length>1?'<button class="q-remove-btn" onclick="removeBuilderRow('+i+')">×</button>':'')+  '</div>'+
       '<div class="q-builder-fields">'+
         '<input class="builder-input" placeholder="Question" value="'+esc(r.question)+'" oninput="builderRows['+i+'].question=this.value;saveLocalDraft()" />'+
-        '<input class="builder-input answer-f" placeholder="✅ Answer(s), comma-separated" value="'+esc(r.answers)+'" oninput="builderRows['+i+'].answers=this.value;saveLocalDraft()" />'+
-        '<input class="builder-input hint-f" placeholder="💡 Hint after 3 wrong attempts (optional)" value="'+esc(r.hint)+'" oninput="builderRows['+i+'].hint=this.value;saveLocalDraft()" />'+
+        '<input class="builder-input answer-f" placeholder="✅ Accepted answer(s), comma-separated (exact spelling)" value="'+esc(r.answers)+'" oninput="builderRows['+i+'].answers=this.value;saveLocalDraft()" />'+
+        '<input class="builder-input hint-f" placeholder="💡 Hint shown after 3 wrong attempts (optional)" value="'+esc(r.hint)+'" oninput="builderRows['+i+'].hint=this.value;saveLocalDraft()" />'+
         '<input class="builder-input img-f" placeholder="🖼 Image URL (optional)" value="'+esc(r.imageUrl)+'" oninput="builderRows['+i+'].imageUrl=this.value;saveLocalDraft()" />'+
       '</div></div>';
   }).join('');
 }
 
-function addBuilderRow(){builderRows.push({question:'',answers:'',hint:'',imageUrl:''});renderBuilderList();setTimeout(function(){var l=document.getElementById('q-builder-list');if(l&&l.lastElementChild){var inp=l.lastElementChild.querySelector('input');if(inp){inp.focus();inp.scrollIntoView({behavior:'smooth',block:'nearest'});}};},50);}
+function addBuilderRow(){builderRows.push({question:'',answers:'',hint:'',imageUrl:''});renderBuilderList();setTimeout(function(){var l=document.getElementById('q-builder-list');if(l&&l.lastElementChild){var inp=l.lastElementChild.querySelector('input');if(inp){inp.focus();inp.scrollIntoView({behavior:'smooth',block:'nearest'});}}},50);}
 function removeBuilderRow(i){builderRows.splice(i,1);renderBuilderList();}
 function clearBuilder(){
   if(!confirm('Clear this week\'s quiz? This cannot be undone.'))return;
   builderRows=[];for(var i=0;i<10;i++)builderRows.push({question:'',answers:'',hint:'',imageUrl:''});
   var ti=document.getElementById('quiz-title-input');if(ti)ti.value='';
-  localStorage.removeItem(DRAFT_STORAGE_KEY);
+  localStorage.removeItem(DRAFT_KEY);
   document.getElementById('save-error').style.display='none';
   document.getElementById('save-success').style.display='none';
   renderBuilderList();
 }
 
-// ── SAVE TO SHEET ─────────────────────────────────────────────
+// ── SAVE QUIZ ─────────────────────────────────────────────────
 async function saveQuizToSheet(){
   var errEl=document.getElementById('save-error'),okEl=document.getElementById('save-success'),btn=document.getElementById('save-btn');
   errEl.style.display='none';okEl.style.display='none';
-
   var title=document.getElementById('quiz-title-input').value.trim();
   var questions=builderRows.filter(function(r){return r.question.trim();}).map(function(r){
     return{question:r.question.trim(),answers:r.answers.split(',').map(function(a){return a.trim();}).filter(Boolean),hint:r.hint.trim(),imageUrl:r.imageUrl.trim()};
   });
-
   if(!questions.length){errEl.textContent='Add at least one question.';errEl.style.display='block';return;}
   var empty=-1;for(var i=0;i<questions.length;i++){if(!questions[i].answers.length){empty=i;break;}}
   if(empty>=0){errEl.textContent='Question '+(empty+1)+' needs an answer.';errEl.style.display='block';return;}
-
   btn.textContent='⏳ Saving…';btn.disabled=true;
-
   try{
     await api('saveQuiz',{title:title,questions:questions});
     okEl.textContent='✅ Saved! Quiz is now live at papanewquizzes.com';
     okEl.style.display='block';
-  }catch(e){
-    errEl.textContent='⚠️ Save failed. Check your API URL.';
-    errEl.style.display='block';
-  }
-
+  }catch(e){errEl.textContent='⚠️ Save failed. Check your connection.';errEl.style.display='block';}
   btn.textContent='💾 Save & Go Live';btn.disabled=false;
+}
+
+// ── RESET LEAGUE ──────────────────────────────────────────────
+async function resetLeagueSeason(){
+  if(!confirm('Reset the entire league season? This permanently deletes all scores and cannot be undone.'))return;
+  var errEl=document.getElementById('league-error'),okEl=document.getElementById('league-success');
+  errEl.style.display='none';okEl.style.display='none';
+  try{
+    await api('resetLeague');
+    okEl.textContent='✅ League season has been reset.';
+    okEl.style.display='block';
+  }catch(e){errEl.textContent='⚠️ Reset failed.';errEl.style.display='block';}
 }
 
 // ── UTILS ─────────────────────────────────────────────────────
