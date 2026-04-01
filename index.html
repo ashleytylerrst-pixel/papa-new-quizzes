@@ -386,38 +386,86 @@ function switchView(v) {
 
 // ── PLAY ──────────────────────────────────────────────────────
 var solvedArr=[], wrongCounts=[], hintUsed=[], currentQuiz=null, playerName='';
+var QUIZ_CACHE_KEY = 'pnq_quiz_cache';
+var checkedPlayedResult = null; // prefetched checkPlayed result
 
 async function renderPlay() {
   var el = document.getElementById('play-content');
-  el.innerHTML = '<div class="glass-card"><div class="loading-state"><span class="spinner"></span>Loading quiz…</div></div>';
 
+  // Show cached quiz instantly if available, then refresh in background
+  var cached = null;
   try {
-    var data = await api('getQuiz');
-    var quiz = data.quiz;
-    if (!quiz || !quiz.questions || !quiz.questions.length) {
-      el.innerHTML = '<div class="glass-card"><div class="no-quiz"><span class="no-quiz-emoji">⏳</span><h2>No Quiz Yet</h2><p>The gaffer hasn\'t set this week\'s quiz yet. Check back soon!</p></div></div>';
-      return;
+    var raw = localStorage.getItem(QUIZ_CACHE_KEY);
+    if (raw) cached = JSON.parse(raw);
+  } catch(e) {}
+
+  if (cached && cached.questions && cached.questions.length) {
+    // Show name screen immediately from cache
+    showNameScreen(cached, el);
+    // Refresh in background silently
+    api('getQuiz').then(function(data){
+      if (data.quiz && data.quiz.questions && data.quiz.questions.length) {
+        try { localStorage.setItem(QUIZ_CACHE_KEY, JSON.stringify(data.quiz)); } catch(e) {}
+        // Only update if the quiz has changed
+        if (JSON.stringify(data.quiz) !== JSON.stringify(currentQuiz)) {
+          currentQuiz = data.quiz;
+        }
+      }
+    }).catch(function(){});
+  } else {
+    // No cache — show spinner and fetch
+    el.innerHTML = '<div class="glass-card"><div class="loading-state"><span class="spinner"></span>Loading quiz…</div></div>';
+    try {
+      var data = await api('getQuiz');
+      var quiz = data.quiz;
+      if (!quiz || !quiz.questions || !quiz.questions.length) {
+        el.innerHTML = '<div class="glass-card"><div class="no-quiz"><span class="no-quiz-emoji">⏳</span><h2>No Quiz Yet</h2><p>The gaffer hasn\'t set this week\'s quiz yet. Check back soon!</p></div></div>';
+        return;
+      }
+      try { localStorage.setItem(QUIZ_CACHE_KEY, JSON.stringify(quiz)); } catch(e) {}
+      showNameScreen(quiz, el);
+    } catch(e) {
+      el.innerHTML='<div class="glass-card"><div class="no-quiz"><span class="no-quiz-emoji">📶</span><h2>Couldn\'t Load Quiz</h2><p style="margin-bottom:20px">This is usually a temporary blip. Give it a second and try again.</p><button class="apple-btn" onclick="renderPlay()" style="max-width:200px;margin:0 auto">↻ Try Again</button></div></div>';
     }
-    currentQuiz = quiz;
-    if (quiz.title) document.getElementById('play-subtitle').textContent = quiz.title;
-
-    // Name screen
-    el.innerHTML = '<div class="glass-card" id="name-card"><div class="name-screen">'+
-      '<span class="name-screen-emoji">⚽</span>'+
-      '<h2>'+(quiz.title||'This Week\'s Quiz')+'</h2>'+
-      '<p>'+quiz.questions.length+' questions · 3 pts per answer · 1 pt if you need a hint</p>'+
-      '<p style="font-size:12px;background:rgba(255,159,10,0.1);border:0.5px solid rgba(255,159,10,0.3);border-radius:8px;padding:10px 14px;color:#b25000;margin-bottom:20px;line-height:1.6"><strong>⚠️ Important:</strong> Use the same name every week so your scores add up correctly on the league table. Even a small difference (e.g. "Dan" vs "Danny") will create a separate entry.</p>'+
-      '<input class="name-field" id="name-input" type="text" placeholder="Your name" maxlength="20" autocomplete="off" />'+
-      '<button class="apple-btn" onclick="startQuiz()">Start Quiz →</button>'+
-      '</div></div>';
-
-    setTimeout(function(){
-      var ni=document.getElementById('name-input');
-      if(ni){ni.focus();ni.addEventListener('keydown',function(e){if(e.key==='Enter')startQuiz();});}
-    },100);
-  } catch(e) {
-    el.innerHTML='<div class="glass-card"><div class="no-quiz"><span class="no-quiz-emoji">📶</span><h2>Couldn\'t Load Quiz</h2><p style="margin-bottom:20px">This is usually a temporary blip. Give it a second and try again.</p><button class="apple-btn" onclick="renderPlay()" style="max-width:200px;margin:0 auto">↻ Try Again</button></div></div>';
   }
+}
+
+function showNameScreen(quiz, el) {
+  currentQuiz = quiz;
+  checkedPlayedResult = null;
+  if (quiz.title) document.getElementById('play-subtitle').textContent = quiz.title;
+
+  el.innerHTML = '<div class="glass-card" id="name-card"><div class="name-screen">'+
+    '<span class="name-screen-emoji">⚽</span>'+
+    '<h2>'+(quiz.title||'This Week\'s Quiz')+'</h2>'+
+    '<p>'+quiz.questions.length+' questions · 3 pts per answer · 1 pt if you need a hint</p>'+
+    '<p style="font-size:12px;background:rgba(255,159,10,0.1);border:0.5px solid rgba(255,159,10,0.3);border-radius:8px;padding:10px 14px;color:#b25000;margin-bottom:20px;line-height:1.6"><strong>⚠️ Important:</strong> Use the same name every week so your scores add up correctly on the league table. Even a small difference (e.g. "Dan" vs "Danny") will create a separate entry.</p>'+
+    '<input class="name-field" id="name-input" type="text" placeholder="Your name" maxlength="20" autocomplete="off" />'+
+    '<button class="apple-btn" onclick="startQuiz()">Start Quiz →</button>'+
+    '</div></div>';
+
+  // Prefetch checkPlayed in background as soon as name is typed
+  setTimeout(function(){
+    var ni=document.getElementById('name-input');
+    if(!ni) return;
+    ni.focus();
+    ni.addEventListener('keydown',function(e){if(e.key==='Enter')startQuiz();});
+    var prefetchTimer=null;
+    ni.addEventListener('input', function(){
+      clearTimeout(prefetchTimer);
+      checkedPlayedResult=null;
+      var val=ni.value.trim();
+      if(val.length<2) return;
+      // Debounce — wait 600ms after they stop typing then prefetch
+      prefetchTimer=setTimeout(function(){
+        var name=val.replace(/\b\w/g,function(c){return c.toUpperCase();});
+        var week=quiz.title||'Unknown Week';
+        api('checkPlayed',{player:name,week:week}).then(function(r){
+          checkedPlayedResult=r;
+        }).catch(function(){});
+      },600);
+    });
+  },100);
 }
 
 function startQuiz() {
@@ -427,13 +475,12 @@ function startQuiz() {
   var quiz=currentQuiz;
   var week=quiz.title||'Unknown Week';
 
-  // Disable button while checking
+  // Use prefetched result if it matches current name, otherwise fetch now
   var btn=document.querySelector('#name-card .apple-btn');
-  if(btn){btn.textContent='Checking…';btn.disabled=true;}
+  var cachedName=val.replace(/\b\w/g,function(c){return c.toUpperCase();});
 
-  // Check server-side if this player has already played this week
-  api('checkPlayed',{player:playerName,week:week}).then(function(data){
-    if(data.played){
+  function handlePlayedResult(data) {
+    if(data && data.played){
       var el=document.getElementById('play-content');
       el.innerHTML='<div class="glass-card"><div class="name-screen">'+
         '<span class="name-screen-emoji">✅</span>'+
@@ -445,10 +492,20 @@ function startQuiz() {
       return;
     }
     beginQuiz(quiz);
-  }).catch(function(){
-    // If check fails just let them play
-    beginQuiz(quiz);
-  });
+  }
+
+  if(checkedPlayedResult !== null) {
+    // Already have the answer — instant
+    handlePlayedResult(checkedPlayedResult);
+  } else {
+    // Still fetching — show brief loading state
+    if(btn){btn.textContent='Checking…';btn.disabled=true;}
+    api('checkPlayed',{player:playerName,week:week}).then(function(data){
+      handlePlayedResult(data);
+    }).catch(function(){
+      beginQuiz(quiz);
+    });
+  }
 }
 
 function beginQuiz(quiz) {
@@ -772,6 +829,7 @@ async function saveQuizToSheet(){
   btn.textContent='⏳ Saving…';btn.disabled=true;
   try{
     await api('saveQuiz',{title:title,questions:questions});
+    try { localStorage.removeItem(QUIZ_CACHE_KEY); } catch(e) {}
     okEl.textContent='✅ Saved! Quiz is now live at papanewquizzes.com';
     okEl.style.display='block';
   }catch(e){errEl.textContent='⚠️ Save failed. Check your connection.';errEl.style.display='block';}
