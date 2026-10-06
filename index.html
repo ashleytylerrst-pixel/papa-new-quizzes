@@ -283,7 +283,10 @@ h1{font-size:clamp(40px,9vw,64px);font-weight:700;letter-spacing:-0.03em;line-he
 .ten-board{display:flex;flex-direction:column;gap:6px;padding:0 20px 16px;}
 .ten-slot{display:flex;align-items:center;gap:12px;background:rgba(0,0,0,0.04);border-radius:var(--radius-xs);padding:10px 14px;min-height:44px;transition:background 0.3s;}
 .ten-slot-num{font-size:13px;font-weight:700;color:var(--text-tertiary);width:20px;font-variant-numeric:tabular-nums;}
-.ten-slot-name{font-size:15px;font-weight:500;color:var(--text);}
+.ten-slot-name{font-size:15px;font-weight:500;color:var(--text);flex:1;}
+.ten-slot-stat{font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;color:var(--text-tertiary);white-space:nowrap;}
+.ten-slot.found .ten-slot-stat{color:rgba(255,255,255,0.65);}
+.ten-builder-row .stat-f{width:120px;flex-shrink:0;}
 .ten-slot.found{background:#1d1d1f;animation:popIn 0.35s cubic-bezier(0.34,1.56,0.64,1);}
 .ten-slot.found .ten-slot-num{color:rgba(255,255,255,0.5);}
 .ten-slot.found .ten-slot-name{color:#fff;}
@@ -385,10 +388,10 @@ h1{font-size:clamp(40px,9vw,64px);font-weight:700;letter-spacing:-0.03em;line-he
             <button class="add-q-btn" onclick="addBuilderRow()">⚽ Add Question</button>
           </div>
           <div id="tenable-builder" style="display:none">
-            <div class="admin-notice">Set one top 10 list. Players type answers until they find all 10 or press "I'm done". 1 pt per answer, +5 bonus for all 10. Their time is recorded and breaks ties.<br><br>For each answer you can add other accepted spellings, separated by commas (e.g. <em>Alan Shearer, Shearer</em>). Surnames and small typos are accepted automatically.</div>
+            <div class="admin-notice">Set one top 10 list. Players type answers until they find all 10 or press "I'm done". 1 pt per answer, +5 bonus for all 10. Their time is recorded and breaks ties.<br><br>For each answer you can add other accepted spellings, separated by commas (e.g. <em>Alan Shearer, Shearer</em>). Surnames and small typos are accepted automatically.<br><br>The number box is optional (e.g. <em>963 apps</em> or <em>74,197</em>). It doesn't affect the answer, it's revealed next to the name once it's found.</div>
             <label class="field-label">The list</label>
             <input class="title-field" id="ten-prompt-input" style="font-size:16px" placeholder="e.g. Top 10 all-time Premier League goalscorers" oninput="tenDraft.prompt=this.value;saveLocalDraft()" />
-            <label class="field-label">Answers (in order, 1 = top)</label>
+            <label class="field-label">Answers (in order, 1 = top) · Number shown once guessed</label>
             <div id="ten-builder-list"></div>
             <input class="builder-input img-f" style="margin-top:10px" id="ten-img-input" placeholder="🖼 Image URL (optional)" oninput="tenDraft.imageUrl=this.value;saveLocalDraft()" />
           </div>
@@ -897,7 +900,19 @@ function typoOk(guess,target){
   return editDist(guess,target)<=allowed;
 }
 // Score how well a guess matches one list item: 2 = full answer, 1 = surname only, 0 = no match
-function tenMatch(guess,item){
+// Last words that shouldn't count on their own (e.g. "Stadium" in a list of grounds)
+var TEN_GENERIC={stadium:1,park:1,road:1,lane:1,ground:1,arena:1,field:1,city:1,united:1,town:1,the:1,fc:1};
+function tenSharedLastWords(items){
+  var count={};
+  items.forEach(function(it){
+    var seen={};
+    (it.answers||[]).forEach(function(a){var w=normAns(a).split(' ');var l=w[w.length-1];if(l&&!seen[l]){seen[l]=1;count[l]=(count[l]||0)+1;}});
+  });
+  var shared={};for(var k in count)if(count[k]>1)shared[k]=1;
+  return shared;
+}
+function tenMatch(guess,item,shared){
+  shared=shared||{};
   var g=normAns(guess);if(g.length<2)return 0;
   var best=0;
   (item.answers||[]).forEach(function(a){
@@ -906,6 +921,7 @@ function tenMatch(guess,item){
     var words=t.split(' ');
     if(words.length>1){
       var last=words[words.length-1];
+      if(TEN_GENERIC[last]||shared[last])return;
       if(last.length>=3&&(g===last||typoOk(g,last)))best=Math.max(best,1);
       // Different first name but right surname (e.g. "Andy Cole" for "Andrew Cole")
       var gw=g.split(' ');
@@ -917,8 +933,9 @@ function tenMatch(guess,item){
 function tenFindItem(guess,items){
   // Prefer an exact full-name match; otherwise first unfound surname match
   var full=-1,partial=-1,alreadyFull=-1,alreadyPartial=-1;
+  var shared=tenSharedLastWords(items);
   items.forEach(function(it,i){
-    var m=tenMatch(guess,it);
+    var m=tenMatch(guess,it,shared);
     if(!m)return;
     if(tenFound[i]){ if(m===2&&alreadyFull<0)alreadyFull=i; else if(alreadyPartial<0)alreadyPartial=i; return; }
     if(m===2&&full<0)full=i; else if(m===1&&partial<0)partial=i;
@@ -939,7 +956,7 @@ function beginTenable(quiz){
   var el=document.getElementById('play-content');
   var slots='';
   for(var i=0;i<items.length;i++){
-    slots+='<div class="ten-slot" id="ts'+i+'"><div class="ten-slot-num">'+(i+1)+'</div><div class="ten-slot-name" id="tsn'+i+'"></div></div>';
+    slots+='<div class="ten-slot" id="ts'+i+'"><div class="ten-slot-num">'+(i+1)+'</div><div class="ten-slot-name" id="tsn'+i+'"></div><div class="ten-slot-stat" id="tss'+i+'"></div></div>';
   }
   el.innerHTML=
     '<div class="glass-card" style="margin-bottom:2px">'+
@@ -986,10 +1003,11 @@ function tenGuess(){
     var slot=document.getElementById('ts'+r.idx);
     slot.classList.add('found');
     document.getElementById('tsn'+r.idx).textContent=titleCase(items[r.idx].answers[0]);
+    document.getElementById('tss'+r.idx).textContent=items[r.idx].stat||'';
     var count=tenFound.filter(Boolean).length;
     document.getElementById('ten-count').innerHTML=count+'<span>/'+items.length+'</span>';
     fb.className='ten-feedback good';
-    fb.textContent='✓ '+titleCase(items[r.idx].answers[0])+' is number '+(r.idx+1);
+    fb.textContent='✓ '+titleCase(items[r.idx].answers[0])+' is number '+(r.idx+1)+(items[r.idx].stat?' ('+items[r.idx].stat+')':'');
     if(count===items.length) finishTenable(true);
   } else if(r.already){
     fb.className='ten-feedback';
@@ -1025,6 +1043,7 @@ async function finishTenable(allFound){
     if(!tenFound[i]){
       document.getElementById('ts'+i).classList.add('missed');
       document.getElementById('tsn'+i).textContent=titleCase(items[i].answers[0]);
+      document.getElementById('tss'+i).textContent=items[i].stat||'';
     }
   }
   var inputRow=document.querySelector('.ten-input-row');if(inputRow)inputRow.style.display='none';
@@ -1167,7 +1186,7 @@ function loadLocalDraft(){
   try{
     var raw=localStorage.getItem(DRAFT_KEY);
     if(raw){var d=JSON.parse(raw);if(d.rows&&d.rows.length)builderRows=d.rows;var ti=document.getElementById('quiz-title-input');if(ti&&d.title)ti.value=d.title;
-      if(d.ten&&d.ten.items&&d.ten.items.length===10)tenDraft=d.ten;
+      if(d.ten&&d.ten.items&&d.ten.items.length===10){tenDraft=d.ten;if(!tenDraft.stats||tenDraft.stats.length!==10)tenDraft.stats=['','','','','','','','','',''];}
       if(d.format)quizFormat=d.format;}
   }catch(e){}
   setFormat(quizFormat,true);
@@ -1175,7 +1194,7 @@ function loadLocalDraft(){
 
 // ── FORMAT (Normal / Tenable) ─────────────────────────────────
 var quizFormat='standard';
-function blankTenDraft(){var it=[];for(var i=0;i<10;i++)it.push('');return{prompt:'',imageUrl:'',items:it};}
+function blankTenDraft(){var it=[],st=[];for(var i=0;i<10;i++){it.push('');st.push('');}return{prompt:'',imageUrl:'',items:it,stats:st};}
 var tenDraft=blankTenDraft();
 function setFormat(f,silent){
   quizFormat=f==='tenable'?'tenable':'standard';
@@ -1192,7 +1211,8 @@ function renderTenBuilder(){
   document.getElementById('ten-img-input').value=tenDraft.imageUrl||'';
   list.innerHTML=tenDraft.items.map(function(v,i){
     return '<div class="ten-builder-row"><div class="q-builder-num">'+(i+1)+'</div>'+
-      '<input class="builder-input answer-f" placeholder="Answer '+(i+1)+(i===0?' (e.g. Alan Shearer)':'')+'" value="'+esc(v)+'" oninput="tenDraft.items['+i+']=this.value;saveLocalDraft()" /></div>';
+      '<input class="builder-input answer-f" placeholder="Answer '+(i+1)+(i===0?' (e.g. Alan Shearer)':'')+'" value="'+esc(v)+'" oninput="tenDraft.items['+i+']=this.value;saveLocalDraft()" />'+
+      '<input class="builder-input stat-f" placeholder="Number (optional)" value="'+esc(tenDraft.stats[i]||'')+'" oninput="tenDraft.stats['+i+']=this.value;saveLocalDraft()" /></div>';
   }).join('');
 }
 
@@ -1239,7 +1259,7 @@ async function saveQuizToSheet(){
     for(var k=0;k<tenDraft.items.length;k++){
       var alts=String(tenDraft.items[k]||'').split(',').map(function(a){return a.trim();}).filter(Boolean);
       if(!alts.length){errEl.textContent='Answer '+(k+1)+' is empty. A Tenable list needs all 10.';errEl.style.display='block';return;}
-      items.push({answers:alts});
+      items.push({answers:alts,stat:String(tenDraft.stats[k]||'').trim()});
     }
     btn.textContent='⏳ Saving…';btn.disabled=true;
     try{
