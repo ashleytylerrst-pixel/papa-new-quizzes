@@ -247,7 +247,64 @@ h1{font-size:clamp(40px,9vw,64px);font-weight:700;letter-spacing:-0.03em;line-he
 @keyframes fadeSlide{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
 @keyframes popIn{0%{transform:scale(0);}60%{transform:scale(1.15);}100%{transform:scale(1);}}
 #confetti-canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:999;display:none;}
-@media(max-width:480px){.page{padding:32px 16px 60px;}.name-screen{padding:28px 20px;}.win-wrap{padding:28px 20px;}.win-score-display{font-size:64px;}.week-cols{display:none;}}
+
+/* LINK BUTTON */
+.link-btn{background:none;border:none;font-family:inherit;font-size:14px;font-weight:500;color:var(--blue);cursor:pointer;padding:8px 4px;}
+.link-btn:hover{text-decoration:underline;}
+.back-row{margin-bottom:12px;}
+
+/* PAST QUIZZES */
+.archive-head{padding:20px 20px 14px;border-bottom:0.5px solid var(--separator);}
+.archive-head h2{font-size:22px;font-weight:700;letter-spacing:-0.02em;margin-bottom:4px;}
+.archive-head p{font-size:13px;color:var(--text-secondary);line-height:1.5;margin-bottom:12px;}
+.archive-head .name-field{margin-bottom:0;font-size:15px;padding:10px 14px;}
+.archive-item{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:transparent;border:none;border-bottom:0.5px solid var(--separator);font-family:inherit;padding:14px 20px;cursor:pointer;transition:background 0.15s;}
+.archive-item:last-child{border-bottom:none;}
+.archive-item:hover{background:rgba(0,0,0,0.03);}
+.archive-item.done{cursor:default;}
+.archive-item.done:hover{background:transparent;}
+.archive-main{flex:1;min-width:0;}
+.archive-title{font-size:15px;font-weight:600;color:var(--text);margin-bottom:2px;}
+.archive-meta{font-size:12px;color:var(--text-tertiary);}
+.archive-tag{font-size:11px;font-weight:600;padding:3px 9px;border-radius:980px;flex-shrink:0;}
+.archive-tag.play{background:rgba(0,113,227,0.1);color:var(--blue);}
+.archive-tag.done{background:rgba(52,199,89,0.15);color:#1a7f37;}
+.archive-tag.live{background:rgba(0,0,0,0.06);color:var(--text-secondary);}
+.type-tag{display:inline-block;font-size:10px;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;padding:1px 6px;border-radius:4px;background:#1d1d1f;color:#fff;margin-left:6px;vertical-align:middle;}
+
+/* TENABLE */
+.ten-top{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;gap:12px;}
+.ten-count{font-size:28px;font-weight:700;letter-spacing:-0.03em;line-height:1;}
+.ten-count span{color:var(--text-tertiary);font-weight:400;}
+.ten-timer{font-size:22px;font-weight:600;font-variant-numeric:tabular-nums;color:var(--text);letter-spacing:-0.01em;}
+.ten-timer-label{font-size:10px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-tertiary);text-align:right;}
+.ten-prompt{padding:20px 20px 6px;font-size:19px;font-weight:600;letter-spacing:-0.01em;line-height:1.35;text-align:center;}
+.ten-sub{padding:0 20px 16px;font-size:13px;color:var(--text-secondary);text-align:center;}
+.ten-board{display:flex;flex-direction:column;gap:6px;padding:0 20px 16px;}
+.ten-slot{display:flex;align-items:center;gap:12px;background:rgba(0,0,0,0.04);border-radius:var(--radius-xs);padding:10px 14px;min-height:44px;transition:background 0.3s;}
+.ten-slot-num{font-size:13px;font-weight:700;color:var(--text-tertiary);width:20px;font-variant-numeric:tabular-nums;}
+.ten-slot-name{font-size:15px;font-weight:500;color:var(--text);}
+.ten-slot.found{background:#1d1d1f;animation:popIn 0.35s cubic-bezier(0.34,1.56,0.64,1);}
+.ten-slot.found .ten-slot-num{color:rgba(255,255,255,0.5);}
+.ten-slot.found .ten-slot-name{color:#fff;}
+.ten-slot.missed .ten-slot-name{color:var(--text-tertiary);}
+.ten-input-row{display:flex;gap:10px;padding:0 20px 8px;}
+.ten-input-row .q-input{font-size:16px;}
+.ten-input-row .apple-btn{width:auto;padding:10px 20px;}
+.ten-feedback{min-height:20px;padding:0 20px 12px;font-size:13px;color:var(--text-tertiary);}
+.ten-feedback.good{color:#1a7f37;font-weight:500;}
+.ten-feedback.bad{color:var(--red);}
+.ten-done-row{padding:4px 20px 20px;}
+.win-time{font-size:15px;color:var(--text-secondary);margin-bottom:8px;}
+
+/* ADMIN FORMAT TOGGLE */
+.seg{display:flex;background:rgba(0,0,0,0.05);border-radius:10px;padding:3px;gap:2px;margin-bottom:16px;}
+.seg button{flex:1;background:transparent;border:none;font-family:inherit;font-size:13px;font-weight:500;color:var(--text-secondary);padding:8px 10px;border-radius:8px;cursor:pointer;transition:all 0.2s;}
+.seg button.active{background:#fff;color:var(--text);box-shadow:0 1px 3px rgba(0,0,0,0.12);}
+.ten-builder-row{display:flex;align-items:center;gap:10px;margin-bottom:6px;}
+.ten-builder-row .q-builder-num{flex-shrink:0;}
+
+@media(max-width:480px){.page{padding:32px 16px 60px;}.name-screen{padding:28px 20px;}.win-wrap{padding:28px 20px;}.win-score-display{font-size:64px;}.week-cols{display:none;}.ten-prompt{font-size:17px;}}
 </style>
 </head>
 <body>
@@ -283,10 +340,11 @@ h1{font-size:clamp(40px,9vw,64px);font-weight:700;letter-spacing:-0.03em;line-he
       <div class="header-eyebrow">🏆 Season Standings</div>
       <h2>League Table</h2>
       <p>3 pts per correct answer · 1 pt if hint used</p>
+      <p style="font-size:13px;margin-top:4px">Tenable weeks: 1 pt per answer · +5 for all 10 · quicker time wins a tie</p>
     </div>
     <div class="scoring-key">
-      <div class="key-item"><div class="key-dot" style="background:var(--green)"></div>3 pts — no hint</div>
-      <div class="key-item"><div class="key-dot" style="background:var(--gold)"></div>1 pt — hint used</div>
+      <div class="key-item"><div class="key-dot" style="background:var(--green)"></div>3 pts - no hint</div>
+      <div class="key-item"><div class="key-dot" style="background:var(--gold)"></div>1 pt - hint used</div>
     </div>
     <div id="league-content"></div>
   </div>
@@ -314,11 +372,26 @@ h1{font-size:clamp(40px,9vw,64px);font-weight:700;letter-spacing:-0.03em;line-he
       <div class="admin-section">
         <div class="admin-section-header"><div class="admin-section-title">⚽ This Week's Quiz</div></div>
         <div class="admin-section-body">
-          <div class="admin-notice">Add your questions. Each correct answer scores 3pts (no hint) or 1pt (hint used). Players must finish all questions to score.</div>
+          <label class="field-label">Format</label>
+          <div class="seg">
+            <button id="fmt-standard" class="active" onclick="setFormat('standard')">⚽ Normal Quiz</button>
+            <button id="fmt-tenable" onclick="setFormat('tenable')">🔟 Tenable</button>
+          </div>
           <label class="field-label">Week / Title</label>
           <input class="title-field" id="quiz-title-input" placeholder="e.g. Week 4 · January Edition" oninput="saveLocalDraft()" />
-          <div id="q-builder-list"></div>
-          <button class="add-q-btn" onclick="addBuilderRow()">⚽ Add Question</button>
+          <div id="standard-builder">
+            <div class="admin-notice">Add your questions. Each correct answer scores 3pts (no hint) or 1pt (hint used). Players must finish all questions to score.</div>
+            <div id="q-builder-list"></div>
+            <button class="add-q-btn" onclick="addBuilderRow()">⚽ Add Question</button>
+          </div>
+          <div id="tenable-builder" style="display:none">
+            <div class="admin-notice">Set one top 10 list. Players type answers until they find all 10 or press "I'm done". 1 pt per answer, +5 bonus for all 10. Their time is recorded and breaks ties.<br><br>For each answer you can add other accepted spellings, separated by commas (e.g. <em>Alan Shearer, Shearer</em>). Surnames and small typos are accepted automatically.</div>
+            <label class="field-label">The list</label>
+            <input class="title-field" id="ten-prompt-input" style="font-size:16px" placeholder="e.g. Top 10 all-time Premier League goalscorers" oninput="tenDraft.prompt=this.value;saveLocalDraft()" />
+            <label class="field-label">Answers (in order, 1 = top)</label>
+            <div id="ten-builder-list"></div>
+            <input class="builder-input img-f" style="margin-top:10px" id="ten-img-input" placeholder="🖼 Image URL (optional)" oninput="tenDraft.imageUrl=this.value;saveLocalDraft()" />
+          </div>
         </div>
       </div>
       <div class="btn-row">
@@ -332,7 +405,7 @@ h1{font-size:clamp(40px,9vw,64px);font-weight:700;letter-spacing:-0.03em;line-he
       <div class="admin-section" style="margin-top:24px">
         <div class="admin-section-header"><div class="admin-section-title">🏆 League Management</div></div>
         <div class="admin-section-body">
-          <p style="font-size:13px;color:var(--text-secondary);margin-bottom:16px;line-height:1.6">Reset the league to start a new season. This permanently deletes all scores — use with caution.</p>
+          <p style="font-size:13px;color:var(--text-secondary);margin-bottom:16px;line-height:1.6">Reset the league to start a new season. This permanently deletes all scores and closes last season's past quizzes. Use with caution.</p>
           <button class="apple-btn apple-btn-danger" onclick="resetLeagueSeason()">🗑️ Reset League Season</button>
           <div class="error-msg"   id="league-error"   style="display:none"></div>
           <div class="success-msg" id="league-success" style="display:none"></div>
@@ -390,6 +463,8 @@ var QUIZ_CACHE_KEY = 'pnq_quiz_cache';
 var checkedPlayedResult = null; // prefetched checkPlayed result
 
 async function renderPlay() {
+  stopTenTimer();
+  playingFromArchive = false;
   var el = document.getElementById('play-content');
 
   // Show cached quiz instantly if available, then refresh in background
@@ -399,12 +474,12 @@ async function renderPlay() {
     if (raw) cached = JSON.parse(raw);
   } catch(e) {}
 
-  if (cached && cached.questions && cached.questions.length) {
+  if (cached && quizSize(cached)) {
     // Show name screen immediately from cache
     showNameScreen(cached, el);
     // Refresh in background silently
     api('getQuiz').then(function(data){
-      if (data.quiz && data.quiz.questions && data.quiz.questions.length) {
+      if (data.quiz && quizSize(data.quiz)) {
         try { localStorage.setItem(QUIZ_CACHE_KEY, JSON.stringify(data.quiz)); } catch(e) {}
         // Only update if the quiz has changed
         if (JSON.stringify(data.quiz) !== JSON.stringify(currentQuiz)) {
@@ -413,13 +488,13 @@ async function renderPlay() {
       }
     }).catch(function(){});
   } else {
-    // No cache — show spinner and fetch
+    // No cache - show spinner and fetch
     el.innerHTML = '<div class="glass-card"><div class="loading-state"><span class="spinner"></span>Loading quiz…</div></div>';
     try {
       var data = await api('getQuiz');
       var quiz = data.quiz;
-      if (!quiz || !quiz.questions || !quiz.questions.length) {
-        el.innerHTML = '<div class="glass-card"><div class="no-quiz"><span class="no-quiz-emoji">⏳</span><h2>No Quiz Yet</h2><p>The gaffer hasn\'t set this week\'s quiz yet. Check back soon!</p></div></div>';
+      if (!quiz || !quizSize(quiz)) {
+        el.innerHTML = '<div class="glass-card"><div class="no-quiz"><span class="no-quiz-emoji">⏳</span><h2>No Quiz Yet</h2><p>The gaffer hasn\'t set this week\'s quiz yet. Check back soon!</p><button class="link-btn" style="margin-top:12px" onclick="renderArchive()">📚 Play past quizzes</button></div></div>';
         return;
       }
       try { localStorage.setItem(QUIZ_CACHE_KEY, JSON.stringify(quiz)); } catch(e) {}
@@ -430,19 +505,37 @@ async function renderPlay() {
   }
 }
 
-function showNameScreen(quiz, el) {
+var PLAYER_KEY = 'pnq_player_name';
+var playingFromArchive = false;
+function rememberedName(){ try { return localStorage.getItem(PLAYER_KEY)||''; } catch(e){ return ''; } }
+function rememberName(n){ try { localStorage.setItem(PLAYER_KEY,n); } catch(e){} }
+function niceName(v){ return String(v||'').trim().replace(/\b\w/g,function(c){return c.toUpperCase();}); }
+function isTenable(q){ return q && q.type==='tenable'; }
+function quizSize(q){ return isTenable(q) ? (q.items||[]).length : (q.questions||[]).length; }
+
+function showNameScreen(quiz, el, fromArchive) {
   currentQuiz = quiz;
+  playingFromArchive = !!fromArchive;
   checkedPlayedResult = null;
   if (quiz.title) document.getElementById('play-subtitle').textContent = quiz.title;
 
-  el.innerHTML = '<div class="glass-card" id="name-card"><div class="name-screen">'+
-    '<span class="name-screen-emoji">⚽</span>'+
-    '<h2>'+(quiz.title||'This Week\'s Quiz')+'</h2>'+
-    '<p>'+quiz.questions.length+' questions · 3 pts per answer · 1 pt if you need a hint</p>'+
+  var desc = isTenable(quiz)
+    ? 'Tenable · name all 10 · 1 pt per answer, +5 for all 10 · you\'re against the clock'
+    : quiz.questions.length+' questions · 3 pts per answer · 1 pt if you need a hint';
+  var heading = (fromArchive ? '' : '') + esc(quiz.title||(isTenable(quiz)?'This Week\'s Tenable':'This Week\'s Quiz'));
+  var saved = rememberedName();
+
+  el.innerHTML =
+    (fromArchive ? '<div class="back-row"><button class="link-btn" onclick="renderArchive()">← Past quizzes</button></div>' : '')+
+    '<div class="glass-card" id="name-card"><div class="name-screen">'+
+    '<span class="name-screen-emoji">'+(isTenable(quiz)?'🔟':'⚽')+'</span>'+
+    '<h2>'+heading+'</h2>'+
+    '<p>'+desc+'</p>'+
     '<p style="font-size:12px;background:rgba(255,159,10,0.1);border:0.5px solid rgba(255,159,10,0.3);border-radius:8px;padding:10px 14px;color:#b25000;margin-bottom:20px;line-height:1.6"><strong>⚠️ Important:</strong> Use the same name every week so your scores add up correctly on the league table. Even a small difference (e.g. "Dan" vs "Danny") will create a separate entry.</p>'+
-    '<input class="name-field" id="name-input" type="text" placeholder="Your name" maxlength="20" autocomplete="off" />'+
-    '<button class="apple-btn" onclick="startQuiz()">Start Quiz →</button>'+
-    '</div></div>';
+    '<input class="name-field" id="name-input" type="text" placeholder="Your name" maxlength="20" autocomplete="off" value="'+esc(saved)+'" />'+
+    '<button class="apple-btn" id="start-btn" onclick="startQuiz()">'+(isTenable(quiz)?'Start the Clock →':'Start Quiz →')+'</button>'+
+    '</div></div>'+
+    (fromArchive ? '' : '<div style="text-align:center;margin-top:16px"><button class="link-btn" onclick="renderArchive()">📚 Missed a week? Play past quizzes</button></div>');
 
   // Prefetch checkPlayed in background as soon as name is typed
   setTimeout(function(){
@@ -451,61 +544,145 @@ function showNameScreen(quiz, el) {
     ni.focus();
     ni.addEventListener('keydown',function(e){if(e.key==='Enter')startQuiz();});
     var prefetchTimer=null;
-    ni.addEventListener('input', function(){
-      clearTimeout(prefetchTimer);
+    function prefetch(){
       checkedPlayedResult=null;
       var val=ni.value.trim();
       if(val.length<2) return;
-      // Debounce — wait 600ms after they stop typing then prefetch
-      prefetchTimer=setTimeout(function(){
-        var name=val.replace(/\b\w/g,function(c){return c.toUpperCase();});
-        var week=quiz.title||'Unknown Week';
-        api('checkPlayed',{player:name,week:week}).then(function(r){
-          checkedPlayedResult=r;
-        }).catch(function(){});
-      },600);
+      var name=niceName(val);
+      api('checkPlayed',{player:name,week:quiz.title||'Unknown Week'}).then(function(r){
+        if(niceName(ni.value)===name){ r._name=name; checkedPlayedResult=r; }
+      }).catch(function(){});
+    }
+    ni.addEventListener('input', function(){
+      clearTimeout(prefetchTimer);
+      checkedPlayedResult=null;
+      // Debounce - wait 600ms after they stop typing then prefetch
+      prefetchTimer=setTimeout(prefetch,600);
     });
+    if(saved) prefetch();
   },100);
 }
 
 function startQuiz() {
   var ni=document.getElementById('name-input'),val=ni?ni.value.trim():'';
   if(!val){if(ni)ni.classList.add('error');return;}
-  playerName=val.replace(/\b\w/g,function(c){return c.toUpperCase();});
+  playerName=niceName(val);
+  rememberName(playerName);
   var quiz=currentQuiz;
   var week=quiz.title||'Unknown Week';
 
-  // Use prefetched result if it matches current name, otherwise fetch now
-  var btn=document.querySelector('#name-card .apple-btn');
-  var cachedName=val.replace(/\b\w/g,function(c){return c.toUpperCase();});
+  var btn=document.getElementById('start-btn');
 
   function handlePlayedResult(data) {
     if(data && data.played){
       var el=document.getElementById('play-content');
+      var timeLine = (data.timeSeconds!==null && data.timeSeconds!==undefined) ? ' in <strong>'+fmtTime(data.timeSeconds)+'</strong>' : '';
       el.innerHTML='<div class="glass-card"><div class="name-screen">'+
         '<span class="name-screen-emoji">✅</span>'+
         '<h2>Already Played!</h2>'+
-        '<p style="margin-bottom:8px">You\'ve already completed <strong>'+esc(week)+'</strong> this week, '+esc(playerName)+'.</p>'+
-        '<p style="margin-bottom:24px;color:var(--text-secondary);font-size:14px">Your score of <strong>'+data.score+' pts</strong> has been saved to the league.</p>'+
+        '<p style="margin-bottom:8px">You\'ve already completed <strong>'+esc(week)+'</strong>, '+esc(playerName)+'.</p>'+
+        '<p style="margin-bottom:24px;color:var(--text-secondary);font-size:14px">Your score of <strong>'+data.score+' pts</strong>'+timeLine+' has been saved to the league.</p>'+
         '<button class="apple-btn" onclick="switchView(\'league\')" style="margin-bottom:10px">🏆 See League Table</button>'+
+        '<button class="apple-btn apple-btn-secondary" onclick="renderArchive()">📚 Play past quizzes</button>'+
       '</div></div>';
       return;
     }
-    beginQuiz(quiz);
+    if(isTenable(quiz)) beginTenable(quiz); else beginQuiz(quiz);
   }
 
-  if(checkedPlayedResult !== null) {
-    // Already have the answer — instant
+  if(checkedPlayedResult !== null && checkedPlayedResult._name===playerName) {
+    // Already have the answer - instant
     handlePlayedResult(checkedPlayedResult);
   } else {
-    // Still fetching — show brief loading state
+    // Still fetching - show brief loading state
     if(btn){btn.textContent='Checking…';btn.disabled=true;}
     api('checkPlayed',{player:playerName,week:week}).then(function(data){
       handlePlayedResult(data);
     }).catch(function(){
-      beginQuiz(quiz);
+      handlePlayedResult(null);
     });
   }
+}
+
+// ── PAST QUIZZES ──────────────────────────────────────────────
+async function renderArchive(){
+  stopTenTimer();
+  document.getElementById('play-subtitle').textContent='Catch up on any week you missed';
+  var el=document.getElementById('play-content');
+  var saved=rememberedName();
+  el.innerHTML=
+    '<div class="back-row"><button class="link-btn" onclick="renderPlay()">← This week\'s quiz</button></div>'+
+    '<div class="glass-card">'+
+      '<div class="archive-head"><h2>📚 Past Quizzes</h2>'+
+        '<p>Play any week you missed. Scores count in full towards the league.</p>'+
+        '<input class="name-field" id="archive-name" type="text" placeholder="Your name (to see what you\'ve played)" maxlength="20" autocomplete="off" value="'+esc(saved)+'" />'+
+      '</div>'+
+      '<div id="archive-list"><div class="loading-state"><span class="spinner"></span>Loading past quizzes…</div></div>'+
+    '</div>';
+  var ni=document.getElementById('archive-name');
+  var t=null;
+  ni.addEventListener('input',function(){clearTimeout(t);t=setTimeout(loadArchiveList,600);});
+  ni.addEventListener('keydown',function(e){if(e.key==='Enter'){clearTimeout(t);loadArchiveList();}});
+  loadArchiveList();
+}
+
+var archiveCache=[];
+async function loadArchiveList(){
+  var list=document.getElementById('archive-list');if(!list)return;
+  var ni=document.getElementById('archive-name');
+  var name=ni?niceName(ni.value):'';
+  if(name.length>=2){ rememberName(name); playerName=name; }
+  try{
+    var data=await api('getArchive',{player:name.length>=2?name:''});
+    if(!document.getElementById('archive-list'))return;
+    var qs=(data.quizzes||[]);
+    archiveCache=qs;
+    if(!qs.length){
+      list.innerHTML='<div class="no-quiz" style="padding:40px 20px"><span class="no-quiz-emoji">🗂️</span><h2>Nothing here yet</h2><p>Past quizzes will appear here once the next one goes live.</p></div>';
+      return;
+    }
+    list.innerHTML=qs.map(function(q,i){
+      var meta=(q.type==='tenable'?'Top 10 list':q.count+' questions')+(q.savedAt?' · '+fmtDate(q.savedAt):'');
+      var typeTag=q.type==='tenable'?'<span class="type-tag">Tenable</span>':'';
+      var tag, cls='archive-item';
+      if(q.played){
+        cls+=' done';
+        tag='<span class="archive-tag done">✓ '+q.score+' pts'+(q.timeSeconds!==null&&q.timeSeconds!==undefined?' · '+fmtTime(q.timeSeconds):'')+'</span>';
+      } else if(q.isCurrent){
+        tag='<span class="archive-tag live">This week</span>';
+      } else {
+        tag='<span class="archive-tag play">Play →</span>';
+      }
+      var click=q.played?'':' onclick="openArchived('+i+')"';
+      return '<button class="'+cls+'"'+click+'><div class="archive-main"><div class="archive-title">'+esc(q.title||'Untitled')+typeTag+'</div><div class="archive-meta">'+meta+'</div></div>'+tag+'</button>';
+    }).join('');
+  }catch(e){
+    list.innerHTML='<div class="no-quiz" style="padding:40px 20px"><span class="no-quiz-emoji">📶</span><h2>Couldn\'t Load</h2><p style="margin-bottom:20px">Give it a second and try again.</p><button class="apple-btn" onclick="loadArchiveList()" style="max-width:200px;margin:0 auto">↻ Try Again</button></div>';
+  }
+}
+
+async function openArchived(i){
+  var item=archiveCache[i];if(!item)return;
+  if(item.isCurrent){renderPlay();return;}
+  var el=document.getElementById('play-content');
+  el.innerHTML='<div class="glass-card"><div class="loading-state"><span class="spinner"></span>Loading quiz…</div></div>';
+  try{
+    var data=await api('getArchivedQuiz',{id:item.id});
+    if(!data.quiz||!quizSize(data.quiz))throw new Error('missing');
+    showNameScreen(data.quiz,el,true);
+  }catch(e){
+    el.innerHTML='<div class="back-row"><button class="link-btn" onclick="renderArchive()">← Past quizzes</button></div><div class="glass-card"><div class="no-quiz"><span class="no-quiz-emoji">📶</span><h2>Couldn\'t Load Quiz</h2><p>Give it a second and try again.</p></div></div>';
+  }
+}
+
+function fmtDate(iso){
+  var d=new Date(iso);if(isNaN(d))return'';
+  return d.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+}
+function fmtTime(s){
+  s=Math.max(0,Math.round(Number(s)||0));
+  var m=Math.floor(s/60),r=s%60;
+  return m+':'+(r<10?'0':'')+r;
 }
 
 function beginQuiz(quiz) {
@@ -568,7 +745,7 @@ function checkAnswer(i) {
   if(!val)return;
 
   var accepted=quiz.questions[i].answers.map(function(a){return a.trim().toLowerCase();}).filter(Boolean);
-  // Case-insensitive partial match — 'shearer' matches 'Alan Shearer' and vice versa
+  // Case-insensitive partial match - 'shearer' matches 'Alan Shearer' and vice versa
   var correct=accepted.some(function(a){
     var v=val.toLowerCase(), ac=a.toLowerCase();
     return v===ac || v.indexOf(ac)>=0 || ac.indexOf(v)>=0;
@@ -649,6 +826,7 @@ async function showWin(quiz) {
         '<button class="apple-btn" onclick="toggleResultsCard()">📸 Results Card</button>'+
         '<button class="apple-btn apple-btn-secondary" onclick="switchView(\'league\')">🏆 See League</button>'+
       '</div>'+
+      '<div style="margin:-20px 0 24px"><button class="link-btn" onclick="renderArchive()">📚 Play another past quiz</button></div>'+
       '<div class="results-card" id="results-card">'+
         '<div style="height:3px;background:linear-gradient(90deg,#241f20 0%,#241f20 33.3%,#DA291C 33.3%,#DA291C 66.6%,#034694 66.6%,#034694 100%);margin:-28px -28px 20px;"></div>'+
         '<div class="rc-title">Papa New Quizzes</div>'+
@@ -693,6 +871,210 @@ function buildReview(quiz){
   return html+'</div>';
 }
 
+// ── TENABLE ───────────────────────────────────────────────────
+var tenFound=[], tenStart=0, tenTimer=null, tenWrong=0, tenFinished=false, TEN_BONUS=5;
+
+function normAns(s){
+  return String(s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'')
+    .replace(/&/g,' and ').replace(/[^a-z0-9 ]+/g,' ').replace(/\s+/g,' ').trim();
+}
+function editDist(a,b){
+  if(a===b)return 0;
+  var m=a.length,n=b.length;if(!m)return n;if(!n)return m;
+  var i,j;
+  // Damerau-Levenshtein (optimal string alignment): swapped letters count as one slip
+  var d=[];for(i=0;i<=m;i++){d[i]=[i];}for(j=0;j<=n;j++)d[0][j]=j;
+  for(i=1;i<=m;i++)for(j=1;j<=n;j++){
+    var c=a[i-1]===b[j-1]?0:1;
+    d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+c);
+    if(i>1&&j>1&&a[i-1]===b[j-2]&&a[i-2]===b[j-1])d[i][j]=Math.min(d[i][j],d[i-2][j-2]+1);
+  }
+  return d[m][n];
+}
+function typoOk(guess,target){
+  if(guess.length<4||target.length<4)return guess===target;
+  var allowed=target.length>=9?2:1;
+  return editDist(guess,target)<=allowed;
+}
+// Score how well a guess matches one list item: 2 = full answer, 1 = surname only, 0 = no match
+function tenMatch(guess,item){
+  var g=normAns(guess);if(g.length<2)return 0;
+  var best=0;
+  (item.answers||[]).forEach(function(a){
+    var t=normAns(a);if(!t)return;
+    if(g===t||typoOk(g,t)){best=2;return;}
+    var words=t.split(' ');
+    if(words.length>1){
+      var last=words[words.length-1];
+      if(last.length>=3&&(g===last||typoOk(g,last)))best=Math.max(best,1);
+      // Different first name but right surname (e.g. "Andy Cole" for "Andrew Cole")
+      var gw=g.split(' ');
+      if(gw.length>1){var gl=gw[gw.length-1];if(last.length>=3&&(gl===last||typoOk(gl,last)))best=Math.max(best,1);}
+    }
+  });
+  return best;
+}
+function tenFindItem(guess,items){
+  // Prefer an exact full-name match; otherwise first unfound surname match
+  var full=-1,partial=-1,alreadyFull=-1,alreadyPartial=-1;
+  items.forEach(function(it,i){
+    var m=tenMatch(guess,it);
+    if(!m)return;
+    if(tenFound[i]){ if(m===2&&alreadyFull<0)alreadyFull=i; else if(alreadyPartial<0)alreadyPartial=i; return; }
+    if(m===2&&full<0)full=i; else if(m===1&&partial<0)partial=i;
+  });
+  if(full>=0)return{idx:full};
+  if(partial>=0)return{idx:partial};
+  if(alreadyFull>=0||alreadyPartial>=0)return{already:true};
+  return{};
+}
+
+function stopTenTimer(){ if(tenTimer){clearInterval(tenTimer);tenTimer=null;} }
+function tenElapsed(){ return Math.round((Date.now()-tenStart)/1000); }
+
+function beginTenable(quiz){
+  var items=quiz.items||[];
+  tenFound=new Array(items.length).fill(false);
+  tenWrong=0; tenFinished=false;
+  var el=document.getElementById('play-content');
+  var slots='';
+  for(var i=0;i<items.length;i++){
+    slots+='<div class="ten-slot" id="ts'+i+'"><div class="ten-slot-num">'+(i+1)+'</div><div class="ten-slot-name" id="tsn'+i+'"></div></div>';
+  }
+  el.innerHTML=
+    '<div class="glass-card" style="margin-bottom:2px">'+
+      '<div class="ten-top">'+
+        '<div class="ten-count" id="ten-count">0<span>/'+items.length+'</span></div>'+
+        '<div><div class="ten-timer-label">Time</div><div class="ten-timer" id="ten-timer">0:00</div></div>'+
+      '</div>'+
+    '</div>'+
+    '<div class="glass-card">'+
+      (quiz.imageUrl?'<img class="q-img" style="border-radius:0;margin:0" src="'+esc(quiz.imageUrl)+'" alt="" onerror="this.style.display=\'none\'" />':'')+
+      '<div class="ten-prompt">'+esc(quiz.prompt||quiz.title||'Name the top 10')+'</div>'+
+      '<div class="ten-sub">Type an answer and press Enter. Surnames are fine.</div>'+
+      '<div class="ten-board">'+slots+'</div>'+
+      '<div class="ten-input-row">'+
+        '<input class="q-input" id="ten-input" type="text" placeholder="Your answer…" autocomplete="off" spellcheck="false" />'+
+        '<button class="apple-btn" onclick="tenGuess()">Go</button>'+
+      '</div>'+
+      '<div class="ten-feedback" id="ten-feedback"></div>'+
+      '<div class="ten-done-row"><button class="apple-btn apple-btn-secondary" id="ten-done-btn" onclick="tenGiveUp()">I\'m done</button></div>'+
+    '</div>'+
+    '<div id="ws"></div>';
+
+  var inp=document.getElementById('ten-input');
+  inp.addEventListener('keydown',function(e){if(e.key==='Enter')tenGuess();});
+  inp.focus();
+  stopTenTimer();
+  tenStart=Date.now();
+  tenTimer=setInterval(function(){
+    var t=document.getElementById('ten-timer');
+    if(!t){stopTenTimer();return;}
+    t.textContent=fmtTime(tenElapsed());
+  },250);
+}
+
+function tenGuess(){
+  if(tenFinished)return;
+  var quiz=currentQuiz, items=quiz.items||[];
+  var inp=document.getElementById('ten-input'), fb=document.getElementById('ten-feedback');
+  var val=inp.value.trim(); if(!val)return;
+  var r=tenFindItem(val,items);
+  inp.value=''; inp.focus();
+  if(r.idx!==undefined){
+    tenFound[r.idx]=true;
+    var slot=document.getElementById('ts'+r.idx);
+    slot.classList.add('found');
+    document.getElementById('tsn'+r.idx).textContent=titleCase(items[r.idx].answers[0]);
+    var count=tenFound.filter(Boolean).length;
+    document.getElementById('ten-count').innerHTML=count+'<span>/'+items.length+'</span>';
+    fb.className='ten-feedback good';
+    fb.textContent='✓ '+titleCase(items[r.idx].answers[0])+' is number '+(r.idx+1);
+    if(count===items.length) finishTenable(true);
+  } else if(r.already){
+    fb.className='ten-feedback';
+    fb.textContent='You\'ve already got that one';
+  } else {
+    tenWrong++;
+    inp.classList.remove('shake');void inp.offsetWidth;inp.classList.add('shake');
+    setTimeout(function(){inp.classList.remove('shake');},400);
+    fb.className='ten-feedback bad';
+    fb.textContent='✗ "'+val+'" isn\'t on the list';
+  }
+}
+
+function tenGiveUp(){
+  if(tenFinished)return;
+  var left=tenFound.filter(function(f){return!f;}).length;
+  if(!confirm('Finish now? You still have '+left+' to find. Your score will be locked in.'))return;
+  finishTenable(false);
+}
+
+async function finishTenable(allFound){
+  tenFinished=true;
+  stopTenTimer();
+  var secs=tenElapsed();
+  var quiz=currentQuiz, items=quiz.items||[];
+  var count=tenFound.filter(Boolean).length;
+  var bonus=count===items.length&&items.length>0?TEN_BONUS:0;
+  var totalPts=count+bonus;
+  var maxPts=items.length+TEN_BONUS;
+
+  // Reveal the missed answers
+  for(var i=0;i<items.length;i++){
+    if(!tenFound[i]){
+      document.getElementById('ts'+i).classList.add('missed');
+      document.getElementById('tsn'+i).textContent=titleCase(items[i].answers[0]);
+    }
+  }
+  var inputRow=document.querySelector('.ten-input-row');if(inputRow)inputRow.style.display='none';
+  var doneRow=document.querySelector('.ten-done-row');if(doneRow)doneRow.style.display='none';
+  var fb=document.getElementById('ten-feedback');if(fb){fb.className='ten-feedback';fb.textContent='';}
+  document.getElementById('ten-timer').textContent=fmtTime(secs);
+
+  var verdict,emoji;
+  if(count===items.length){verdict='Tenable!';emoji='🌟';}
+  else if(count>=8){verdict='Cracking Display';emoji='🔥';}
+  else if(count>=6){verdict='Solid Performance';emoji='👍';}
+  else if(count>=4){verdict='Needs Work';emoji='😅';}
+  else{verdict='Back to Training';emoji='😬';}
+
+  var week=quiz.title||'Unknown Week';
+  try { await api('submitScore',{player:playerName,week:week,score:totalPts,hintsUsed:0,timeSeconds:secs}); } catch(e){}
+
+  var dots='';
+  for(var j=0;j<items.length;j++) dots+='<div class="rc-dot '+(tenFound[j]?'pts3':'no')+'">'+(j+1)+'</div>';
+
+  var ws=document.getElementById('ws');
+  ws.innerHTML=
+    '<div class="glass-card" style="margin-top:16px"><div class="win-wrap">'+
+      '<div class="win-name">'+(playerName?esc(playerName):'')+'</div>'+
+      '<div class="win-score-display">'+totalPts+'</div>'+
+      '<div class="win-total">out of '+maxPts+' points</div>'+
+      '<div class="win-time">'+count+'/'+items.length+' found in '+fmtTime(secs)+(bonus?' · +'+bonus+' bonus':'')+'</div>'+
+      '<div class="win-verdict">'+emoji+' '+verdict+'</div>'+
+      '<div class="win-points-badge">🏆 '+totalPts+' pts added to league</div>'+
+      '<div class="win-actions">'+
+        '<button class="apple-btn" onclick="toggleResultsCard()">📸 Results Card</button>'+
+        '<button class="apple-btn apple-btn-secondary" onclick="switchView(\'league\')">🏆 See League</button>'+
+      '</div>'+
+      '<div style="margin:-20px 0 24px"><button class="link-btn" onclick="renderArchive()">📚 Play another past quiz</button></div>'+
+      '<div class="results-card" id="results-card">'+
+        '<div style="height:3px;background:linear-gradient(90deg,#241f20 0%,#241f20 33.3%,#DA291C 33.3%,#DA291C 66.6%,#034694 66.6%,#034694 100%);margin:-28px -28px 20px;"></div>'+
+        '<div class="rc-title">Papa New Quizzes · Tenable</div>'+
+        (quiz.title?'<div class="rc-week">'+esc(quiz.title)+'</div>':'')+
+        (playerName?'<div class="rc-name">'+esc(playerName)+'</div>':'')+
+        '<div class="rc-score">'+count+'/'+items.length+'</div>'+
+        '<div class="rc-points">'+totalPts+' pts · '+fmtTime(secs)+'</div>'+
+        '<div class="rc-verdict">'+emoji+' '+verdict+'</div>'+
+        '<div class="rc-dots">'+dots+'</div>'+
+        '<div class="rc-footer">📱 Screenshot &amp; share · papanewquizzes.com</div>'+
+      '</div>'+
+    '</div></div>';
+  ws.scrollIntoView({behavior:'smooth',block:'start'});
+  if(count>=Math.ceil(items.length*0.6)) launchConfetti();
+}
+
 // ── LEAGUE ────────────────────────────────────────────────────
 async function renderLeague() {
   var el=document.getElementById('league-content');
@@ -732,9 +1114,11 @@ async function renderLeague() {
       if(weeks.length){
         weeks.forEach(function(w){
           var s=p.weekScores[weeks.indexOf(w)];
-          var cls=s===null?'none':s>=20?'high':s>0?'low':'zero';
+          var tmx=p.weekTimes?p.weekTimes[weeks.indexOf(w)]:null;var isTen=tmx!==null&&tmx!==undefined;var cls=s===null?'none':(isTen?s>=10:s>=20)?'high':s>0?'low':'zero';
           var disp=s===null?'–':String(s);
-          html+='<td class="week-cols"><span class="week-score '+cls+'">'+disp+'</span></td>';
+          var tm=p.weekTimes?p.weekTimes[weeks.indexOf(w)]:null;
+          var tip=esc(w)+(tm!==null&&tm!==undefined?' · '+fmtTime(tm):'');
+          html+='<td class="week-cols"><span class="week-score '+cls+'" title="'+tip+'">'+disp+'</span></td>';
         });
       }
       html+='</tr>';
@@ -777,13 +1161,39 @@ document.addEventListener('keydown',function(e){if(e.key==='Enter'&&document.act
 
 // ── LOCAL DRAFT ───────────────────────────────────────────────
 function saveLocalDraft(){
-  try{var ti=document.getElementById('quiz-title-input');localStorage.setItem(DRAFT_KEY,JSON.stringify({rows:builderRows,title:ti?ti.value:''}));}catch(e){}
+  try{var ti=document.getElementById('quiz-title-input');localStorage.setItem(DRAFT_KEY,JSON.stringify({rows:builderRows,title:ti?ti.value:'',format:quizFormat,ten:tenDraft}));}catch(e){}
 }
 function loadLocalDraft(){
   try{
     var raw=localStorage.getItem(DRAFT_KEY);
-    if(raw){var d=JSON.parse(raw);if(d.rows&&d.rows.length)builderRows=d.rows;var ti=document.getElementById('quiz-title-input');if(ti&&d.title)ti.value=d.title;}
+    if(raw){var d=JSON.parse(raw);if(d.rows&&d.rows.length)builderRows=d.rows;var ti=document.getElementById('quiz-title-input');if(ti&&d.title)ti.value=d.title;
+      if(d.ten&&d.ten.items&&d.ten.items.length===10)tenDraft=d.ten;
+      if(d.format)quizFormat=d.format;}
   }catch(e){}
+  setFormat(quizFormat,true);
+}
+
+// ── FORMAT (Normal / Tenable) ─────────────────────────────────
+var quizFormat='standard';
+function blankTenDraft(){var it=[];for(var i=0;i<10;i++)it.push('');return{prompt:'',imageUrl:'',items:it};}
+var tenDraft=blankTenDraft();
+function setFormat(f,silent){
+  quizFormat=f==='tenable'?'tenable':'standard';
+  document.getElementById('fmt-standard').classList.toggle('active',quizFormat==='standard');
+  document.getElementById('fmt-tenable').classList.toggle('active',quizFormat==='tenable');
+  document.getElementById('standard-builder').style.display=quizFormat==='standard'?'block':'none';
+  document.getElementById('tenable-builder').style.display=quizFormat==='tenable'?'block':'none';
+  if(quizFormat==='tenable')renderTenBuilder();
+  if(!silent)saveLocalDraft();
+}
+function renderTenBuilder(){
+  var list=document.getElementById('ten-builder-list');if(!list)return;
+  document.getElementById('ten-prompt-input').value=tenDraft.prompt||'';
+  document.getElementById('ten-img-input').value=tenDraft.imageUrl||'';
+  list.innerHTML=tenDraft.items.map(function(v,i){
+    return '<div class="ten-builder-row"><div class="q-builder-num">'+(i+1)+'</div>'+
+      '<input class="builder-input answer-f" placeholder="Answer '+(i+1)+(i===0?' (e.g. Alan Shearer)':'')+'" value="'+esc(v)+'" oninput="tenDraft.items['+i+']=this.value;saveLocalDraft()" /></div>';
+  }).join('');
 }
 
 // ── BUILDER ───────────────────────────────────────────────────
@@ -808,6 +1218,7 @@ function removeBuilderRow(i){builderRows.splice(i,1);renderBuilderList();}
 function clearBuilder(){
   if(!confirm('Clear this week\'s quiz? This cannot be undone.'))return;
   builderRows=[];for(var i=0;i<10;i++)builderRows.push({question:'',answers:'',hint:'',imageUrl:''});
+  tenDraft=blankTenDraft();renderTenBuilder();
   var ti=document.getElementById('quiz-title-input');if(ti)ti.value='';
   localStorage.removeItem(DRAFT_KEY);
   document.getElementById('save-error').style.display='none';
@@ -820,6 +1231,27 @@ async function saveQuizToSheet(){
   var errEl=document.getElementById('save-error'),okEl=document.getElementById('save-success'),btn=document.getElementById('save-btn');
   errEl.style.display='none';okEl.style.display='none';
   var title=document.getElementById('quiz-title-input').value.trim();
+  if(!title){errEl.textContent='Add a week / title. Past quizzes and the league use it to tell weeks apart.';errEl.style.display='block';return;}
+  if(quizFormat==='tenable'){
+    var prompt=(tenDraft.prompt||'').trim();
+    if(!prompt){errEl.textContent='Add the list question (e.g. Top 10 all-time Premier League goalscorers).';errEl.style.display='block';return;}
+    var items=[];
+    for(var k=0;k<tenDraft.items.length;k++){
+      var alts=String(tenDraft.items[k]||'').split(',').map(function(a){return a.trim();}).filter(Boolean);
+      if(!alts.length){errEl.textContent='Answer '+(k+1)+' is empty. A Tenable list needs all 10.';errEl.style.display='block';return;}
+      items.push({answers:alts});
+    }
+    btn.textContent='⏳ Saving…';btn.disabled=true;
+    try{
+      var r=await api('saveQuiz',{type:'tenable',title:title,prompt:prompt,imageUrl:(tenDraft.imageUrl||'').trim(),items:items});
+      if(r&&r.error)throw new Error(r.error);
+      try { localStorage.removeItem(QUIZ_CACHE_KEY); } catch(e) {}
+      okEl.textContent='✅ Saved! Tenable is now live at papanewquizzes.com';
+      okEl.style.display='block';
+    }catch(e){errEl.textContent='⚠️ Save failed. Check your connection.';errEl.style.display='block';}
+    btn.textContent='💾 Save & Go Live';btn.disabled=false;
+    return;
+  }
   var questions=builderRows.filter(function(r){return r.question.trim();}).map(function(r){
     return{question:r.question.trim(),answers:r.answers.split(',').map(function(a){return a.trim();}).filter(Boolean),hint:r.hint.trim(),imageUrl:r.imageUrl.trim()};
   });
@@ -828,7 +1260,8 @@ async function saveQuizToSheet(){
   if(empty>=0){errEl.textContent='Question '+(empty+1)+' needs an answer.';errEl.style.display='block';return;}
   btn.textContent='⏳ Saving…';btn.disabled=true;
   try{
-    await api('saveQuiz',{title:title,questions:questions});
+    var rs=await api('saveQuiz',{type:'standard',title:title,questions:questions});
+    if(rs&&rs.error)throw new Error(rs.error);
     try { localStorage.removeItem(QUIZ_CACHE_KEY); } catch(e) {}
     okEl.textContent='✅ Saved! Quiz is now live at papanewquizzes.com';
     okEl.style.display='block';
@@ -849,7 +1282,7 @@ async function resetLeagueSeason(){
 }
 
 // ── UTILS ─────────────────────────────────────────────────────
-function titleCase(s){if(!s)return'';return String(s).replace(/\b\w/g,function(c){return c.toUpperCase();});}
+function titleCase(s){if(!s)return'';return String(s).replace(/(^|[\s\-])(\S)/g,function(m,a,c){return a+c.toUpperCase();});}
 function esc(s){if(!s)return'';return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 
 switchView('play');
